@@ -1,0 +1,40 @@
+@import "../../../../colors.scss";
+.ClientsList {
+  width: 100%;
+  background-color: $s-lite;
+  color: $p-text-dark;
+  font-size: 1.2rem;
+  &__item {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+  }
+  &__client {
+    flex-grow: 1;
+    margin: 1% 0 1% 5%;
+    font-size: 1.2rem;
+  }
+
+  &__nameFamale {
+    width: 185px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 2%;
+    font-weight: 600;
+  }
+  &__phone {
+    margin: 2%;
+    font-size: 0.9rem;
+  }
+
+  &__icon {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}

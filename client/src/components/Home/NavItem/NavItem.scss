@@ -1,0 +1,25 @@
+.NavItem {
+  background-color: transparent;
+  flex: 0 0 7%;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #071f3a;
+  box-shadow: 0 0 4px #8c50fb;
+  cursor: pointer;
+
+  :nth-child(1) {
+    font-size: 30px;
+    opacity: 0.8;
+    margin-left: 5%;
+    margin-right: 10%;
+  }
+
+  &:hover {
+    background-color: #e0d2fa;
+    :nth-child(1) {
+      color: red;
+      opacity: 1;
+    }
+  }
+}

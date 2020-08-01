@@ -1,0 +1,17 @@
+.Home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f5ff;
+  border-radius: 10px 0 0 10px;
+  &__NavItem {
+    padding: 20px;
+    margin: 15px 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &__Label {
+    padding: 10px 0;
+  }
+}

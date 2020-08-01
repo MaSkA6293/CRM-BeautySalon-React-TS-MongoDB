@@ -1,0 +1,21 @@
+.ClientsHeader {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  &__title {
+    font-size: 1.4rem;
+    flex: 1;
+    margin-left: 30px;
+  }
+  &__addUser {
+    font-size: 1.4rem;
+    // position: absolute;
+    // right: 20px;
+    // top: 17px;
+    display: flex;
+    cursor: pointer;
+  }
+  &__arrowBack {
+    font-size: 1.4rem;
+  }
+}

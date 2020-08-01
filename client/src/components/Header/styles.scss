@@ -1,0 +1,20 @@
+.header {
+  width: 100%;
+  background-color: #f3eefc;
+  color: #2d2929;
+  z-index: 1;
+  cursor: pointer;
+  &__row {
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
+  }
+  &__icon {
+    font-size: 1.6rem;
+    display: flex;
+    margin-right: 10px;
+  }
+  &__title {
+    font-size: 1.5rem;
+  }
+}
