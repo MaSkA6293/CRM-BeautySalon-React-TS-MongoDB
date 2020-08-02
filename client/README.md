@@ -1,3 +1,3 @@
 CRM для салона красоты
 
-https://crm-beauty-salon.web.app
+https://crm-beauty-salon.herokuapp.com/
