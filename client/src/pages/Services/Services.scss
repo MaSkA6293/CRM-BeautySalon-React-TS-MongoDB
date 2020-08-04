@@ -1,3 +1,4 @@
+@import "../../colors.scss";
 .addService {
   color: #ffffff;
   background-color: #4ed8ff;
@@ -10,6 +11,7 @@
   cursor: pointer;
   z-index: 1;
 }
+
 .Services {
   display: flex;
   width: 100%;
@@ -17,13 +19,8 @@
   align-content: flex-start;
   border-radius: 0 10px 10px 0;
   position: relative;
-  // height: 600px;
-  // overflow-y: auto;
-  &__header {
-    position: sticky;
-    top: 0;
-    opacity: 0.9;
-  }
+  background-color: $s-lite;
+  min-height: 100vh;
 
   .PriceTable {
     background-color: #fff4fe;

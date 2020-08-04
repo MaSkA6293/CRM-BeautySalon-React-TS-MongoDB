@@ -18,7 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "fixed",
       bottom: theme.spacing(2),
       right: theme.spacing(2),
+      zIndex: 1,
     },
+
+    offset: theme.mixins.toolbar,
   })
 );
 
@@ -51,22 +54,22 @@ function ScrollTop(props: any) {
 }
 
 const Header = (props: any) => {
+  const classes = useStyles();
   return (
-    <div className={classNames(props.addClass)}>
-      <React.Fragment>
-        <CssBaseline />
-        <AppBar>
-          <Toolbar>{props.children}</Toolbar>
-        </AppBar>
-        <Toolbar id="back-to-top-anchor" />
+    <React.Fragment>
+      <CssBaseline />
+      <AppBar position="fixed" className="header">
+        <Toolbar>{props.children}</Toolbar>
+      </AppBar>
+      <Toolbar id="back-to-top-anchor" />
+      <ScrollTop {...props}>
+        <Fab color="secondary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
 
-        <ScrollTop {...props}>
-          <Fab color="secondary" size="small" aria-label="scroll back to top">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
-      </React.Fragment>
-    </div>
+      <div className={classNames(classes.offset, "header__back")} />
+    </React.Fragment>
   );
 };
 export default Header;

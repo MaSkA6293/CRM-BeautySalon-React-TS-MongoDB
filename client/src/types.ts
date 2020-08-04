@@ -55,7 +55,7 @@ export interface IstateColors {
 }
 
 export interface IstateService {
-  services: IService[];
+  servicesList: IService[];
 }
 // Actions
 

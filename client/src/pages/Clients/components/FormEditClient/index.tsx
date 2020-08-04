@@ -5,10 +5,9 @@ import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector } from "react-redux";
 import Spiner from "../../../../components/Spiner";
 import { IClient } from "../../../../types/typesClients";
-import Message from "../../../../components/Message";
 import { IClientValues } from "../../../../types/typesClients";
 import FormicEditClient from "./FormicEditClient";
-
+import cogoToast from "cogo-toast";
 type FormAddClientProps = {
   modalIsOpen: boolean;
   closeModal: () => void;
@@ -66,6 +65,20 @@ export const FormEditClient = ({
       deletClient(id, closeModal);
     }
   };
+  if (clientDeleted) {
+    cogoToast.success(<div className="message"> Клиент успешно удален</div>);
+  }
+  if (clientDeletError) {
+    cogoToast.error(<div className="message">{clientDeletError}</div>);
+  }
+  if (clientEdited) {
+    cogoToast.success(
+      <div className="message"> Данные клиента успешно изменены</div>
+    );
+  }
+  if (clientEditError) {
+    cogoToast.error(<div className="message"> {clientEditError}</div>);
+  }
 
   return (
     <div>
@@ -88,24 +101,7 @@ export const FormEditClient = ({
           clientEditIsFail={clientEditIsFail}
           clientDeletIsFail={clientDeletIsFail}
         />
-        {clientDeleted || clientDeletError ? (
-          <Message
-            message={clientDeleted ? "Клиент успешно удален" : clientDeletError}
-            status={clientDeleted ? true : false}
-          />
-        ) : (
-          ""
-        )}
-        {clientEdited || clientEditError ? (
-          <Message
-            message={
-              clientEdited ? "Данные клиента успешно изменены" : clientEditError
-            }
-            status={clientEdited ? true : false}
-          />
-        ) : (
-          ""
-        )}
+
         {clientIsDeleting || clientIsEditing ? <Spiner /> : ""}
       </Modal>
     </div>

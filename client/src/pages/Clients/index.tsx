@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import "./styles.scss";
-import ClientsHeader from "./components/ClientsHeader";
-
 import { useSelector, useDispatch } from "react-redux";
-import Message from "../../components/Message";
-
+import ClientHeader from "./components/ClientsHeader";
 import { ClientsList, ModalAddClient, FormEditClient } from "./components";
 import { IGlobalStore } from "../../reducers/rootReducer";
 import {
@@ -16,6 +13,8 @@ import {
 
 import { IClient } from "../../types/typesClients";
 import Spiner from "../../components/Spiner";
+
+import cogoToast from "cogo-toast";
 
 const initialSelectedClient = {
   _id: 0,
@@ -57,17 +56,15 @@ const Clients = () => {
     }
   };
 
+  if (clientGetIsFail) {
+    cogoToast.error(<div className="message">{clientGetError}</div>);
+  }
+
   return (
     <>
       {" "}
       <div className="Clients">
-        <ClientsHeader setAddIsOpen={setAddIsOpen} />
-
-        {clientGetIsFail ? (
-          <Message message={clientGetError} status={false} />
-        ) : (
-          ""
-        )}
+        <ClientHeader setAddIsOpen={setAddIsOpen} />
         {clientsIsLoading ? (
           <Spiner />
         ) : (

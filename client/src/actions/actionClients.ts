@@ -48,7 +48,7 @@ export const getClients = () => {
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_REQUEST_FAIL });
-        }, 5000);
+        }, 2000);
       });
   };
 };
@@ -67,8 +67,8 @@ export const editClient = (data: IClient, callback: () => void) => {
             setTimeout(() => {
               dispatch({ type: EDIT_CLIENT_SUCCESS });
               callback();
-            }, 5000);
-          }, 5000);
+            }, 2000);
+          }, 2000);
         } else {
           throw new Error(res.data.error);
         }
@@ -80,7 +80,7 @@ export const editClient = (data: IClient, callback: () => void) => {
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_EDIT_FAIL });
-        }, 5000);
+        }, 2000);
       });
   };
 };
@@ -101,8 +101,8 @@ export const deletClient = (_id: number, callback: () => void) => {
             setTimeout(() => {
               dispatch({ type: DELET_CLIENT_SUCCESS });
               callback();
-            }, 10000);
-          }, 4000);
+            }, 2000);
+          }, 2000);
         } else {
           throw new Error(res.data.error);
         }
@@ -114,7 +114,7 @@ export const deletClient = (_id: number, callback: () => void) => {
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_DELET_FAIL });
-        }, 5000);
+        }, 2000);
       });
   };
 };
@@ -140,8 +140,8 @@ export const addClient = (
             setTimeout(() => {
               dispatch({ type: ADD_CLIENT_SUCCESS });
               callback();
-            }, 5000);
-          }, 5000);
+            }, 2000);
+          }, 2000);
         } else {
           throw new Error(res.data.error);
         }
@@ -150,7 +150,7 @@ export const addClient = (
         dispatch({ type: CLIENT_ADD_FAIL, payload: { message: err.message } });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_CLIENT_ADD_FAIL });
-        }, 5000);
+        }, 2000);
       });
   };
 };

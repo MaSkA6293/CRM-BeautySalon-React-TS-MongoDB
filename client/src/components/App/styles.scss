@@ -2,15 +2,14 @@
 @import "../../colors.scss";
 .App {
   min-width: 320px;
-  max-width: 320px;
+  max-width: 768px;
   position: relative;
   display: flex;
   border: 1px solid #a9a0a0;
   border-radius: 10px;
   margin: 5px auto;
   box-shadow: 2px 0px 5px #c4b5df;
-  min-height: 600px;
-  // overflow-y: auto;
-  // overflow-x: hidden;
+  min-height: 100vh;
   background-color: $s-lite;
+  flex-direction: column;
 }

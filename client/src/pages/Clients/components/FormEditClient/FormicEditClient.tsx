@@ -3,7 +3,9 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "@material-ui/core";
 import PhoneInput from "../ModalAddClient/PhoneInput";
-import CancelPresentationOutlinedIcon from "@material-ui/icons/CancelPresentationOutlined";
+
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
@@ -63,7 +65,7 @@ const FormicEditClient = ({
 
   return (
     <>
-      <h3 className="Modal__title">Изменить данные клиента</h3>
+      <h2 className="Modal__title">Изменить данные клиента</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={EditClientSchema}
@@ -75,9 +77,9 @@ const FormicEditClient = ({
       >
         {({ dirty, isValid, errors, handleSubmit }) => (
           <Form className="Form">
-            <button onClick={closeModal} className="Form__close">
-              <CancelPresentationOutlinedIcon />
-            </button>
+            <IconButton onClick={closeModal} className="Form__close">
+              <CloseIcon fontSize="small" />
+            </IconButton>
             <Field
               as={TextField}
               label="Имя"

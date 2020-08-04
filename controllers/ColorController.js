@@ -5,13 +5,12 @@ const ColorController = {
     const color = new ColorsModels({
       id: req.body.id,
       hex: req.body.hex,
-      name: req.body.name,
     });
 
     color
       .save()
-      .then(() => console.log("succsess!"))
-      .then(() => res.send("finish"));
+      .then(() => res.send("success"))
+      .catch((e) => res.send(e));
   },
 
   read(req, res) {
@@ -19,7 +18,7 @@ const ColorController = {
       .then((result) => {
         res.json(result);
       })
-      .catch((e) => res.send("No result"));
+      .catch((e) => res.send("Error", e));
   },
 };
 module.exports = ColorController;

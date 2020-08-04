@@ -1,16 +1,13 @@
 import React from "react";
 import MenuItemClient from "../../components/MenuItemClient";
 import "react-dropdown/style.css";
-import { IClient } from "../../../../types/typesClients";
 import "./styles.scss";
-
+import { IClient } from "../../../../types/typesClients";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "@material-ui/core/Avatar";
-import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import classNames from "classnames";
 
 type ClientsListProps = {
   clients: IClient[];
@@ -42,26 +39,24 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
       },
     },
   ];
-
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        width: "100%",
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-      },
-    })
-  );
-
-  const classes = useStyles();
-
+  console.log(clients);
   return (
-    <div className={classNames(classes.root, "ClientsList")}>
+    <div className="ClientsList">
       <List component="nav" aria-label="main mailbox folders">
-        {clients.map((client: IClient) => {
+        {clients.map((client: any) => {
           return (
-            <ListItem key={client._id} alignItems="center" button>
-              <Avatar style={{ backgroundColor: "#9e51b0" }}>
+            <ListItem
+              key={client._id}
+              alignItems="center"
+              button
+              className="ClientsList__item"
+            >
+              <Avatar
+                style={{
+                  backgroundColor: client.color ? client.color : "#9e51b0",
+                }}
+                className="ClientsList__avatar"
+              >
                 {client.name[0]}
               </Avatar>
               <div className="ClientsList__client">

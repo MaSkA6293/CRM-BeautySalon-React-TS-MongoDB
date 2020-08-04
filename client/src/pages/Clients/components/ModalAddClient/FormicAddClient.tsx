@@ -3,11 +3,12 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "@material-ui/core";
 import PhoneInput from "./PhoneInput";
-import CancelPresentationOutlinedIcon from "@material-ui/icons/CancelPresentationOutlined";
+import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { IClientValues } from "../../../../types/typesClients";
 
+import IconButton from "@material-ui/core/IconButton";
 const initialValues: IClientValues = {
   name: "",
   female: "",
@@ -57,9 +58,9 @@ const FormicAddClient = ({
       >
         {({ dirty, isValid, errors }) => (
           <Form className="Form">
-            <button onClick={closeModal} className="Form__close">
-              <CancelPresentationOutlinedIcon />
-            </button>
+            <IconButton onClick={closeModal} className="Form__close">
+              <CloseIcon fontSize="small" />
+            </IconButton>
             <Field
               as={TextField}
               label="Имя"

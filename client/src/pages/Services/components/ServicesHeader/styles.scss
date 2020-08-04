@@ -1,4 +1,4 @@
-.ClientsHeader {
+.ServicesHeader {
   display: flex;
   flex: 1 1 100%;
   align-items: center;
@@ -10,7 +10,7 @@
     flex: 1;
     margin-left: 10px;
   }
-  &__addUser {
+  &__addCategory {
     font-size: 1.4rem;
     display: flex;
     cursor: pointer;

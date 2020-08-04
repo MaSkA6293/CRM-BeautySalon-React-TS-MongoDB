@@ -1,6 +1,6 @@
 import React from "react";
 import "./Services.scss";
-import Header from "../Header";
+import Header from "../../components/Header";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,19 +9,27 @@ import { IService } from "../../types";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { IGlobalStore } from "../.,/../../reducers/rootReducer";
 
+import ServicesHeader from "./components/ServicesHeader";
 type ServicesProps = {
   services: IService;
 };
 
-const Services = ({ services }: any) => {
+const Services = () => {
+  const { services } = useSelector(({ services }: IGlobalStore) => {
+    return {
+      services: services.servicesList,
+    };
+  });
   return (
     <>
       <div className="addService">
         <FontAwesomeIcon icon={faPlus} />
       </div>
       <div className="Services">
-        <Header addClass="Services__header" />
+        <ServicesHeader services={services} />
 
         <table className="PriceTable">
           {services.map((service: any, index: number) => {

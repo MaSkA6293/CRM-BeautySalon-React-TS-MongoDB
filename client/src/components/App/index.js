@@ -6,13 +6,12 @@ import Spiner from "../Spiner";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { purple } from "@material-ui/core/colors";
-
 import Test from "../Test";
 
 const Home = lazy(() => import("../Home"));
 const Jornal = lazy(() => import("../Jornal/Jornal"));
 const Clients = lazy(() => import("../../pages/Clients"));
-const Services = lazy(() => import("../Services/Services"));
+const Services = lazy(() => import("../../pages/Services"));
 
 const theme = createMuiTheme({
   palette: {

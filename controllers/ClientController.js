@@ -1,25 +1,38 @@
 //const ListModels = require("../models/List");
 const ERROR_MESSAGE = "Ошибка сервера. Что-то пошло не так...";
 const ClientModel = require("../models/Client");
+const ColorsModels = require("../models/Color");
 
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 const ClientController = {
   create(req, res) {
-    const client = new ClientModel({
-      name: req.body.name,
-      female: req.body.female,
-      phone: req.body.phone,
-    });
-    client
-      .save()
-      .then((data) => {
-        res.json({ status: "OK", data });
+    const colors = ColorsModels.find()
+      .then((result) => {
+        const randomColorId = getRandomIntInclusive(1, 18);
+        const color = result.find((item) => item.id === randomColorId);
+        const client = new ClientModel({
+          name: req.body.name,
+          female: req.body.female,
+          phone: req.body.phone,
+          color: color.hex,
+        });
+        client
+          .save()
+          .then((data) => {
+            res.json({ status: "OK", data });
+          })
+          .catch((e) =>
+            res.json({
+              status: "error",
+              error: ERROR_MESSAGE,
+            })
+          );
       })
-      .catch((e) =>
-        res.json({
-          status: "error",
-          error: ERROR_MESSAGE,
-        })
-      );
+      .catch((e) => res.send("Error", e));
   },
 
   delete(req, res) {

@@ -4,11 +4,10 @@ import "./styles.scss";
 import Modal from "react-modal";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import Spiner from "../../../../components/Spiner";
-import Message from "../../../../components/Message";
 import { addClient } from "../../../../actions/actionClients";
 import { IClientValues } from "../../../../types/typesClients";
 import FormicAddClient from "./FormicAddClient";
-
+import cogoToast from "cogo-toast";
 type ModalAddClientProps = {
   modalIsOpen: boolean;
   closeModal: () => void;
@@ -46,6 +45,12 @@ export const ModalAddClient = ({
     );
   };
 
+  if (clientIsAdded) {
+    cogoToast.success(<div className="message">Клиент успешно добавлен</div>);
+  }
+  if (clientAddError) {
+    cogoToast.error(<div className="message">{clientAddError}</div>);
+  }
   return (
     <div>
       <Modal
@@ -62,18 +67,6 @@ export const ModalAddClient = ({
           clientAdded={clientAdded}
           closeModal={closeModal}
         />
-
-        {clientAdded ? (
-          <Message message={"Клиент успешно добавлен"} status={true} />
-        ) : (
-          ""
-        )}
-        {clientAddIsFail ? (
-          <Message message={clientAddError} status={false} />
-        ) : (
-          ""
-        )}
-
         {clientIsAdded ? <Spiner /> : ""}
       </Modal>
     </div>
