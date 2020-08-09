@@ -39,7 +39,6 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
       },
     },
   ];
-  console.log(clients);
   return (
     <div className="ClientsList">
       <List component="nav" aria-label="main mailbox folders">

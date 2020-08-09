@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
+const compression = require("compression");
 
 const ClientController = require("./controllers/ClientController");
 
@@ -12,8 +13,10 @@ const TaskController = require("./controllers/TaskController");
 
 const ListController = require("./controllers/ListsController");
 
-const app = express();
+const routes = require("./routes/auth.routes");
 
+const app = express();
+app.use(compression());
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -52,6 +55,8 @@ async function start() {
 
 start();
 
+app.use("/api/auth", routes);
+
 app.get("/clients", ClientController.read);
 app.post("/clients", ClientController.create);
 app.delete("/clients/:id", ClientController.delete);
@@ -76,5 +81,9 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 module.exports = app;

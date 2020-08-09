@@ -1,25 +1,10 @@
-.ServicesHeader {
+.CategoryHeader {
   display: flex;
   flex: 1 1 100%;
   align-items: center;
   max-width: 760px;
   justify-content: space-between;
   margin: auto;
-
-  &__title {
-    font-size: 1.4rem;
-    flex: 1;
-    margin-left: 10px;
-  }
-  &__Category {
-    font-size: 1.4rem;
-    display: flex;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-  }
   &__arrowBack {
     width: 40px;
     height: 40px;
@@ -29,10 +14,27 @@
     font-size: 1.4rem;
     cursor: pointer;
   }
+  &__title {
+    font-size: 1.4rem;
+    flex: 1;
+  }
+  &__add {
+    font-size: 1.6rem;
+    display: flex;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 35px;
+      height: 35px;
+    }
+  }
 }
 
 @media screen and (min-width: 425px) {
-  .ServicesHeader {
+  .CategoryHeader {
     &__title {
       font-size: 1.3rem;
       margin-left: 40px;
@@ -41,8 +43,11 @@
     &__arrowBack {
       font-size: 1.3rem;
     }
-    &__Category {
-      font-size: 1.3rem;
+    &__add {
+      svg {
+        width: 45px;
+        height: 45px;
+      }
     }
   }
 }

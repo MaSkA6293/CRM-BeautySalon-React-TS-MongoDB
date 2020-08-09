@@ -29,7 +29,6 @@ export const getClients = () => {
     dispatch({ type: CLIENTS_REQUEST });
     httpRequest("clients", "GET")
       .then((res: any) => {
-        console.log(res);
         if (res.data.status === "OK") {
           setTimeout(() => {
             dispatch({

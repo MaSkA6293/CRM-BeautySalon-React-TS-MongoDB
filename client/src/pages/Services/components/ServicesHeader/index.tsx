@@ -1,26 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import "./styles.scss";
 import Header from "../../../../components/Header";
-import { faEdit, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import InputLabel from "@material-ui/core/InputLabel";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import CustomIcon from "../../../../components/CustomIcon";
 import CategoryIcon from "@material-ui/icons/Category";
 import Select from "@material-ui/core/Select";
-
+import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+const useStyles = makeStyles({
+  root: {
+    color: "#fff",
+    margin: "0 5%",
+    fontSize: "1.3rem",
+  },
+  button: {
+    color: "#fff",
+  },
+  input: {
+    borderBlockColor: "#fff",
+  },
+});
+
 type ServicesHeaderProps = {
   services: any;
 };
 
 const ServicesHeader = ({ services }: ServicesHeaderProps) => {
+  const classes = useStyles();
   let history = useHistory();
   const handlerClickGoHome = () => {
     history.push("/");
   };
+  const handlerClickGoCategiry = () => {
+    history.push("services/category");
+  };
 
-  const [filter, setFilter] = React.useState("all");
+  const [filter, setFilter] = useState("all");
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilter(event.target.value as string);
   };
@@ -28,21 +46,24 @@ const ServicesHeader = ({ services }: ServicesHeaderProps) => {
   return (
     <Header>
       <div className="ServicesHeader">
-        <CustomIcon
-          addClass={["ServicesHeader__arrowBack"]}
-          click={() => handlerClickGoHome()}
-          icon={faArrowLeft}
-        />
+        <Button className={classes.button}>
+          <CustomIcon
+            addClass={["ServicesHeader__arrowBack"]}
+            click={() => handlerClickGoHome()}
+            icon={faArrowLeft}
+          />
+        </Button>
 
-        <div className="ServicesHeader__title">Услуги</div>
-        <InputLabel id="demo-simple-select-label"></InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={filter}
           onChange={handleChange}
+          className={classes.root}
         >
-          <MenuItem value="all">Все услуги</MenuItem>
+          <MenuItem value="all" className={classes.input}>
+            Все услуги
+          </MenuItem>
           {services.map((item: any, index: number) => {
             return (
               <MenuItem key={index} value={item.id}>
@@ -52,8 +73,11 @@ const ServicesHeader = ({ services }: ServicesHeaderProps) => {
             );
           })}
         </Select>
-        <div className="ServicesHeader__addCategory">
-          <CategoryIcon onClick={() => {}} />
+
+        <div className="ServicesHeader__Category">
+          <Button className={classes.button}>
+            <CategoryIcon onClick={() => handlerClickGoCategiry()} />
+          </Button>
         </div>
       </div>
     </Header>

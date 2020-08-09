@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./styles.scss";
 import Label from "./Label/Label";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { changeDate } from "../../actions/actionCreator";
 import { connect } from "react-redux";
 
+import { AuthContext } from "../../context/AuthContext";
 import {
   faUserCog,
   faChartPie,
@@ -19,8 +20,17 @@ import {
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const auth = useContext(AuthContext);
+
   return (
     <div className="Home">
+      <button
+        onClick={() => {
+          auth.logOut();
+        }}
+      >
+        logOut
+      </button>
       <Label title="Beauty Slon" addClass={["Home__Label"]} />
       <nav>
         <ul>
