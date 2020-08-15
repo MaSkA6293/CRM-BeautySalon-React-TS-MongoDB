@@ -27,7 +27,7 @@ import { httpRequest } from "../utils/network";
 export const getClients = () => {
   return (dispatch: Dispatch) => {
     dispatch({ type: CLIENTS_REQUEST });
-    httpRequest("clients", "GET")
+    httpRequest("api/client", "GET")
       .then((res: any) => {
         if (res.data.status === "OK") {
           setTimeout(() => {

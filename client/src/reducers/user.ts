@@ -9,6 +9,7 @@ import {
   USER_LOGIN_FAIL,
   CLEAR_LOGIN_FAIL,
   USER_LOGOOUT,
+  USER_READY,
 } from "../constants";
 
 const initialState: IstateUser = {
@@ -20,7 +21,8 @@ const initialState: IstateUser = {
   userIsLogined: false,
   userLoginIsFail: false,
   userLoginError: "",
-  userData: {},
+  userData: { token: "", id: "" },
+  userReady: false,
 };
 const stateUser = (
   state: IstateUser = initialState,
@@ -84,8 +86,10 @@ const stateUser = (
     case USER_LOGOOUT:
       return {
         ...state,
-        userData: {},
+        userData: { token: "", id: "" },
       };
+    case USER_READY:
+      return { ...state, userReady: action.payload };
     default:
       return state;
   }

@@ -8,6 +8,7 @@ import {
   USER_LOGIN_FAIL,
   CLEAR_LOGIN_FAIL,
   USER_LOGOOUT,
+  USER_READY,
 } from "../../constants";
 
 export interface IstateUser {
@@ -20,7 +21,8 @@ export interface IstateUser {
   userIsLogined: boolean;
   userLoginIsFail: boolean;
   userLoginError: string;
-  userData: object;
+  userData: { token: string; id: string };
+  userReady: boolean;
 }
 
 //  USER
@@ -60,6 +62,10 @@ interface ILoginUserFailClear {
 interface ILogoOut {
   type: typeof USER_LOGOOUT;
 }
+interface IUserReady {
+  type: typeof USER_READY;
+  payload: boolean;
+}
 
 export type UserActionTypes =
   | IUserRequestAction
@@ -70,7 +76,8 @@ export type UserActionTypes =
   | IUserLoginSuccess
   | ILoginUserFail
   | ILoginUserFailClear
-  | ILogoOut;
+  | ILogoOut
+  | IUserReady;
 
 // export interface IClient {
 //   _id: number;

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 
 import { registerHandler, sugnInHandler } from "./actions/actionUser";
@@ -7,9 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import cogoToast from "cogo-toast";
 import Spiner from "../../components/Spiner";
 import AuthForm from "./components/Authform";
-import { AuthContext } from "../../context/AuthContext";
 export const AuthPage = () => {
-  const auth = useContext(AuthContext);
   const {
     userIsLoading,
     userLoaded,
@@ -53,7 +51,7 @@ export const AuthPage = () => {
     dispatch(registerHandler(values));
   };
   const signIn = (values: any) => {
-    dispatch(sugnInHandler(values, auth.logIn));
+    dispatch(sugnInHandler(values));
   };
 
   return (

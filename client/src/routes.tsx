@@ -6,15 +6,11 @@ const Home = lazy(() => import("./components/Home"));
 const Clients = lazy(() => import("./pages/Clients"));
 const Services = lazy(() => import("./pages/Services"));
 
-// import Home from "./components/Home";
-// import Clients from "./pages/Clients";
-// import Services from "./pages/Services";
-
 export const useRoutes = (isAuthenticated: boolean) => {
   if (isAuthenticated) {
     return (
       <Switch>
-        <Route exact path="/Home">
+        <Route exact path="/">
           <Home />
         </Route>
         <Route path="/services">

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./styles.scss";
 import Spiner from "../Spiner";
@@ -6,9 +6,12 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { purple } from "@material-ui/core/colors";
 import { useRoutes } from "../../routes";
-import { useAuth } from "../../utils/useAuth.hook";
-//import { useSelector } from "react-redux";
-import { AuthContext } from "../../context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  authHandler,
+  userReady,
+} from "../../pages/AuthPage/actions/actionUser";
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -24,23 +27,34 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
-  // const { userData } = useSelector(({ user }) => {
-  //   return {
-  //     userData: user,
-  //   };
-  // });
-  const { logIn, logOut, token } = useAuth();
-  const isAuntenticated = !!token;
-  const routes = useRoutes(isAuntenticated);
+  const dispatch = useDispatch();
+  const { userIsLogined, checkUser } = useSelector(({ user }) => {
+    return {
+      userIsLogined: user.userIsLogined,
+      checkUser: user.userReady,
+    };
+  });
+  useEffect(() => {
+    dispatch(userReady(false));
+    const data = JSON.parse(localStorage.getItem("userData") || "[]");
+    if (data && data.token) {
+      dispatch(authHandler(data.token, data.id));
+    } else {
+      dispatch(userReady(true));
+    }
+  }, [dispatch]);
+
+  const routes = useRoutes(userIsLogined);
+  if (!checkUser) {
+    return <Spiner />;
+  }
   return (
     <div className="App">
-      <AuthContext.Provider value={{ token, logIn, logOut, isAuntenticated }}>
-        <Router>
-          <Suspense fallback={<Spiner />}>
-            <ThemeProvider theme={theme}>{routes}</ThemeProvider>
-          </Suspense>
-        </Router>
-      </AuthContext.Provider>
+      <Router>
+        <Suspense fallback={<Spiner />}>
+          <ThemeProvider theme={theme}>{routes}</ThemeProvider>
+        </Suspense>
+      </Router>
     </div>
   );
 };

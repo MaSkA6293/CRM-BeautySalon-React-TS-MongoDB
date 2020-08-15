@@ -5,8 +5,6 @@ const mongoose = require("mongoose");
 const config = require("config");
 const compression = require("compression");
 
-const ClientController = require("./controllers/ClientController");
-
 const ColorController = require("./controllers/ColorController");
 
 const TaskController = require("./controllers/TaskController");
@@ -14,6 +12,7 @@ const TaskController = require("./controllers/TaskController");
 const ListController = require("./controllers/ListsController");
 
 const routes = require("./routes/auth.routes");
+const clientRoutes = require("./routes/client.routes");
 
 const app = express();
 app.use(compression());
@@ -54,13 +53,8 @@ async function start() {
 }
 
 start();
-
 app.use("/api/auth", routes);
-
-app.get("/clients", ClientController.read);
-app.post("/clients", ClientController.create);
-app.delete("/clients/:id", ClientController.delete);
-app.put("/clients/:id", ClientController.update);
+app.use("/api/client", clientRoutes);
 
 app.post("/colors", ColorController.create);
 app.get("/colors", ColorController.read);

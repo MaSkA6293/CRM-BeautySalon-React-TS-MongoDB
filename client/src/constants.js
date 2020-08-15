@@ -55,3 +55,5 @@ export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
 export const CLEAR_LOGIN_FAIL = "CLEAR_LOGIN_FAIL";
 
 export const USER_LOGOOUT = "USER_LOGOOUT";
+
+export const USER_READY = "USER_READY";

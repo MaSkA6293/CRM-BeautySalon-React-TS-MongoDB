@@ -14,7 +14,6 @@ const AddClientSchema = Yup.object().shape({
     .min(6, "Минимум 6 символов")
     .required("Обязательное поле"),
 });
-
 type AuthFormProps = {
   userIsLoading: boolean;
   userIsLogining: boolean;
@@ -87,6 +86,7 @@ const AuthForm = ({
             >
               Войти
             </Button>
+
             <Button
               variant="contained"
               type="submit"

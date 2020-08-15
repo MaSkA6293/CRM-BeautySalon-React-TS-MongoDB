@@ -10,6 +10,7 @@
 # testing
 /coverage
 
+/learnJestEnzime
 # production
 /build
 # misc
