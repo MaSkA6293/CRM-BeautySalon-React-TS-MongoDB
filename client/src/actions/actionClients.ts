@@ -29,21 +29,19 @@ export const getClients = () => {
     dispatch({ type: CLIENTS_REQUEST });
     httpRequest("api/client", "GET")
       .then((res: any) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           setTimeout(() => {
             dispatch({
               type: CLIENTS_REQUEST_SUCCESS,
-              payload: res.data.result,
+              payload: res.data,
             });
           }, 1000);
-        } else {
-          throw new Error(res.data.error);
         }
       })
-      .catch((err: Error) => {
+      .catch((err) => {
         dispatch({
           type: CLIENTS_REQUEST_FAIL,
-          payload: { message: err.message },
+          payload: { message: err.response.data.message },
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_REQUEST_FAIL });
@@ -55,13 +53,13 @@ export const getClients = () => {
 export const editClient = (data: IClient, callback: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: EDIT_CLIENT_REQUEST });
-    httpRequest(`clients/${data._id}`, "PUT", data)
+    httpRequest(`api/client/${data._id}`, "PUT", data)
       .then((res) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           setTimeout(() => {
             dispatch({
               type: EDIT_CLIENT,
-              payload: { data: res.data.data },
+              payload: { data: res.data },
             });
             setTimeout(() => {
               dispatch({ type: EDIT_CLIENT_SUCCESS });
@@ -89,9 +87,9 @@ export const deletClient = (_id: number, callback: () => void) => {
       type: DELET_CLIENT_REQUEST,
     });
 
-    httpRequest(`clients/${_id}`, "DELETE")
+    httpRequest(`api/client/${_id}`, "DELETE")
       .then((res) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           setTimeout(() => {
             dispatch({
               type: DELET_CLIENT,
@@ -131,22 +129,23 @@ export const addClient = (
       type: ADD_CLIENT_REQUEST,
     });
 
-    httpRequest("clients", "POST", data)
+    httpRequest("api/client", "POST", data)
       .then((res: any) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           setTimeout(() => {
-            dispatch({ type: ADD_CLIENT, payload: res.data.data });
+            dispatch({ type: ADD_CLIENT, payload: res.data });
             setTimeout(() => {
               dispatch({ type: ADD_CLIENT_SUCCESS });
               callback();
             }, 2000);
           }, 2000);
-        } else {
-          throw new Error(res.data.error);
         }
       })
-      .catch((err: Error) => {
-        dispatch({ type: CLIENT_ADD_FAIL, payload: { message: err.message } });
+      .catch((err) => {
+        dispatch({
+          type: CLIENT_ADD_FAIL,
+          payload: { message: err.response.data.message },
+        });
         setTimeout(() => {
           dispatch({ type: CLEAR_ERROR_CLIENT_ADD_FAIL });
         }, 2000);

@@ -4,6 +4,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
 const compression = require("compression");
+const morgan = require("morgan");
+const passport = require("passport");
 
 const ColorController = require("./controllers/ColorController");
 
@@ -11,11 +13,15 @@ const TaskController = require("./controllers/TaskController");
 
 const ListController = require("./controllers/ListsController");
 
-const routes = require("./routes/auth.routes");
+const authRoutes = require("./routes/auth.routes");
 const clientRoutes = require("./routes/client.routes");
+const colorRoutes = require("./routes/color.routes");
 
 const app = express();
+app.use(morgan("tiny"));
 app.use(compression());
+app.use(passport.initialize());
+require("./middleware/passport/passport")(passport);
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -53,11 +59,9 @@ async function start() {
 }
 
 start();
-app.use("/api/auth", routes);
+app.use("/api/auth", authRoutes);
 app.use("/api/client", clientRoutes);
-
-app.post("/colors", ColorController.create);
-app.get("/colors", ColorController.read);
+app.use("/api/color", colorRoutes);
 
 app.post("/tasks", TaskController.create);
 app.get("/tasks", TaskController.read);

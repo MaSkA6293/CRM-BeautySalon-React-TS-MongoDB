@@ -16,23 +16,20 @@ import { httpRequest } from "../../../utils/network";
 export const registerHandler = (data: { email: string; password: string }) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: USER_REQUEST });
-    console.log(data);
     httpRequest("api/auth/register", "POST", { ...data })
       .then((res: any) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           setTimeout(() => {
             dispatch({
               type: USER_REQUEST_SUCCESS,
             });
           }, 2000);
-        } else {
-          throw new Error(res.data.errorMessage || "Что-то пошло не так");
         }
       })
       .catch((e) => {
         dispatch({
           type: USER_REQUEST_FAIL,
-          payload: { message: e.message },
+          payload: { message: e.response.data.message },
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_USER_REQUEST_FAIL });
@@ -46,7 +43,8 @@ export const sugnInHandler = (data: { email: string; password: string }) => {
     dispatch({ type: USER_LOGIN_REQUEST });
     httpRequest("api/auth/login", "POST", { ...data })
       .then((res: any) => {
-        if (res.data.status === "OK") {
+        console.log(res);
+        if (res.statusText === "OK") {
           setTimeout(() => {
             const { token, userId } = res.data;
             dispatch({
@@ -58,14 +56,12 @@ export const sugnInHandler = (data: { email: string; password: string }) => {
               JSON.stringify({ token, id: userId })
             );
           }, 2000);
-        } else {
-          throw new Error(res.data.errorMessage || "Что-то пошло не так");
         }
       })
-      .catch((e) => {
+      .catch((error) => {
         dispatch({
           type: USER_LOGIN_FAIL,
-          payload: { message: e.message },
+          payload: { message: error.response.data.message },
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_LOGIN_FAIL });

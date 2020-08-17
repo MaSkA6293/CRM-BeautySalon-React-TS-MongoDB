@@ -21,7 +21,7 @@ export const httpRequest = (
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
-    Authorization: `Bearer ${getToken()}`,
+    Authorization: `${getToken()}`,
   };
 
   return axios({

@@ -53,7 +53,6 @@ export const AuthPage = () => {
   const signIn = (values: any) => {
     dispatch(sugnInHandler(values));
   };
-
   return (
     <div className="contaner">
       <div className="Auth">
