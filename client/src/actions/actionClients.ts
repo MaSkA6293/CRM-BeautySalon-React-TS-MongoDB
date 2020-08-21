@@ -35,7 +35,7 @@ export const getClients = () => {
               type: CLIENTS_REQUEST_SUCCESS,
               payload: res.data,
             });
-          }, 1000);
+          }, 100);
         }
       })
       .catch((err) => {

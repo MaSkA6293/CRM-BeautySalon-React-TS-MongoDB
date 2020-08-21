@@ -8,6 +8,9 @@ import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { IClientValues } from "../../../../types/typesClients";
 
+import RecentActorsIcon from "@material-ui/icons/RecentActors";
+import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
+
 import IconButton from "@material-ui/core/IconButton";
 const initialValues: IClientValues = {
   name: "",
@@ -60,34 +63,86 @@ const FormicAddClient = ({
           <Form className="Form">
             <IconButton onClick={closeModal} className="Form__close">
               <CloseIcon fontSize="small" />
-            </IconButton>
-            <Field
-              as={TextField}
-              label="Имя"
-              type="name"
-              name="name"
-              fullWidth
-              error={errors.name ? true : false}
-              autoComplete="false"
-              className="Form__item"
-            />
-            <FormHelperText id="component-error-text">
-              {errors.name}
-            </FormHelperText>
-            <Field
-              as={TextField}
-              label="Фамилия"
-              type="female"
-              name="female"
-              fullWidth
-              error={errors.female ? true : false}
-              autoComplete="false"
-              className="Form__item"
-            />
-            <FormHelperText id="component-error-text">
-              {errors.female}
-            </FormHelperText>
-            <Field
+            </IconButton>{" "}
+            <div className="Form__field field">
+              <div className="field__row">
+                <div className="field__icon">
+                  {" "}
+                  <RecentActorsIcon />{" "}
+                </div>
+                <div className="field__body">
+                  <Field
+                    as={TextField}
+                    label="Имя"
+                    type="name"
+                    name="name"
+                    fullWidth
+                    error={errors.name ? true : false}
+                    autoComplete="false"
+                    className="Form__item"
+                  />
+                </div>
+              </div>
+              <div className="field__error">
+                <FormHelperText id="component-error-text">
+                  {errors.name}
+                </FormHelperText>
+              </div>
+            </div>
+            <div className="Form__field field">
+              <div className="field__row">
+                <div className="field__icon">
+                  {" "}
+                  <RecentActorsIcon />{" "}
+                </div>
+                <div className="field__body">
+                  <Field
+                    as={TextField}
+                    label="Фамилия"
+                    type="female"
+                    name="female"
+                    fullWidth
+                    error={errors.female ? true : false}
+                    autoComplete="false"
+                    className="Form__item"
+                  />
+                </div>
+              </div>
+              <div className="field__error">
+                <FormHelperText id="component-error-text">
+                  {errors.female}
+                </FormHelperText>
+              </div>
+            </div>
+            <div className="Form__field field">
+              <div className="field__row">
+                <div className="field__icon">
+                  {" "}
+                  <PermPhoneMsgIcon />{" "}
+                </div>
+                <div className="field__body">
+                  <Field
+                    as={TextField}
+                    label="Телефон"
+                    type="phone"
+                    name="phone"
+                    fullWidth
+                    InputProps={{
+                      inputComponent: PhoneInput as any,
+                    }}
+                    error={errors.phone ? true : false}
+                    autoComplete="false"
+                    className="Form__item"
+                  />{" "}
+                </div>
+              </div>
+              <div className="field__error">
+                <FormHelperText id="component-error-text">
+                  {errors.phone}
+                </FormHelperText>
+              </div>
+            </div>
+            {/* <Field
               as={TextField}
               label="Телефон"
               type="phone"
@@ -102,7 +157,7 @@ const FormicAddClient = ({
             />{" "}
             <FormHelperText id="component-error-text">
               {errors.phone}
-            </FormHelperText>
+            </FormHelperText> */}
             <Button
               variant="contained"
               color="primary"

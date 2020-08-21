@@ -48,7 +48,7 @@ interface IUserLoginRequest {
 
 interface IUserLoginSuccess {
   type: typeof USER_LOGIN_SUCCESS;
-  payload: { token: string; id: string };
+  payload: { token: string; id: string; refresh_token: string };
 }
 
 interface ILoginUserFail {

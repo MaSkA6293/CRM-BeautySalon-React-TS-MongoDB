@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`all tests Home Home component should render Home component 1`] = `
+<Fragment>
+  <WithStyles(CssBaseline) />
+  <WithStyles(ForwardRef(AppBar))
+    className="header"
+    position="fixed"
+  >
+    <WithStyles(ForwardRef(Toolbar)) />
+  </WithStyles(ForwardRef(AppBar))>
+  <WithStyles(ForwardRef(Toolbar))
+    id="back-to-top-anchor"
+  />
+  <ScrollTop>
+    <WithStyles(ForwardRef(Fab))
+      aria-label="scroll back to top"
+      color="secondary"
+      size="small"
+    >
+      <KeyboardArrowUpIcon />
+    </WithStyles(ForwardRef(Fab))>
+  </ScrollTop>
+  <div
+    className="makeStyles-offset-2 header__back"
+  />
+</Fragment>
+`;

@@ -1,22 +1,22 @@
 import axios from "axios";
 //config
 import * as config from "../config";
-
-export const httpRequest = (
+const getToken = () => {
+  const userData = localStorage.getItem("userData");
+  if (userData) {
+    const { token } = JSON.parse(userData);
+    if (token) {
+      return token;
+    } else return undefined;
+  }
+  return undefined;
+};
+export const httpRequest = async (
   url: string,
   method: "GET" | "POST" | "DELETE" | "PUT",
   data?: any
 ) => {
-  const getToken = () => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      const { token } = JSON.parse(userData);
-      if (token) {
-        return token;
-      } else return undefined;
-    }
-    return undefined;
-  };
+  await refreshToken();
 
   const headers = {
     Accept: "application/json",
@@ -32,15 +32,44 @@ export const httpRequest = (
   });
 };
 
-export const checkResponse = (response: IResponse) => {
-  if (response.status === 200) {
-    return true;
+const refreshToken = async () => {
+  const userData = localStorage.getItem("userData")
+    ? await JSON.parse(localStorage.getItem("userData") || "")
+    : null;
+
+  if (userData && userData.expires_in - Date.now() < 2 * 60 * 1000) {
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    const data = {
+      refresh_token: userData.refresh_token,
+      id: userData.id,
+    };
+
+    return await axios({
+      url: `${config.API_ROOT}/api/auth/refresh`,
+      method: "POST",
+      data: data,
+      headers,
+    })
+      .then((result) => {
+        const { token, userId, refresh_token } = result.data;
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            token,
+            refresh_token,
+            id: userId,
+            expires_in: Date.now() + 10 * 60 * 1000,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.response);
+        localStorage.removeItem("userData");
+        window.location.reload(true);
+      });
   }
-
-  throw new Error(response.statusText);
 };
-
-interface IResponse {
-  status: number;
-  statusText: string;
-}

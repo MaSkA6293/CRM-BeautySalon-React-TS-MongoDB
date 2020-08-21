@@ -37,7 +37,31 @@
       margin: 20px 0 0;
     }
     &__item {
-      margin: 5px 0 10px;
+      margin: 5px;
+    }
+    &__field {
+      display: flex;
+      flex-direction: column;
+      .field {
+        &__row {
+          display: flex;
+        }
+        &__icon {
+          display: flex;
+          align-items: center;
+
+          padding-top: 20px;
+        }
+        &__error {
+          margin-left: 50px;
+        }
+        &__body {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-left: 15px;
+        }
+      }
     }
   }
 }

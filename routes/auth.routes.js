@@ -24,4 +24,6 @@ router.post(
   controller.login
 );
 
+router.post("/refresh", controller.refresh);
+
 module.exports = router;

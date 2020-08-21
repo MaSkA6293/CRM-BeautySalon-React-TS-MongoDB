@@ -43,25 +43,33 @@ export const sugnInHandler = (data: { email: string; password: string }) => {
     dispatch({ type: USER_LOGIN_REQUEST });
     httpRequest("api/auth/login", "POST", { ...data })
       .then((res: any) => {
-        console.log(res);
         if (res.statusText === "OK") {
           setTimeout(() => {
-            const { token, userId } = res.data;
+            const { token, refresh_token, userId } = res.data;
             dispatch({
               type: USER_LOGIN_SUCCESS,
-              payload: { token, userId },
+              payload: { token, refresh_token, userId },
             });
             localStorage.setItem(
               "userData",
-              JSON.stringify({ token, id: userId })
+              JSON.stringify({
+                token,
+                refresh_token,
+                id: userId,
+                expires_in: Date.now() + 10 * 1000,
+              })
             );
-          }, 2000);
+          }, 1000);
         }
       })
       .catch((error) => {
         dispatch({
           type: USER_LOGIN_FAIL,
-          payload: { message: error.response.data.message },
+          payload: {
+            message: error.response.data.message
+              ? error.response.data.message
+              : "Что-то пошло не так, попробуйте снова",
+          },
         });
         setTimeout(() => {
           dispatch({ type: CLEAR_LOGIN_FAIL });

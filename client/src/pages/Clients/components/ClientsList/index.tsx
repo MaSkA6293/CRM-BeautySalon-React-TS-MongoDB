@@ -19,21 +19,18 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
     {
       label: "Отправить всем SMS",
       function: (id: number, cb: () => void) => {
-        console.log(id);
         cb();
       },
     },
     {
       label: "Отправить всем email",
       function: (id: number, cb: () => void) => {
-        console.log(id);
         cb();
       },
     },
     {
       label: "Редактировать клиента",
       function: (id: number, cb: () => void) => {
-        console.log(id);
         cb();
         edit(id);
       },

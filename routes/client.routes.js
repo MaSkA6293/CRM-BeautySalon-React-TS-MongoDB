@@ -6,24 +6,32 @@ const passport = require("passport");
 
 router.get(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", {
+    session: false,
+  }),
   ClientController.allClients
 );
 router.post(
   "/",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", {
+    session: false,
+  }),
   ClientController.add
 );
 
 router.delete(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", {
+    session: false,
+  }),
   ClientController.delet
 );
 
 router.put(
   "/:id",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", {
+    session: false,
+  }),
   ClientController.update
 );
 
