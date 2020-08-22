@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Test from "./components/Test";
 import { AuthPage } from "./pages/AuthPage";
-const Home = lazy(() => import("./components/Home"));
+const Home = lazy(() => import("./pages/HomePage"));
 const Clients = lazy(() => import("./pages/Clients"));
 const Services = lazy(() => import("./pages/Services"));
 

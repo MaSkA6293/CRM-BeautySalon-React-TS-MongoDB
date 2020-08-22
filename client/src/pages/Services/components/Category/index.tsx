@@ -6,7 +6,7 @@ import ModalAddNewCategory from "../FormAddNewCategory";
 type CategoryListProps = {};
 
 const CategoryList = () => {
-  const [isOpenAddCategory, setIsOpenAddCategory] = useState(true);
+  const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
   return (
     <div className="CategoryList">
       dsfsdfsd

@@ -26,40 +26,37 @@ const useStyles = makeStyles({
 });
 
 type ServicesHeaderProps = {
-  services?: any;
-  openAddCategory: any;
+  openAddCategory: (value: boolean) => void;
 };
 
-const CategoryHeader = ({ services, openAddCategory }: ServicesHeaderProps) => {
+const CategoryHeader = ({ openAddCategory }: ServicesHeaderProps) => {
   const classes = useStyles();
   let history = useHistory();
   const handlerClickGoHome = () => {
-    history.push("/");
+    history.push("/services");
   };
 
   return (
-    <>
-      <Header>
-        <div className="CategoryHeader">
+    <Header>
+      <div className="CategoryHeader">
+        <Button className={classes.button}>
+          <CustomIcon
+            addClass={["CategoryHeader__arrowBack"]}
+            click={() => handlerClickGoHome()}
+            icon={faArrowLeft}
+          />
+        </Button>
+        <div className="CategoryHeader__title">Категории услуг</div>
+        <div
+          className="CategoryHeader__add"
+          onClick={() => openAddCategory(true)}
+        >
           <Button className={classes.button}>
-            <CustomIcon
-              addClass={["CategoryHeader__arrowBack"]}
-              click={() => handlerClickGoHome()}
-              icon={faArrowLeft}
-            />
+            <PlaylistAddIcon />
           </Button>
-          <div className="CategoryHeader__title">Категории услуг</div>
-          <div
-            className="CategoryHeader__add"
-            onClick={() => openAddCategory(true)}
-          >
-            <Button className={classes.button}>
-              <PlaylistAddIcon />
-            </Button>
-          </div>
         </div>
-      </Header>
-    </>
+      </div>
+    </Header>
   );
 };
 

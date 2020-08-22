@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`all tests Label Label component should render Label component 1`] = `
+<div
+  className="Label"
+>
+  <h1 />
+</div>
+`;

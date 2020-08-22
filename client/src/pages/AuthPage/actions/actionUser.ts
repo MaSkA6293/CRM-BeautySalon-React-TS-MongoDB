@@ -23,7 +23,7 @@ export const registerHandler = (data: { email: string; password: string }) => {
             dispatch({
               type: USER_REQUEST_SUCCESS,
             });
-          }, 2000);
+          }, 100);
         }
       })
       .catch((e) => {
@@ -59,7 +59,7 @@ export const sugnInHandler = (data: { email: string; password: string }) => {
                 expires_in: Date.now() + 10 * 1000,
               })
             );
-          }, 1000);
+          }, 100);
         }
       })
       .catch((error) => {
@@ -94,7 +94,7 @@ export const authHandler = (token: string, id: string) => {
         payload: { token, id },
       });
       dispatch(userReady(true));
-    }, 3000);
+    }, 100);
   };
 };
 
