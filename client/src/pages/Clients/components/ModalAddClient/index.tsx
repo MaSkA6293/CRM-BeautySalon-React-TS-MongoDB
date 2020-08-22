@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./styles.scss";
 import Modal from "react-modal";
@@ -45,12 +45,16 @@ export const ModalAddClient = ({
     );
   };
 
-  if (clientIsAdded) {
-    cogoToast.success(<div className="message">Клиент успешно добавлен</div>);
-  }
-  if (clientAddError) {
-    cogoToast.error(<div className="message">{clientAddError}</div>);
-  }
+  useEffect(() => {
+    clientIsAdded &&
+      cogoToast.success(<div className="message">Клиент успешно добавлен</div>);
+  }, [clientIsAdded]);
+
+  useEffect(() => {
+    clientAddError &&
+      cogoToast.error(<div className="message">{clientAddError}</div>);
+  }, [clientAddError]);
+
   return (
     <div>
       <Modal

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import Modal from "react-modal";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
@@ -65,20 +65,27 @@ export const FormEditClient = ({
       deletClient(id, closeModal);
     }
   };
-  if (clientDeleted) {
-    cogoToast.success(<div className="message"> Клиент успешно удален</div>);
-  }
-  if (clientDeletError) {
-    cogoToast.error(<div className="message">{clientDeletError}</div>);
-  }
-  if (clientEdited) {
-    cogoToast.success(
-      <div className="message"> Данные клиента успешно изменены</div>
-    );
-  }
-  if (clientEditError) {
-    cogoToast.error(<div className="message"> {clientEditError}</div>);
-  }
+
+  useEffect(() => {
+    clientDeleted &&
+      cogoToast.success(<div className="message"> Клиент успешно удален</div>);
+  }, [clientDeleted]);
+
+  useEffect(() => {
+    clientDeletError &&
+      cogoToast.error(<div className="message">{clientDeletError}</div>);
+  }, [clientDeletError]);
+  useEffect(() => {
+    clientEdited &&
+      cogoToast.success(
+        <div className="message"> Данные клиента успешно изменены</div>
+      );
+  }, [clientEdited]);
+
+  useEffect(() => {
+    clientEditError &&
+      cogoToast.error(<div className="message"> {clientEditError}</div>);
+  }, [clientEditError]);
 
   return (
     <div>

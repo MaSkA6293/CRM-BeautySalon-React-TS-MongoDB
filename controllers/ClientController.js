@@ -4,8 +4,17 @@ const ColorsModels = require("../models/Color");
 
 module.exports.allClients = async (req, res) => {
   try {
-    const clients = await ClientModel.find();
-    res.status(200).json(clients);
+    const clients = await ClientModel.find({ userId: req.user._id });
+    const userData = clients.map((item) => {
+      return {
+        _id: item._id,
+        name: item.name,
+        female: item.female,
+        phone: item.phone,
+        color: item.color,
+      };
+    });
+    res.status(200).json(userData);
   } catch (e) {
     res.status(500).send({
       message: ERROR_MESSAGE_STATUS_500,
@@ -22,6 +31,7 @@ module.exports.add = async (req, res) => {
       female: req.body.female,
       phone: req.body.phone,
       color: colors[randomColorId].hex,
+      userId: req.user._id,
     });
     const result = await client.save();
     res.status(200).json(result);
@@ -51,8 +61,18 @@ module.exports.update = async (req, res) => {
   try {
     const query = { _id: req.params.id };
     const update = req.body;
-    const newWrite = await ClientModel.findOneAndUpdate(query, update);
-    res.status(200).json({ newWrite });
+    const newWrite = await ClientModel.findOneAndUpdate(query, update, {
+      new: true,
+    });
+
+    const userData = {
+      _id: newWrite._id,
+      name: newWrite.name,
+      female: newWrite.female,
+      phone: newWrite.phone,
+      color: newWrite.color,
+    };
+    res.status(200).json(userData);
   } catch (e) {
     res.send({ error: ERROR_MESSAGE_STATUS_500 });
   }
