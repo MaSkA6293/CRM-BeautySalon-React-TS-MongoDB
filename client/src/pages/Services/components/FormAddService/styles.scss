@@ -1,0 +1,64 @@
+.Form {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  &__close {
+    margin: 5px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+  &__submit {
+    margin: 20px 0 0;
+  }
+  &__item {
+    margin: 5px;
+  }
+  &__field {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+    width: 100%;
+    .field {
+      &__row {
+        display: flex;
+      }
+      &__icon {
+        display: flex;
+        align-items: center;
+
+        padding-top: 20px;
+      }
+      &__error {
+        margin-left: 50px;
+        min-height: 25px;
+      }
+      &__body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-left: 15px;
+      }
+    }
+  }
+  .selectColor {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    &__selected {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: red;
+      margin-right: 5px;
+    }
+    &__button {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}

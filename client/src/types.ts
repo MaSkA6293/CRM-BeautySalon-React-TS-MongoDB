@@ -6,7 +6,6 @@ import {
   CREATE_NEW_RECORD,
   EDIT_RECORD,
   DELET_RECORD,
-  CREATE_NEW_SERVICE,
 } from "./constants";
 
 export interface IstateRecords {
@@ -22,18 +21,18 @@ export interface IRecord {
   color: number;
 }
 
-export interface IColor {
-  id: number;
-  hex: string;
-}
+// export interface IColor {
+//   id: number;
+//   hex: string;
+// }
 export interface IstateApp {
   date: Date;
   workTime: string[];
 }
 
-export interface IstateColors {
-  colors: IColor[];
-}
+// export interface IstateColors {
+//   colors: IColor[];
+// }
 
 // Actions
 

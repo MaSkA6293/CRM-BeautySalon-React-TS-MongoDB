@@ -10,7 +10,8 @@ import avatarDefault from "../../../assets/avatar/default-avatar.png";
 
 import { formatDateToSave } from "../../../functions";
 
-import { IRecord, IColor } from "../../../types";
+import { IRecord } from "../../../types";
+import { IColor } from "../../../types/typesColors";
 import { IClient } from "../../../types/typesClients";
 import {
   createNewRecord,

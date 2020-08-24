@@ -1,0 +1,11 @@
+.SelectColor {
+  display: flex;
+  flex-wrap: wrap;
+  width: 260px;
+  &__item {
+    width: 55px;
+    height: 55px;
+    margin: 4px;
+    border-radius: 50%;
+  }
+}

@@ -9,9 +9,9 @@ module.exports.create = async (req, res) => {
       hex: req.body.hex,
     });
     await color.save();
-    res.status(200).send("success");
+    res.status(200).json("success");
   } catch (e) {
-    res.status(500).send({
+    res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
   }
@@ -20,9 +20,9 @@ module.exports.create = async (req, res) => {
 module.exports.read = async (req, res) => {
   try {
     const colors = await ColorsModels.find();
-    res.json(colors);
+    res.status(200).json(colors);
   } catch (e) {
-    res.status(500).send({
+    res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
   }

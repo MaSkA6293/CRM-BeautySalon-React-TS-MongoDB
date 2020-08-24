@@ -1,7 +1,8 @@
 import { combineReducers } from "redux";
-import { IstateRecords, IstateApp, IstateColors } from "../types";
+import { IstateRecords, IstateApp } from "../types";
 import { IstateService } from "../pages/Services/types";
 import { IstateClients } from "../types/typesClients";
+import { IstateColors } from "../types/typesColors";
 import { IstateUser } from "../pages/AuthPage/types";
 import app from "./app";
 import clients from "./clients";

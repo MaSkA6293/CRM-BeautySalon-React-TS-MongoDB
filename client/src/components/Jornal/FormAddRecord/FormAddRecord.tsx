@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 import Marker from "../Marker/Marker";
-import { IColor, IRecord } from "../../../types";
+import { IRecord } from "../../../types";
+import { IColor } from "../../../types/typesColors";
 import { IClient } from "../../../types/typesClients";
 import { formatDateToSave } from "../../../functions";
 

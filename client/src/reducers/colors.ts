@@ -1,40 +1,50 @@
-import { IstateColors } from "../types";
+import {
+  COLORS_REQUEST,
+  COLORS_REQUEST_SUCCESS,
+  COLORS_REQUEST_FAIL,
+  CLEAR_ERROR_REQUEST_COLORS_FAIL,
+} from "../constants";
+import { IstateColors } from "../types/typesColors";
 
 const initialState: IstateColors = {
-  colors: [
-    {
-      id: 1,
-      hex: "rgb(0, 171, 214)",
-    },
-    {
-      id: 2,
-      hex: "rgb(255, 173, 20)",
-    },
-    {
-      id: 3,
-      hex: "rgba(255, 39, 93)",
-    },
-    {
-      id: 4,
-      hex: "rgba(60, 95, 226)",
-    },
-    {
-      id: 5,
-      hex: "rgb(0, 255, 37)",
-    },
-    {
-      id: 6,
-      hex: "rgba(195, 85, 245)",
-    },
-    {
-      id: 7,
-      hex: "rgba(255, 100, 100)",
-    },
-  ],
+  colorsLoaded: false,
+  colorsIsLoading: false,
+  colorsGetIsFail: false,
+  colorsGetError: "",
+  colorsList: [],
 };
 
 const stateColors = (state: IstateColors = initialState, action: any) => {
   switch (action.type) {
+    case COLORS_REQUEST:
+      return {
+        ...state,
+        colorsIsLoading: true,
+        colorsLoaded: false,
+        colorsList: [],
+      };
+    case COLORS_REQUEST_SUCCESS:
+      return {
+        ...state,
+        colorsIsLoading: false,
+        colorsLoaded: true,
+        colorsList: action.payload,
+      };
+    case COLORS_REQUEST_FAIL:
+      return {
+        ...state,
+        colorsIsLoading: false,
+        colorsGetIsFail: true,
+        colorsGetError: action.payload.message,
+      };
+
+    case CLEAR_ERROR_REQUEST_COLORS_FAIL:
+      return {
+        ...state,
+        colorsGetIsFail: false,
+        colorsGetError: "",
+      };
+
     default:
       return state;
   }

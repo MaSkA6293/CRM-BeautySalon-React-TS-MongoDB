@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type IconAddProps = {
   addClass: string[];
-  click: () => void;
+  click?: () => void;
   icon: any;
 };
 const CustomIcon = ({ addClass, click, icon }: IconAddProps) => {
