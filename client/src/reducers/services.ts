@@ -2,7 +2,7 @@ import { CREATE_NEW_SERVICE } from "../constants";
 import { IstateService } from "../pages/Services/types";
 import { ServiceActionTypes } from "../pages/Services/actions";
 
-const initialState: IstateService = {
+export const initialState: IstateService = {
   categoryIsAdded: false,
   categoryAddIsFail: false,
   categoryAdded: false,

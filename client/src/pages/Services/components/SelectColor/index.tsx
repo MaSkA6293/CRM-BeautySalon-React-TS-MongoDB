@@ -7,7 +7,7 @@ import "./styles.scss";
 type SimpleDialogProps = {
   open: boolean;
   onClose: any;
-  handleSelectColor: ({}: { color: string }) => void;
+  handleSelectColor: (color: string) => void;
   colors: IColor[];
 };
 
@@ -22,12 +22,13 @@ function SimpleDialog({
       <div className="SelectColor">
         {colors.map((color, index) => {
           return (
-            <div
-              key={index}
-              className="SelectColor__item"
-              style={{ backgroundColor: color.hex }}
-              onClick={() => handleSelectColor({ color: color.hex })}
-            ></div>
+            <div className="SelectColor__wraper" key={index}>
+              <div
+                className="SelectColor__item"
+                style={{ backgroundColor: color.hex }}
+                onClick={() => handleSelectColor(color.hex)}
+              ></div>
+            </div>
           );
         })}
       </div>
@@ -46,7 +47,8 @@ export default function SelectColor({
 }: SelectColorProps) {
   const [open, setOpen] = useState(false);
 
-  const handleSelectColor = ({ color }: { color: string }) => {
+  const handleSelectColor = (color: string) => {
+    console.log(color);
     setSelectedColor(color);
     setOpen(false);
   };
@@ -59,7 +61,7 @@ export default function SelectColor({
       <SimpleDialog
         open={open}
         onClose={() => setOpen(false)}
-        handleSelectColor={handleSelectColor}
+        handleSelectColor={(color: string) => handleSelectColor(color)}
         colors={colors}
       />
     </div>

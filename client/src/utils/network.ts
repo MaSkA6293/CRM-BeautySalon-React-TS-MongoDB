@@ -67,9 +67,17 @@ const refreshToken = async () => {
         );
       })
       .catch((err) => {
-        console.log(err.response);
+        check401(err);
         localStorage.removeItem("userData");
         window.location.reload(true);
       });
+  }
+};
+
+export const check401 = (err: { response: { status: number } }) => {
+  if (err.response.status === 401) {
+    localStorage.removeItem("userData");
+    document.location.reload();
+    return;
   }
 };

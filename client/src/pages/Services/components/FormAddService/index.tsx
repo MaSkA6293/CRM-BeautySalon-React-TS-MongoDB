@@ -31,7 +31,7 @@ const FormAddService = ({ handleClose }: any) => {
     };
   });
 
-  const [selectedColor, setSelectedColor] = useState({ color: "#4791db" });
+  const [selectedColor, setSelectedColor] = useState("#4791db");
 
   const handlerAddService = (values: any) => {
     console.log(values, selectedColor);
@@ -121,7 +121,7 @@ const FormAddService = ({ handleClose }: any) => {
               <div
                 className="selectColor__selected"
                 style={{
-                  backgroundColor: selectedColor.color,
+                  backgroundColor: selectedColor,
                 }}
               ></div>
               <div className="selectColor__button">

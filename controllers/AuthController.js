@@ -50,7 +50,7 @@ module.exports.login = async (req, res) => {
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.jwtSectet || config.get("jwtSecret"),
-      { expiresIn: 10 * 60 * 1000 }
+      { expiresIn: "10m" }
     );
     const refresh_token = jwt.sign(
       { userId: user.id, email: user.email, payload: token },
@@ -94,7 +94,7 @@ module.exports.refresh = async (req, res) => {
       const newToken = jwt.sign(
         { userId: user.id, email: user.email },
         process.env.jwtSecret || config.get("jwtSecret"),
-        { expiresIn: 10 * 60 * 1000 }
+        { expiresIn: "10m" }
       );
       const newRefresh_token = jwt.sign(
         { userId: user.id, email: user.email, payload: newToken },

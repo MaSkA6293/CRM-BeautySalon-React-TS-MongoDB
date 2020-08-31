@@ -28,18 +28,13 @@ export const addCategory = (
     httpRequest("servicess", "POST", data)
       .then((res: any) => {
         if (res.data.status === "OK") {
-          setTimeout(() => {
-            dispatch({ type: ADD_SERVICE_CATEGORY, payload: res.data.data });
-            setTimeout(() => {
-              dispatch({ type: ADD_SERVICE_CATEGORY_SUCCESS });
-              callback();
-            }, 2000);
-          }, 2000);
+          dispatch({ type: ADD_SERVICE_CATEGORY, payload: res.data.data });
+          dispatch({ type: ADD_SERVICE_CATEGORY_SUCCESS });
+          callback();
         } else {
           throw new Error(res.data.error);
         }
       })
-
       .catch((err: Error) => {
         dispatch({
           type: SERVICE_CATEGORY_ADD_FAIL,
@@ -58,12 +53,10 @@ export const getColors = () => {
     httpRequest("api/color", "GET")
       .then((res: any) => {
         if (res.statusText === "OK") {
-          setTimeout(() => {
-            dispatch({
-              type: COLORS_REQUEST_SUCCESS,
-              payload: res.data,
-            });
-          }, 100);
+          dispatch({
+            type: COLORS_REQUEST_SUCCESS,
+            payload: res.data,
+          });
         }
       })
       .catch((err) => {

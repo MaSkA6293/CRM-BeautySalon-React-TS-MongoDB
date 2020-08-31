@@ -38,7 +38,7 @@ const App = () => {
     dispatch(userReady(false));
     const data = JSON.parse(localStorage.getItem("userData") || "[]");
     if (data && data.token) {
-      dispatch(authHandler(data.token, data.id));
+      dispatch(authHandler(data.token, data.refresh_token, data.id));
     } else {
       dispatch(userReady(true));
     }

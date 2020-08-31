@@ -12,7 +12,7 @@ import {
   USER_READY,
 } from "../constants";
 
-const initialState: IstateUser = {
+export const initialState: IstateUser = {
   userLoaded: false,
   userIsLoading: false,
   userGetIsFail: false,

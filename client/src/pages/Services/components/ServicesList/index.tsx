@@ -8,10 +8,9 @@ import ServicesHeader from "../ServicesHeader";
 import { getColors } from "../../actions/actionsServices";
 const ServicesList = () => {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getColors());
-  }, []);
+  }, [dispatch]);
 
   const { services } = useSelector(({ services }: IGlobalStore) => {
     return {
