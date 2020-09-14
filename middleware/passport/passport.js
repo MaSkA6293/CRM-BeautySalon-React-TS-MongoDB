@@ -4,7 +4,7 @@ const config = require("config");
 const User = require("../../models/User");
 var opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.jwtSecret || config.get("jwtSecret");
+opts.secretOrKey = process.env.JWTSECRET || config.get("jwtSecret");
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, async (payload, done) => {

@@ -49,12 +49,12 @@ module.exports.login = async (req, res) => {
     }
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      process.env.jwtSectet || config.get("jwtSecret"),
+      process.env.JWTSECRET || config.get("jwtSecret"),
       { expiresIn: "10m" }
     );
     const refresh_token = jwt.sign(
       { userId: user.id, email: user.email, payload: token },
-      process.env.jwtRefresh || config.get("jwtRefresh"),
+      process.env.JWTREFRESH || config.get("jwtRefresh"),
       { expiresIn: "2 days" }
     );
     const update = { refresh_token: refresh_token };
@@ -78,7 +78,7 @@ module.exports.refresh = async (req, res) => {
     }
     const decoded = jwt.verify(
       refresh_token,
-      process.env.jwtRefresh || config.get("jwtRefresh"),
+      process.env.JWTREFRESH || config.get("jwtRefresh"),
       function (err, decoded) {
         if (err) {
           return false;
@@ -93,12 +93,12 @@ module.exports.refresh = async (req, res) => {
     if (user.refresh_token === refresh_token) {
       const newToken = jwt.sign(
         { userId: user.id, email: user.email },
-        process.env.jwtSecret || config.get("jwtSecret"),
+        process.env.JWTSECRET || config.get("jwtSecret"),
         { expiresIn: "10m" }
       );
       const newRefresh_token = jwt.sign(
         { userId: user.id, email: user.email, payload: newToken },
-        process.env.jwtRefresh || config.get("jwtRefresh"),
+        process.env.JWTREFRESH || config.get("jwtRefresh"),
         { expiresIn: "2 days" }
       );
       const update = { refresh_token: newRefresh_token };
