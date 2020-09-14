@@ -48,7 +48,6 @@ export default function SelectColor({
   const [open, setOpen] = useState(false);
 
   const handleSelectColor = (color: string) => {
-    console.log(color);
     setSelectedColor(color);
     setOpen(false);
   };
@@ -56,7 +55,7 @@ export default function SelectColor({
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
-        Выберите цвет
+        Цвет услуги
       </Button>
       <SimpleDialog
         open={open}

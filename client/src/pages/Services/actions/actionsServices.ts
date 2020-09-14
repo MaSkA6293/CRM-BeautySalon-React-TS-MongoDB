@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 
-import { httpRequest } from "../../../utils/network";
+import { httpRequest, check401 } from "../../../utils/network";
 import {
   ADD_SERVICE_CATEGORY_REQUEST,
   ADD_SERVICE_CATEGORY,
@@ -35,7 +35,8 @@ export const addCategory = (
           throw new Error(res.data.error);
         }
       })
-      .catch((err: Error) => {
+      .catch((err) => {
+        check401(err);
         dispatch({
           type: SERVICE_CATEGORY_ADD_FAIL,
           payload: { message: err.message },
@@ -60,6 +61,7 @@ export const getColors = () => {
         }
       })
       .catch((err) => {
+        check401(err);
         dispatch({
           type: COLORS_REQUEST_FAIL,
           payload: { message: err.response.data.message },

@@ -13,6 +13,7 @@ const ModalAddService = ({ open, handleClose }: ModalAddServiceProps) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <h2 className="Dialog__title">Добавить услугу</h2>
+
       <DialogContent>
         <FormAddService handleClose={handleClose} />
       </DialogContent>

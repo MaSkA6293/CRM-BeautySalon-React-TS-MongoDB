@@ -13,7 +13,16 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector } from "react-redux";
 
+import Select from "@material-ui/core/Select";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
 import SelectColor from "../SelectColor";
+
+import SettingsIcon from "@material-ui/icons/Settings";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const initialValues = {
   name: "",
@@ -33,9 +42,29 @@ const FormAddService = ({ handleClose }: any) => {
 
   const [selectedColor, setSelectedColor] = useState("#4791db");
 
+  const [personName, setPersonName] = React.useState<string[]>([]);
+
   const handlerAddService = (values: any) => {
-    console.log(values, selectedColor);
+    console.log(values, selectedColor, personName);
   };
+
+  const names = [
+    "Oliver Hansen",
+    "Van Henry",
+    "April Tucker",
+    "Ralph Hubbard",
+    "Omar Alexander",
+    "Carlos Abbott",
+    "Miriam Wagner",
+    "Bradley Wilkerson",
+    "Virginia Andrews",
+    "Kelly Snyder",
+  ];
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setPersonName(event.target.value as string[]);
+  };
+
   return (
     <>
       <Formik
@@ -71,7 +100,7 @@ const FormAddService = ({ handleClose }: any) => {
               </div>
             </div>
 
-            <div className="Form__field field">
+            <div className="Form__field field field-marginBottom ">
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
@@ -117,6 +146,41 @@ const FormAddService = ({ handleClose }: any) => {
                 </FormHelperText>
               </div>
             </div>
+
+            <div className="Form__field field">
+              <div className="field__row">
+                <div className="field__icon ">
+                  {" "}
+                  <SettingsIcon />{" "}
+                </div>
+                <div className="field__body  field__body-sizeSelect">
+                  <FormControl>
+                    <InputLabel id="demo-mutiple-checkbox-label">
+                      Категории
+                    </InputLabel>
+                    <Select
+                      labelId="demo-mutiple-checkbox-label"
+                      id="demo-mutiple-checkbox"
+                      multiple
+                      value={personName}
+                      onChange={handleChange}
+                      input={<Input />}
+                      renderValue={(selected: any) =>
+                        (selected as string[]).join(", ")
+                      }
+                    >
+                      {names.map((name) => (
+                        <MenuItem key={name} value={name}>
+                          <Checkbox checked={personName.indexOf(name) > -1} />
+                          <ListItemText primary={name} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+
             <div className="Form__selectColor selectColor">
               <div
                 className="selectColor__selected"

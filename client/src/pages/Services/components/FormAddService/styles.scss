@@ -4,6 +4,7 @@
   flex-direction: column;
   margin: auto;
   width: 100%;
+  min-width: 208px;
   &__close {
     margin: 5px;
     position: absolute;
@@ -16,37 +17,46 @@
   &__item {
     margin: 5px;
   }
+
   &__field {
     display: flex;
     flex-direction: column;
-    margin: 5px 0;
-    width: 100%;
+    flex: 1;
+    margin-bottom: 5px;
     .field {
       &__row {
         display: flex;
+        //   width: 200px;
       }
       &__icon {
         display: flex;
         align-items: center;
-
-        padding-top: 20px;
+        margin-top: 16px;
+        &:first-child {
+          justify-content: center;
+        }
       }
       &__error {
         margin-left: 50px;
-        min-height: 25px;
       }
       &__body {
         display: flex;
         flex-direction: column;
         width: 100%;
-        margin-left: 15px;
+        margin-left: 10px;
       }
     }
   }
+
+  .field__body-sizeSelect {
+    min-width: 185px;
+    //    padding-right: 20px;
+  }
+
   .selectColor {
     display: flex;
-    flex-direction: row !important;
     align-items: center;
+    margin: 10px 0px;
     &__selected {
       width: 30px;
       height: 30px;
@@ -61,4 +71,12 @@
       width: 100%;
     }
   }
+}
+
+@media screen and (min-width: 425px) {
+  .Form {
+    width: 270px;
+  }
+}
+@media screen and (min-width: 625px) {
 }
