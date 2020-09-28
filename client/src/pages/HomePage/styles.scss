@@ -1,9 +1,16 @@
 .Home {
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  border-radius: 10px 0 0 10px;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  border-radius: 0 10px 10px 0;
+  min-height: 100vh;
+  &__menu {
+    width: 100%;
+    min-width: 320px;
+  }
   &__NavItem {
+    min-width: 100%;
     padding: 5px;
     margin: 5px 0;
   }

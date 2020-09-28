@@ -16,6 +16,7 @@ export const AuthPage = () => {
     userIsLogining,
     userLoginIsFail,
     userLoginError,
+    userCreateSuccess,
   }: any = useSelector(({ user }: IGlobalStore) => {
     return {
       userIsLoading: user.userIsLoading,
@@ -25,6 +26,7 @@ export const AuthPage = () => {
       userIsLogining: user.userIsLogining,
       userLoginIsFail: user.userLoginIsFail,
       userLoginError: user.userLoginError,
+      userCreateSuccess: user.userCreateSuccess,
     };
   });
   useEffect(() => {
@@ -33,6 +35,10 @@ export const AuthPage = () => {
         <div className="message">Пользователь успешно создан</div>
       );
   }, [userLoaded]);
+  useEffect(() => {
+    userCreateSuccess &&
+      cogoToast.success(<div className="message">{userCreateSuccess}</div>);
+  }, [userCreateSuccess]);
 
   useEffect(() => {
     userGetIsFail &&

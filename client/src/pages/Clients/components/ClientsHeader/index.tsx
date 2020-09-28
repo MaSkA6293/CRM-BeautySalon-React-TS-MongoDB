@@ -5,6 +5,7 @@ import "./styles.scss";
 import Header from "../../../../components/Header";
 import { faUserPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
+import Typography from "@material-ui/core/Typography";
 import CustomIcon from "../../../../components/CustomIcon";
 
 type ClientHeaderProps = {
@@ -25,8 +26,13 @@ const ClientsHeader = ({ setAddIsOpen }: ClientHeaderProps) => {
           click={() => handlerClickGoHome()}
           icon={faArrowLeft}
         />
-
-        <div className="ClientsHeader__title">Клиенты</div>
+        <Typography
+          variant="h5"
+          component="h2"
+          className="ClientsHeader__title"
+        >
+          Клиенты
+        </Typography>
 
         <CustomIcon
           addClass={["ClientsHeader__addUser"]}

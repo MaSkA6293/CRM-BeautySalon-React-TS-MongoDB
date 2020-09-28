@@ -26,7 +26,7 @@ function SimpleDialog({
               <div
                 className="SelectColor__item"
                 style={{ backgroundColor: color.hex }}
-                onClick={() => handleSelectColor(color.hex)}
+                onClick={() => handleSelectColor(color._id.toString())}
               ></div>
             </div>
           );
@@ -47,8 +47,8 @@ export default function SelectColor({
 }: SelectColorProps) {
   const [open, setOpen] = useState(false);
 
-  const handleSelectColor = (color: string) => {
-    setSelectedColor(color);
+  const handleSelectColor = (_id: string) => {
+    setSelectedColor(_id);
     setOpen(false);
   };
 
@@ -60,7 +60,7 @@ export default function SelectColor({
       <SimpleDialog
         open={open}
         onClose={() => setOpen(false)}
-        handleSelectColor={(color: string) => handleSelectColor(color)}
+        handleSelectColor={(_id: string) => handleSelectColor(_id)}
         colors={colors}
       />
     </div>

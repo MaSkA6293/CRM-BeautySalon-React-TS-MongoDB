@@ -1,0 +1,13 @@
+.HomeHeader {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  max-width: 760px;
+  min-width: 320px;
+  justify-content: center;
+  margin: auto;
+  &__label {
+    font-weight: 400;
+    font-size: 2rem;
+  }
+}

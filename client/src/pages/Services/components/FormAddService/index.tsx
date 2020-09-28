@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
@@ -9,9 +9,11 @@ import { Formik, Form, Field } from "formik";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 
+import cogoToast from "cogo-toast";
+
 import DialogActions from "@material-ui/core/DialogActions";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
@@ -24,6 +26,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
+import { addService } from "../../actions/actionsServices";
+
+export const getTime = (time: string) => {
+  return time.split(":").map((el) => parseInt(el.replace(/^0(\d)/, "$1")));
+};
+
 const initialValues = {
   name: "",
   time: "01:00",
@@ -34,35 +42,67 @@ const AddClientSchema = Yup.object().shape({
   price: Yup.string().required("Обязательное поле"),
 });
 const FormAddService = ({ handleClose }: any) => {
-  const { colors } = useSelector(({ colors }: IGlobalStore) => {
-    return {
-      colors: colors.colorsList,
+  const { colors, serviceMessageFail, serviceMessageSuccess } = useSelector(
+    ({ colors, services }: IGlobalStore) => {
+      return {
+        colors: colors.colorsList,
+        serviceMessageFail: services.serviceMessageFail,
+        serviceMessageSuccess: services.serviceMessageSuccess,
+      };
+    }
+  );
+  const dispatch = useDispatch();
+
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [category, setCategory] = React.useState<string[]>([]);
+  useEffect(() => {
+    if (colors.length > 0) {
+      setSelectedColor(colors[0]._id.toString());
+    }
+  }, [colors]);
+
+  useEffect(() => {
+    serviceMessageFail &&
+      cogoToast.error(<div className="message">{serviceMessageFail}</div>);
+  }, [serviceMessageFail]);
+
+  useEffect(() => {
+    serviceMessageSuccess &&
+      cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
+  }, [serviceMessageSuccess]);
+
+  interface AddServise {
+    name: string;
+    time: string;
+    price: string;
+  }
+  const handlerAddService = (values: AddServise) => {
+    const data = {
+      name: values.name,
+      duration: getTime(values.time),
+      cost: parseInt(values.price),
+      colorId: selectedColor,
+      categoriesId: category,
     };
-  });
 
-  const [selectedColor, setSelectedColor] = useState("#4791db");
-
-  const [personName, setPersonName] = React.useState<string[]>([]);
-
-  const handlerAddService = (values: any) => {
-    console.log(values, selectedColor, personName);
+    dispatch(addService(data, handleClose));
+    console.log(
+      values.name,
+      getTime(values.time),
+      values.price,
+      selectedColor,
+      category
+    );
   };
 
   const names = [
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
+    { name: "Стрижка", _id: "1" },
+    { name: "Окрашивание", _id: "2" },
+    { name: "Укладка", _id: "3" },
   ];
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setPersonName(event.target.value as string[]);
+    setCategory(event.target.value as string[]);
   };
 
   return (
@@ -162,17 +202,24 @@ const FormAddService = ({ handleClose }: any) => {
                       labelId="demo-mutiple-checkbox-label"
                       id="demo-mutiple-checkbox"
                       multiple
-                      value={personName}
+                      value={category}
                       onChange={handleChange}
                       input={<Input />}
                       renderValue={(selected: any) =>
-                        (selected as string[]).join(", ")
+                        selected
+                          .map((_id: string) => {
+                            return names.find((el) => el._id.toString() === _id)
+                              ?.name;
+                          })
+                          .join(", ")
                       }
                     >
-                      {names.map((name) => (
-                        <MenuItem key={name} value={name}>
-                          <Checkbox checked={personName.indexOf(name) > -1} />
-                          <ListItemText primary={name} />
+                      {names.map((item, index) => (
+                        <MenuItem key={index} value={item._id.toString()}>
+                          <Checkbox
+                            checked={category.indexOf(item._id.toString()) > -1}
+                          />
+                          <ListItemText primary={item.name} />
                         </MenuItem>
                       ))}
                     </Select>
@@ -185,7 +232,10 @@ const FormAddService = ({ handleClose }: any) => {
               <div
                 className="selectColor__selected"
                 style={{
-                  backgroundColor: selectedColor,
+                  backgroundColor: selectedColor
+                    ? colors.find((c) => c._id.toString() === selectedColor)
+                        ?.hex
+                    : "#4791db",
                 }}
               ></div>
               <div className="selectColor__button">

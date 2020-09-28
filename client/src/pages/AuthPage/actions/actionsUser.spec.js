@@ -94,9 +94,12 @@ describe("User actions", () => {
   });
 
   it("userRequestSuccess", () => {
-    store.dispatch(userRequestSuccess());
+    const message = "User add success";
+    store.dispatch(userRequestSuccess(message));
     const actions = store.getActions();
-    const expectActions = [{ type: USER_REQUEST_SUCCESS }];
+    const expectActions = [
+      { type: USER_REQUEST_SUCCESS, payload: { message } },
+    ];
     expect(actions).toEqual(expectActions);
   });
 

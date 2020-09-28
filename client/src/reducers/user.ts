@@ -23,6 +23,7 @@ export const initialState: IstateUser = {
   userLoginError: "",
   userData: { token: "", id: "" },
   userReady: false,
+  userCreateSuccess: "",
 };
 const stateUser = (
   state: IstateUser = initialState,
@@ -34,12 +35,14 @@ const stateUser = (
         ...state,
         userIsLoading: true,
         userLoaded: false,
+        userCreateSuccess: "",
       };
     case USER_REQUEST_SUCCESS:
       return {
         ...state,
         userIsLoading: false,
         userLoaded: true,
+        userCreateSuccess: action.payload.message,
       };
     case USER_REQUEST_FAIL:
       return {

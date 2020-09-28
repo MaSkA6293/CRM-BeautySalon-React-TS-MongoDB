@@ -19,7 +19,7 @@ export const registerHandler = (data: { email: string; password: string }) => {
     httpRequest("api/auth/register", "POST", { ...data })
       .then((res: any) => {
         if (res.statusText === "OK") {
-          dispatch(userRequestSuccess());
+          dispatch(userRequestSuccess(res.data.message));
         }
       })
       .catch((e) => {
@@ -120,9 +120,10 @@ export const userLoginSuccess = (
     payload: { token, refresh_token, userId },
   };
 };
-export const userRequestSuccess = () => {
+export const userRequestSuccess = (message: string) => {
   return {
     type: USER_REQUEST_SUCCESS,
+    payload: { message },
   };
 };
 

@@ -3,12 +3,14 @@
   flex: 1 1 100%;
   align-items: center;
   max-width: 760px;
+  min-width: 290px;
   justify-content: center;
   margin: auto;
   &__title {
-    font-size: 1.4rem;
+    display: flex;
     flex: 1;
-    margin-left: 10px;
+    justify-content: center;
+    //  margin-left: 10px;
   }
   &__addUser {
     font-size: 1.4rem;
@@ -26,7 +28,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.4rem;
-
+    margin-right: 10px;
     cursor: pointer;
   }
 }
