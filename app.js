@@ -63,7 +63,7 @@ start();
 app.use("/api/auth", authRoutes);
 app.use("/api/client", clientRoutes);
 app.use("/api/color", colorRoutes);
-app.use("/api/service", serviceRoutes);
+app.use("/api/services", serviceRoutes);
 
 app.post("/tasks", TaskController.create);
 app.get("/tasks", TaskController.read);

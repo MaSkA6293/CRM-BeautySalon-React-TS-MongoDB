@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const ServiceShema = new Schema({
   name: String,
-  hours: String,
-  minutes: String,
-  price: String,
-  color: String,
+  duration: Array,
+  cost: Number,
+  colorId: String,
+  categoriesId: Array,
   userId: String,
 });
 

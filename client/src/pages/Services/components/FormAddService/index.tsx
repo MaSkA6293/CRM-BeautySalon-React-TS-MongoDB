@@ -84,15 +84,7 @@ const FormAddService = ({ handleClose }: any) => {
       colorId: selectedColor,
       categoriesId: category,
     };
-
     dispatch(addService(data, handleClose));
-    console.log(
-      values.name,
-      getTime(values.time),
-      values.price,
-      selectedColor,
-      category
-    );
   };
 
   const names = [

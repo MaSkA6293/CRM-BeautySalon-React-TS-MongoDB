@@ -93,12 +93,12 @@ export const addService = (
     dispatch(addServiceRequest());
     httpRequest("api/services", "POST", data)
       .then((res: any) => {
-        if (res.data.status === "OK") {
+        if (res.statusText === "OK") {
           dispatch(addServiceSuccess(res.data));
           setTimeout(() => {
             dispatch(clearAddServiceSuccess());
             callback();
-          }, 2000);
+          }, 3000);
         }
       })
       .catch((e) => {

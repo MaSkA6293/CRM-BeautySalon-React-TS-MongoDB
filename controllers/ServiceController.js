@@ -1,18 +1,39 @@
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const ServiceModels = require("../models/Service");
 
+const { validationResult } = require("express-validator");
+
 module.exports.add = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(401).json({
+        errors: errors.array(),
+        message: "Не корректные данные при создании услуги",
+      });
+    }
+
     const service = new ServiceModels({
       name: req.body.name,
-      hours: req.body.hours,
-      minutes: req.body.minutes,
-      price: req.body.price,
-      color: req.body.color,
+      duration: req.body.duration,
+      cost: req.body.cost,
+      colorId: req.body.colorId,
+      categoriesId: req.body.categoriesId,
       userId: req.user._id,
     });
     const result = await service.save();
-    res.status(200).json(result);
+    const answer = {
+      data: {
+        _id: result._id,
+        name: result.name,
+        duration: result.duration,
+        cost: result.cost,
+        colorId: result.colorId,
+        categoriesId: result.categoriesId,
+      },
+      message: "Услуга успешно добавлена",
+    };
+    res.status(200).json(answer);
   } catch (e) {
     res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
