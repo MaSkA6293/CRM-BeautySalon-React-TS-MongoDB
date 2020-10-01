@@ -15,10 +15,16 @@
 .Services {
   display: flex;
   width: 100%;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-content: flex-start;
   border-radius: 0 10px 10px 0;
   position: relative;
-  background-color: $s-lite;
+
   min-height: 100vh;
+}
+
+.servic-list {
+  .servic {
+    border-bottom: 2px solid #cecece;
+  }
 }

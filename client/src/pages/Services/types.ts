@@ -4,6 +4,10 @@ import {
   CLEAR_MESSAGE_SERVIC_ADD_SUCCESS,
   ADD_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_ADD_FAIL,
+  GET_SERVICES_REQUEST,
+  GET_SERVICES_REQUEST_SUCCESS,
+  GET_SERVICES_REQUEST_FAIL,
+  CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
 } from "../../constants";
 
 export interface ICategoryValues {
@@ -18,23 +22,49 @@ type serviceList = {
 };
 
 export interface IService {
-  id: number;
+  _id: string;
   name: string;
   duration: number[];
   cost: number;
   colorId: string;
-  categoriesId: string[];
+  categoriesId: [];
+}
+export interface ICategory {
+  _id: string;
+  name: string;
+  colorId: string;
 }
 export interface IstateService {
   readonly servicesList: IService[];
+  readonly servicesIsLoading: boolean;
+  readonly servicesLoaded: boolean;
+  readonly servicesGetIsFail: boolean;
+  readonly servicesGetError: string;
   readonly categoryIsAdded: boolean;
   readonly categoryAddIsFail: boolean;
   readonly categoryAdded: boolean;
   readonly categoryAddError: boolean;
+  readonly categoryList: ICategory[];
   readonly serviceIsAdded: boolean;
   readonly serviceAdded: boolean;
   readonly serviceMessageSuccess: string;
   readonly serviceMessageFail: string;
+}
+
+//get services
+interface IGetServicesRequest {
+  type: typeof GET_SERVICES_REQUEST;
+}
+interface IGetServicesRequestSuccess {
+  type: typeof GET_SERVICES_REQUEST_SUCCESS;
+  payload: IService[];
+}
+interface IGetServicesRequestFail {
+  type: typeof GET_SERVICES_REQUEST_FAIL;
+  payload: { message: string };
+}
+interface IGetServicesRequestFailClear {
+  type: typeof CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL;
 }
 
 // add service
@@ -63,7 +93,11 @@ export type ServiceActionTypes =
   | IAddServiceSuccess
   | IAddServiceClearMessageSuccess
   | IAddServiceFail
-  | IAddServiceFailClear;
+  | IAddServiceFailClear
+  | IGetServicesRequest
+  | IGetServicesRequestSuccess
+  | IGetServicesRequestFail
+  | IGetServicesRequestFailClear;
 
 // export interface IClient {
 //   _id: number;

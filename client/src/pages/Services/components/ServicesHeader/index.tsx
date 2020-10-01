@@ -33,11 +33,11 @@ const useStyles = makeStyles({
 });
 
 type ServicesHeaderProps = {
-  services: any;
+  servicesList: any;
 };
 
-const ServicesHeader = ({ services }: ServicesHeaderProps) => {
-  const [isOpenAddService, setIsOpenAddService] = useState(true);
+const ServicesHeader = ({ servicesList }: ServicesHeaderProps) => {
+  const [isOpenAddService, setIsOpenAddService] = useState(false);
 
   const classes = useStyles();
   let history = useHistory();
@@ -73,14 +73,15 @@ const ServicesHeader = ({ services }: ServicesHeaderProps) => {
             <MenuItem value="all" className={classes.input}>
               Все услуги
             </MenuItem>
-            {services.map((item: any, index: number) => {
-              return (
-                <MenuItem key={index} value={item.id}>
-                  {" "}
-                  {item.name}
-                </MenuItem>
-              );
-            })}
+            {servicesList &&
+              servicesList.map((item: any, index: number) => {
+                return (
+                  <MenuItem key={index} value={item._id}>
+                    {" "}
+                    {item.name}
+                  </MenuItem>
+                );
+              })}
           </Select>
         </div>
         <AddNewService

@@ -41,25 +41,26 @@ module.exports.add = async (req, res) => {
   }
 };
 
-// module.exports.allClients = async (req, res) => {
-//   try {
-//     const clients = await ClientModel.find({ userId: req.user._id });
-//     const userData = clients.map((item) => {
-//       return {
-//         _id: item._id,
-//         name: item.name,
-//         female: item.female,
-//         phone: item.phone,
-//         color: item.color,
-//       };
-//     });
-//     res.status(200).json(userData);
-//   } catch (e) {
-//     res.status(500).send({
-//       message: ERROR_MESSAGE_STATUS_500,
-//     });
-//   }
-// };
+module.exports.getAllServices = async (req, res) => {
+  try {
+    const services = await ServiceModels.find({ userId: req.user._id });
+    const servicesData = services.map((item) => {
+      return {
+        _id: item._id,
+        name: item.name,
+        duration: item.duration,
+        cost: item.cost,
+        colorId: item.colorId,
+        categoriesId: item.categoriesId,
+      };
+    });
+    res.status(200).json(servicesData);
+  } catch (e) {
+    res.status(500).send({
+      message: ERROR_MESSAGE_STATUS_500,
+    });
+  }
+};
 
 // module.exports.delet = async (req, res) => {
 //   try {

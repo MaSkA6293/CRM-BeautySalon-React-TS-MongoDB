@@ -21,8 +21,5 @@ exports[`all tests Home Home component should render Home component 1`] = `
       <KeyboardArrowUpIcon />
     </WithStyles(ForwardRef(Fab))>
   </ScrollTop>
-  <div
-    className="makeStyles-offset-2 header__back"
-  />
 </Fragment>
 `;

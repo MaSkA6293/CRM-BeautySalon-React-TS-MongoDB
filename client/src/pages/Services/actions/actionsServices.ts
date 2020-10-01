@@ -16,6 +16,10 @@ import {
   ADD_SERVIC_SUCCESS,
   ADD_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_ADD_FAIL,
+  GET_SERVICES_REQUEST,
+  GET_SERVICES_REQUEST_SUCCESS,
+  GET_SERVICES_REQUEST_FAIL,
+  CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
 } from "../../../constants";
 import { IService } from "../types";
 export const addCategory = (
@@ -31,7 +35,7 @@ export const addCategory = (
       type: ADD_SERVICE_CATEGORY_REQUEST,
     });
 
-    httpRequest("servicess", "POST", data)
+    httpRequest("services", "POST", data)
       .then((res: any) => {
         if (res.data.status === "OK") {
           dispatch({ type: ADD_SERVICE_CATEGORY, payload: res.data.data });
@@ -79,6 +83,31 @@ export const getColors = () => {
   };
 };
 
+export const getServices = () => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: GET_SERVICES_REQUEST });
+    httpRequest("api/services", "GET")
+      .then((res: any) => {
+        if (res.statusText === "OK") {
+          dispatch({
+            type: GET_SERVICES_REQUEST_SUCCESS,
+            payload: res.data,
+          });
+        }
+      })
+      .catch((err) => {
+        check401(err);
+        dispatch({
+          type: GET_SERVICES_REQUEST_FAIL,
+          payload: { message: err.response.data.message },
+        });
+        setTimeout(() => {
+          dispatch({ type: CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL });
+        }, 2000);
+      });
+  };
+};
+
 export const addService = (
   data: {
     name: string;
@@ -120,7 +149,7 @@ export const addServiceSuccess = (data: {
 }) => {
   return {
     type: ADD_SERVIC_SUCCESS,
-    payload: { data, message: data.message },
+    payload: { data: data.data, message: data.message },
   };
 };
 export const clearAddServiceSuccess = () => {

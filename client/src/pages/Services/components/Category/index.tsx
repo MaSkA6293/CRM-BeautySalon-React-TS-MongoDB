@@ -9,7 +9,6 @@ const CategoryList = () => {
   const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
   return (
     <div className="CategoryList">
-      dsfsdfsd
       <Header>
         <CategoryHeader openAddCategory={() => setIsOpenAddCategory(true)} />
       </Header>

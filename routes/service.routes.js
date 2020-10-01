@@ -3,13 +3,6 @@ const router = Router();
 const ServiceController = require("../controllers/ServiceController");
 const passport = require("passport");
 
-// name: String,
-// duration: Array,
-// cost: Number,
-// colorId: String,
-// categoriesId: Array,
-// userId: String,
-
 const { check } = require("express-validator");
 router.post(
   "/",
@@ -26,6 +19,13 @@ router.post(
     check("colorId", "Поле Цвет не указано").notEmpty(),
   ],
   ServiceController.add
+);
+router.get(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  ServiceController.getAllServices
 );
 
 // router.post(

@@ -1,6 +1,5 @@
 import React from "react";
 import "./styles.scss";
-import classNames from "classnames";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -54,7 +53,6 @@ function ScrollTop(props: any) {
 }
 
 const Header = (props: any) => {
-  const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
@@ -67,8 +65,6 @@ const Header = (props: any) => {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-
-      <div className={classNames(classes.offset, "header__back")} />
     </React.Fragment>
   );
 };

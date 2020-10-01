@@ -1,15 +1,15 @@
-$heightHeader: 70px;
-.header {
-  height: auto;
-}
+// $heightHeader: 70px;
+// .header {
+//   height: auto;
+// }
 
-@media screen and (min-width: 425px) {
-  .header {
-    height: $heightHeader;
-    padding: 10px;
-    justify-content: center;
-    &__back {
-      height: $heightHeader;
-    }
-  }
-}
+// @media screen and (min-width: 425px) {
+//   .header {
+//     height: $heightHeader;
+//     padding: 10px;
+//     justify-content: center;
+//     &__back {
+//       height: $heightHeader;
+//     }
+//   }
+// }
