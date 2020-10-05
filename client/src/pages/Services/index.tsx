@@ -1,16 +1,16 @@
 import React from "react";
 
 import { Route, Switch } from "react-router-dom";
-import ServicesList from "./components/ServicesList";
-import CategoryList from "./components/Category";
+import ServicesPage from "./components/ServicesPage";
+import CategoriesPage from "./components/CategoriesPage";
 const Services = () => {
   return (
     <Switch>
       <Route exact path="/services">
-        <ServicesList />
+        <ServicesPage />
       </Route>
       <Route path="/services/category">
-        <CategoryList />
+        <CategoriesPage />
       </Route>
     </Switch>
   );

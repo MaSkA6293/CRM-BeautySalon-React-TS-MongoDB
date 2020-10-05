@@ -99,8 +99,9 @@ const Content = () => {
                     ) -
                     9 * 60 +
                     "px",
-                  backgroundColor: colors.find((c: IColor) => c.id === r.color)
-                    ?.hex,
+                  // backgroundColor: colors.find(
+                  //   (c: IColor) => c._id.toString() === r.color.toString()
+                  // )?.hex,
                 }}
                 onClick={handlerRecordClick}
               >

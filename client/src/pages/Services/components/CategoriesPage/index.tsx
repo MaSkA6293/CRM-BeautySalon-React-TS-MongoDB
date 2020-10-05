@@ -5,7 +5,7 @@ import CategoryHeader from "../CategoryHeader";
 import ModalAddNewCategory from "../FormAddNewCategory";
 type CategoryListProps = {};
 
-const CategoryList = () => {
+const CategoriesPage = () => {
   const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
   return (
     <div className="CategoryList">
@@ -23,4 +23,4 @@ const CategoryList = () => {
     </div>
   );
 };
-export default CategoryList;
+export default CategoriesPage;

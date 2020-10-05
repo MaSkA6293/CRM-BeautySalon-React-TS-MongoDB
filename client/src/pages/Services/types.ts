@@ -8,6 +8,16 @@ import {
   GET_SERVICES_REQUEST_SUCCESS,
   GET_SERVICES_REQUEST_FAIL,
   CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
+  EDIT_SERVIC_REQUEST,
+  EDIT_SERVIC_SUCCESS,
+  CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
+  EDIT_SERVIC_FAIL,
+  CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
+  DELET_SERVIC_REQUEST,
+  DELET_SERVIC_SUCCESS,
+  CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
+  DELET_SERVIC_FAIL,
+  CLEAR_MESSAGE_SERVIC_DELET_FAIL,
 } from "../../constants";
 
 export interface ICategoryValues {
@@ -49,6 +59,10 @@ export interface IstateService {
   readonly serviceAdded: boolean;
   readonly serviceMessageSuccess: string;
   readonly serviceMessageFail: string;
+  readonly serviceIsEdited: boolean;
+  readonly serviceEdited: boolean;
+  readonly serviceIsDeleted: boolean;
+  readonly serviceDeleted: boolean;
 }
 
 //get services
@@ -67,7 +81,7 @@ interface IGetServicesRequestFailClear {
   type: typeof CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL;
 }
 
-// add service
+// add servic
 interface IAddServiceRequest {
   type: typeof ADD_SERVIC_REQUEST;
 }
@@ -88,6 +102,52 @@ interface IAddServiceFail {
 interface IAddServiceFailClear {
   type: typeof CLEAR_MESSAGE_SERVIC_ADD_FAIL;
 }
+
+// edit servic
+interface IEditServiceRequest {
+  type: typeof EDIT_SERVIC_REQUEST;
+}
+
+interface IEditServiceSuccess {
+  type: typeof EDIT_SERVIC_SUCCESS;
+  payload: { data: IService; message: string };
+}
+
+interface IEditServiceClearMessageSuccess {
+  type: typeof CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS;
+}
+
+interface IEditServiceFail {
+  type: typeof EDIT_SERVIC_FAIL;
+  payload: { message: string };
+}
+interface IEditServiceFailClear {
+  type: typeof CLEAR_MESSAGE_SERVIC_EDIT_FAIL;
+}
+
+// delet servic
+
+interface IDeletServiceRequest {
+  type: typeof DELET_SERVIC_REQUEST;
+}
+
+interface IDeletServiceSuccess {
+  type: typeof DELET_SERVIC_SUCCESS;
+  payload: { _id: string; message: string };
+}
+
+interface IDeletServiceClearMessageSuccess {
+  type: typeof CLEAR_MESSAGE_SERVIC_DELET_SUCCESS;
+}
+
+interface IDeletServiceFail {
+  type: typeof DELET_SERVIC_FAIL;
+  payload: { message: string };
+}
+interface IDeletServiceFailClear {
+  type: typeof CLEAR_MESSAGE_SERVIC_DELET_FAIL;
+}
+
 export type ServiceActionTypes =
   | IAddServiceRequest
   | IAddServiceSuccess
@@ -97,7 +157,17 @@ export type ServiceActionTypes =
   | IGetServicesRequest
   | IGetServicesRequestSuccess
   | IGetServicesRequestFail
-  | IGetServicesRequestFailClear;
+  | IGetServicesRequestFailClear
+  | IEditServiceRequest
+  | IEditServiceSuccess
+  | IEditServiceClearMessageSuccess
+  | IEditServiceFail
+  | IEditServiceFailClear
+  | IDeletServiceRequest
+  | IDeletServiceSuccess
+  | IDeletServiceClearMessageSuccess
+  | IDeletServiceFail
+  | IDeletServiceFailClear;
 
 // export interface IClient {
 //   _id: number;

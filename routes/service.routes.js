@@ -28,6 +28,22 @@ router.get(
   ServiceController.getAllServices
 );
 
+router.put(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  ServiceController.update
+);
+
+router.delete(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  ServiceController.delet
+);
+
 // router.post(
 //   "/",
 //   passport.authenticate("jwt", {

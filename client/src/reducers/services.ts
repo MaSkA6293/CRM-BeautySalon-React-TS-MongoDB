@@ -11,6 +11,16 @@ import {
   CLEAR_MESSAGE_SERVIC_ADD_SUCCESS,
   ADD_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_ADD_FAIL,
+  EDIT_SERVIC_REQUEST,
+  EDIT_SERVIC_SUCCESS,
+  CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
+  EDIT_SERVIC_FAIL,
+  CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
+  DELET_SERVIC_REQUEST,
+  DELET_SERVIC_SUCCESS,
+  CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
+  DELET_SERVIC_FAIL,
+  CLEAR_MESSAGE_SERVIC_DELET_FAIL,
 } from "../constants";
 
 export const initialState: IstateService = {
@@ -34,6 +44,12 @@ export const initialState: IstateService = {
   serviceAdded: false,
   serviceMessageSuccess: "",
   serviceMessageFail: "",
+
+  serviceIsEdited: false,
+  serviceEdited: false,
+
+  serviceIsDeleted: false,
+  serviceDeleted: false,
 };
 
 const stateServices = (
@@ -87,6 +103,51 @@ const stateServices = (
       return { ...state, serviceMessageFail: action.payload.message };
     case CLEAR_MESSAGE_SERVIC_ADD_FAIL:
       return { ...state, serviceMessageFail: "" };
+
+    case EDIT_SERVIC_REQUEST:
+      return { ...state, serviceIsEdited: true, serviceEdited: false };
+    case EDIT_SERVIC_SUCCESS:
+      return {
+        ...state,
+        serviceIsEdited: false,
+        serviceEdited: true,
+        servicesList: state.servicesList.map((servic) =>
+          servic._id === action.payload.data._id ? action.payload.data : servic
+        ),
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS:
+      return {
+        ...state,
+        serviceMessageSuccess: "",
+      };
+    case EDIT_SERVIC_FAIL:
+      return { ...state, serviceMessageFail: action.payload.message };
+    case CLEAR_MESSAGE_SERVIC_EDIT_FAIL:
+      return { ...state, serviceMessageFail: "" };
+
+    case DELET_SERVIC_REQUEST:
+      return { ...state, serviceIsDeleted: true, serviceDeleted: false };
+    case DELET_SERVIC_SUCCESS:
+      return {
+        ...state,
+        serviceIsDeleted: false,
+        serviceDeleted: true,
+        servicesList: state.servicesList.filter(
+          (servic) => servic._id !== action.payload._id
+        ),
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_MESSAGE_SERVIC_DELET_SUCCESS:
+      return {
+        ...state,
+        serviceMessageSuccess: "",
+      };
+    case DELET_SERVIC_FAIL:
+      return { ...state, serviceMessageFail: action.payload.message };
+    case CLEAR_MESSAGE_SERVIC_DELET_FAIL:
+      return { ...state, serviceMessageFail: "" };
+
     default:
       return state;
   }

@@ -1,15 +1,20 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import FormAddService from "../FormAddService";
+import FormEditService from "../FormEditService";
 import "./styles.scss";
 
-type ModalAddServiceProps = {
+type ModalEditServiceProps = {
   open: boolean;
   handleClose: () => void;
+  selectedServic: any;
 };
 
-const ModalAddService = ({ open, handleClose }: ModalAddServiceProps) => {
+const ModalEditService = ({
+  open,
+  handleClose,
+  selectedServic,
+}: ModalEditServiceProps) => {
   return (
     <Dialog
       open={open}
@@ -19,10 +24,13 @@ const ModalAddService = ({ open, handleClose }: ModalAddServiceProps) => {
       className="dialog"
     >
       <DialogContent>
-        <FormAddService handleClose={handleClose} />
+        <FormEditService
+          handleClose={handleClose}
+          selectedServic={selectedServic}
+        />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default ModalAddService;
+export default ModalEditService;

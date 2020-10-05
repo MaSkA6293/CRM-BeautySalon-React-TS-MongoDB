@@ -26,45 +26,77 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-import { addService } from "../../actions/actionsServices";
+import { editService, deletServic } from "../../actions/actionsServices";
 
-export const getTime = (time: string) => {
-  return time.split(":").map((el) => parseInt(el.replace(/^0(\d)/, "$1")));
+import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
+
+import AreYouSure from "../AreYouSure";
+
+export const getTimeFromArray = (time: number[]) => {
+  return time
+    .map((el) => {
+      if (el.toString().length === 1) {
+        return `0${el}`;
+      } else return el;
+    })
+    .join(":");
 };
-
-const initialValues = {
-  name: "",
-  time: "01:00",
-  price: "",
+export const getTimeToArray = (time: string) => {
+  return time.split(":").map((el) => parseInt(el.replace(/^0(\d)/, "$1")));
 };
 const AddClientSchema = Yup.object().shape({
   name: Yup.string().required("Обязательное поле"),
   price: Yup.string().required("Обязательное поле"),
 });
 
-type FormAddServiceProps = {
-  handleClose: any;
+type FormEditServiceProps = {
+  handleClose: () => void;
+  selectedServic: {
+    _id: string;
+    name: string;
+    duration: number[];
+    cost: number;
+    color: { _id: string; hex: string };
+    categoryColor: string[];
+    categoriesId: string[];
+  };
 };
 
-const FormAddService = ({ handleClose }: FormAddServiceProps) => {
-  const { colors, serviceMessageFail, serviceMessageSuccess } = useSelector(
-    ({ colors, services }: IGlobalStore) => {
-      return {
-        colors: colors.colorsList,
-        serviceMessageFail: services.serviceMessageFail,
-        serviceMessageSuccess: services.serviceMessageSuccess,
-      };
-    }
-  );
+const FormEditService = ({
+  handleClose,
+  selectedServic,
+}: FormEditServiceProps) => {
+  const {
+    colors,
+    serviceMessageFail,
+    serviceMessageSuccess,
+    serviceIsEdited,
+  } = useSelector(({ colors, services }: IGlobalStore) => {
+    return {
+      colors: colors.colorsList,
+      serviceMessageFail: services.serviceMessageFail,
+      serviceMessageSuccess: services.serviceMessageSuccess,
+      serviceIsEdited: services.serviceIsEdited,
+    };
+  });
+  const initialValues = {
+    name: selectedServic.name,
+    time: getTimeFromArray(selectedServic.duration),
+    price: selectedServic.cost.toString(),
+  };
   const dispatch = useDispatch();
 
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [category, setCategory] = useState<string[]>([]);
-  useEffect(() => {
-    if (colors.length > 0) {
-      setSelectedColor(colors[0]._id.toString());
-    }
-  }, [colors]);
+  const [selectedColor, setSelectedColor] = useState(selectedServic.color);
+  const [category, setCategory] = useState<string[]>(
+    selectedServic.categoriesId
+  );
+  const [open, setOpen] = useState(false);
+
+  // useEffect(() => {
+  //   if (colors.length > 0) {
+  //     setSelectedColor(colors[0]._id.toString());
+  //   }
+  // }, [colors]);
 
   useEffect(() => {
     serviceMessageFail &&
@@ -76,20 +108,21 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
       cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
   }, [serviceMessageSuccess]);
 
-  interface AddServise {
+  interface EditServise {
     name: string;
     time: string;
     price: string;
   }
-  const handlerAddService = (values: AddServise) => {
+  const handlerEditService = (values: EditServise) => {
     const data = {
+      _id: selectedServic._id,
       name: values.name,
-      duration: getTime(values.time),
+      duration: getTimeToArray(values.time),
       cost: parseInt(values.price),
-      colorId: selectedColor,
+      colorId: selectedColor._id,
       categoriesId: category,
     };
-    dispatch(addService(data, handleClose));
+    dispatch(editService(data, handleClose));
   };
 
   const names = [
@@ -101,17 +134,25 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCategory(event.target.value as string[]);
   };
-
+  const handlerDelet = () => {
+    dispatch(deletServic(selectedServic._id, handleClose));
+  };
   return (
     <>
+      <AreYouSure open={open} setOpen={setOpen} handlerDelet={handlerDelet} />
       <Formik
         initialValues={initialValues}
         validationSchema={AddClientSchema}
-        onSubmit={handlerAddService}
+        onSubmit={handlerEditService}
       >
-        {({ dirty, isValid, errors }) => (
+        {({ isValid, errors }) => (
           <Form className="form">
-            <h2 className="form__title">Добавить услугу</h2>
+            <div className="form__title-btn-delet">
+              <h2 className="form__title">Редактировать</h2>
+              <Button disabled={serviceIsEdited} onClick={() => setOpen(true)}>
+                <DeleteSweepIcon />
+              </Button>
+            </div>
             <div className="form__field field">
               <div className="field__row">
                 <div className="field__icon">
@@ -235,8 +276,7 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
                 className="selectColor__selected selectColor__selected-marginRight "
                 style={{
                   backgroundColor: selectedColor
-                    ? colors.find((c) => c._id.toString() === selectedColor)
-                        ?.hex
+                    ? selectedColor.hex
                     : "#4791db",
                 }}
               ></div>
@@ -244,6 +284,7 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
                 <SelectColor
                   setSelectedColor={setSelectedColor}
                   colors={colors}
+                  serviceIsEdited={serviceIsEdited}
                 />
               </div>
             </div>
@@ -251,11 +292,15 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
               <Button
                 color="primary"
                 type="submit"
-                disabled={!dirty || !isValid}
+                disabled={!isValid || serviceIsEdited}
               >
-                Добавить
+                Сохранить
               </Button>
-              <Button onClick={handleClose} color="primary">
+              <Button
+                onClick={handleClose}
+                color="primary"
+                disabled={serviceIsEdited}
+              >
                 Отмена
               </Button>
             </DialogActions>
@@ -266,4 +311,4 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
   );
 };
 
-export default FormAddService;
+export default FormEditService;

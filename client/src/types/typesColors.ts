@@ -1,6 +1,5 @@
 export interface IColor {
-  _id: number;
-  id: number;
+  _id: string;
   hex: string;
 }
 

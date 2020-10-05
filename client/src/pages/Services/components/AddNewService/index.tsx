@@ -13,11 +13,10 @@ const useStyles = makeStyles({
 });
 
 type AddNewServiceProps = {
-  isOpen: Boolean;
   setIsOpen: (value: boolean) => void;
 };
 
-const AddNewService = ({ isOpen, setIsOpen }: AddNewServiceProps) => {
+const AddNewService = ({ setIsOpen }: AddNewServiceProps) => {
   const classes = useStyles();
   return (
     <div className="ServicesHeader__Category" onClick={() => setIsOpen(true)}>

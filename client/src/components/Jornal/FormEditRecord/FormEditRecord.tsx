@@ -151,15 +151,16 @@ const FormEditRecord = ({
             <div className="addNewWrite__colors">
               {colors.map((color, index) => {
                 return (
-                  <Marker
-                    key={index}
-                    addclass={classNames(
-                      "markerAll",
-                      color.id === activColorId ? "activeColor" : ""
-                    )}
-                    color={color.hex}
-                    onClick={() => setActivColorId(color.id)}
-                  />
+                  <></>
+                  // <Marker
+                  //   key={index}
+                  //   addclass={classNames(
+                  //     "markerAll",
+                  //     color._id === activColorId ? "activeColor" : ""
+                  //   )}
+                  //   color={color.hex}
+                  //   onClick={() => setActivColorId(color._id)}
+                  // />
                 );
               })}
             </div>

@@ -38,6 +38,17 @@ export default function MultipleSelect() {
 
   // console.log(fib(3)); //2
   // console.log(fib(3)); //3
-
+  const a = [
+    { _id: "5f736d571f121b3d9fc7f226…sId", categoryId: ["1", "2"] },
+    { _id: "5f736d571f321fc7f226…sId", categoryId: ["1", "3"] },
+    { _id: "5f736d571321f226…sId", categoryId: ["1", "3"] },
+    { _id: "5f736d571f121321226…sId", categoryId: ["1", "2"] },
+    { _id: "5f736d571f121b3216…sId", categoryId: ["1", "5"] },
+    { _id: "5f736d571f1232f226…sId", categoryId: ["1", "6"] },
+  ];
+  console.log(a);
+  const filter = "all";
+  const afterFilter = a.filter((el) => el.categoryId.includes(filter));
+  console.log("after", afterFilter);
   return <div></div>;
 }

@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 
 import AddNewService from "../AddNewService";
 import ModalAddService from "../ModalAddNewService";
+import { ICategory } from "../../types";
 
 const useStyles = makeStyles({
   root: {
@@ -33,10 +34,16 @@ const useStyles = makeStyles({
 });
 
 type ServicesHeaderProps = {
-  servicesList: any;
+  categoryList: ICategory[];
+  filter: string;
+  setFilter: (value: string) => void;
 };
 
-const ServicesHeader = ({ servicesList }: ServicesHeaderProps) => {
+const ServicesHeader = ({
+  categoryList,
+  setFilter,
+  filter,
+}: ServicesHeaderProps) => {
   const [isOpenAddService, setIsOpenAddService] = useState(false);
 
   const classes = useStyles();
@@ -48,7 +55,6 @@ const ServicesHeader = ({ servicesList }: ServicesHeaderProps) => {
     history.push("services/category");
   };
 
-  const [filter, setFilter] = useState("all");
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFilter(event.target.value as string);
   };
@@ -73,8 +79,8 @@ const ServicesHeader = ({ servicesList }: ServicesHeaderProps) => {
             <MenuItem value="all" className={classes.input}>
               Все услуги
             </MenuItem>
-            {servicesList &&
-              servicesList.map((item: any, index: number) => {
+            {categoryList &&
+              categoryList.map((item: any, index: number) => {
                 return (
                   <MenuItem key={index} value={item._id}>
                     {" "}
@@ -84,10 +90,7 @@ const ServicesHeader = ({ servicesList }: ServicesHeaderProps) => {
               })}
           </Select>
         </div>
-        <AddNewService
-          isOpen={isOpenAddService}
-          setIsOpen={setIsOpenAddService}
-        />
+        <AddNewService setIsOpen={setIsOpenAddService} />
         <div
           className="ServicesHeader__Category"
           onClick={() => handlerClickGoCategiry()}
