@@ -9,7 +9,7 @@ const Services = () => {
       <Route exact path="/services">
         <ServicesPage />
       </Route>
-      <Route path="/services/category">
+      <Route path="/services/categories">
         <CategoriesPage />
       </Route>
     </Switch>

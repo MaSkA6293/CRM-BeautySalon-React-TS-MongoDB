@@ -12,19 +12,18 @@
   z-index: 1;
 }
 
-.services {
+.categories {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-content: flex-start;
   border-radius: 0 10px 10px 0;
   position: relative;
-
   min-height: 100vh;
 }
 
-.servic-list {
-  .servic {
+.categories-list {
+  .category {
     border-bottom: 2px solid #cecece;
   }
 }

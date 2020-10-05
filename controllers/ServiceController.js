@@ -90,7 +90,6 @@ module.exports.update = async (req, res) => {
 };
 
 module.exports.delet = async (req, res) => {
-  console.log(req.body);
   try {
     await ServiceModels.deleteOne({
       _id: req.body._id,

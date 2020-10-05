@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { initialState } from "../../../reducers/services";
 import {
   ADD_SERVICE_CATEGORY_REQUEST,
-  ADD_SERVICE_CATEGORY,
+  CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
   ADD_SERVICE_CATEGORY_SUCCESS,
   SERVICE_CATEGORY_ADD_FAIL,
   CLEAR_SERVICE_CATEGORY_ADD_FAIL,
@@ -22,10 +22,17 @@ import {
   CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
   DELET_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_DELET_FAIL,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_REQUEST_SUCCESS,
+  GET_CATEGORIES_REQUEST_FAIL,
+  CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
 } from "../../../constants";
 import {
-  addCategory,
-  getColors,
+  addCategoryRequest,
+  addCategorySuccess,
+  clearAddCategorySuccess,
+  addCategoryFail,
+  clearAddCategoryError,
   addServiceRequest,
   addServiceSuccess,
   clearAddServiceSuccess,
@@ -41,37 +48,13 @@ import {
   clearDeletServiceSuccess,
   deletServiceFail,
   clearDeletServiceError,
+  getCategoriesRequest,
+  getCategoriesRequestSuccess,
+  getCategoriesFail,
+  clearGetCategoriesError,
 } from "./actionsServices";
-import * as API from "../../../utils/network";
 
 const mockStore = configureStore([thunk]);
-
-// describe("Categories action", () => {
-//   let store;
-//   beforeEach(() => {
-//     store = mockStore(initialState);
-//   });
-//   it("addCategory", async () => {
-//     const mockCategory = {
-//       name: "first",
-//       comment: "",
-//       color: "black",
-//     };
-//     API.httpRequest = jest.fn(() => {
-//       return Promise.reject({
-//         json: () => Promise.resolve([mockCategory]),
-//       });
-//     });
-//     await store.dispatch(addCategory(mockCategory));
-//     const actions = store.getActions();
-//     const expectActions = [
-//       {
-//         type: ADD_SERVICE_CATEGORY_REQUEST,
-//       },
-//     ];
-//     expect(actions).toEqual(expectActions);
-//   });
-// });
 
 describe("Services action add", () => {
   let store;
@@ -262,6 +245,134 @@ describe("Services action delet", () => {
     store.dispatch(clearDeletServiceError());
     const actions = store.getActions();
     const expectActions = [{ type: CLEAR_MESSAGE_SERVIC_DELET_FAIL }];
+    expect(actions).toEqual(expectActions);
+  });
+});
+
+describe("Categories action add", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore(initialState);
+  });
+  it("addCategoryRequest", () => {
+    store.dispatch(addCategoryRequest());
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: ADD_SERVICE_CATEGORY_REQUEST,
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("addCategorySuccess", () => {
+    const responsedata = {
+      data: {
+        _id: "1",
+        name: "test name",
+        colorId: "2",
+      },
+      message: "Success",
+    };
+    store.dispatch(addCategorySuccess(responsedata));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: ADD_SERVICE_CATEGORY_SUCCESS,
+        payload: {
+          data: {
+            _id: responsedata.data._id,
+            name: responsedata.data.name,
+            colorId: responsedata.data.colorId,
+          },
+          message: responsedata.message,
+        },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearAddCategorySuccess", () => {
+    store.dispatch(clearAddCategorySuccess());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS }];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("addCategoryFail", () => {
+    const error = { response: { data: { message: "some error" } } };
+    store.dispatch(addCategoryFail(error));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: SERVICE_CATEGORY_ADD_FAIL,
+        payload: { message: error.response.data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearAddCategoryError", () => {
+    store.dispatch(clearAddCategoryError());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_SERVICE_CATEGORY_ADD_FAIL }];
+    expect(actions).toEqual(expectActions);
+  });
+});
+
+describe("Categories action get", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore(initialState);
+  });
+  it("getCategoriesRequest", () => {
+    store.dispatch(getCategoriesRequest());
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: GET_CATEGORIES_REQUEST,
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("getCategoriesRequestSuccess", () => {
+    const responsedata = [
+      {
+        _id: "1",
+        name: "test name",
+        colorId: "2",
+      },
+    ];
+
+    store.dispatch(getCategoriesRequestSuccess(responsedata));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: GET_CATEGORIES_REQUEST_SUCCESS,
+        payload: responsedata,
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("getCategoriesFail", () => {
+    const error = { response: { data: { message: "some error" } } };
+    store.dispatch(getCategoriesFail(error));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: GET_CATEGORIES_REQUEST_FAIL,
+        payload: { message: error.response.data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearGetCategoriesError", () => {
+    store.dispatch(clearGetCategoriesError());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL }];
     expect(actions).toEqual(expectActions);
   });
 });

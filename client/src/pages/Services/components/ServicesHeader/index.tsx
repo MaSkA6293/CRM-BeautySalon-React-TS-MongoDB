@@ -52,7 +52,7 @@ const ServicesHeader = ({
     history.push("/");
   };
   const handlerClickGoCategiry = () => {
-    history.push("services/category");
+    history.push("services/categories");
   };
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -103,6 +103,7 @@ const ServicesHeader = ({
       <ModalAddService
         open={isOpenAddService}
         handleClose={() => setIsOpenAddService(false)}
+        categoryList={categoryList}
       />
     </Header>
   );

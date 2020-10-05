@@ -3,8 +3,8 @@ import { Dispatch } from "redux";
 import { httpRequest, check401 } from "../../../utils/network";
 import {
   ADD_SERVICE_CATEGORY_REQUEST,
-  ADD_SERVICE_CATEGORY,
   ADD_SERVICE_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
   SERVICE_CATEGORY_ADD_FAIL,
   CLEAR_SERVICE_CATEGORY_ADD_FAIL,
   COLORS_REQUEST,
@@ -30,39 +30,81 @@ import {
   CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
   DELET_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_DELET_FAIL,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_REQUEST_SUCCESS,
+  GET_CATEGORIES_REQUEST_FAIL,
+  CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
 } from "../../../constants";
-import { IService } from "../types";
+import { IService, ICategory } from "../types";
+
+export const getCategories = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(getCategoriesRequest());
+    httpRequest("api/services/categories", "GET")
+      .then((res: any) => {
+        if (res.statusText === "OK") {
+          dispatch(getCategoriesRequestSuccess(res.data));
+        }
+      })
+      .catch((err) => {
+        dispatch(getCategoriesFail(err));
+        setTimeout(() => {
+          dispatch(clearGetCategoriesError());
+        }, 2000);
+      });
+  };
+};
+
+export const getCategoriesRequest = () => {
+  return { type: GET_CATEGORIES_REQUEST };
+};
+export const getCategoriesRequestSuccess = (data: ICategory[]) => {
+  return {
+    type: GET_CATEGORIES_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getCategoriesFail = (e: {
+  response: { data: { message: string } };
+}) => {
+  return {
+    type: GET_CATEGORIES_REQUEST_FAIL,
+    payload: {
+      message: e.response.data.message
+        ? e.response.data.message
+        : '"Что-то пошло не так, попробуйте снова"',
+    },
+  };
+};
+
+export const clearGetCategoriesError = () => {
+  return { type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL };
+};
+
 export const addCategory = (
   data: {
     name: string;
-    comment: string;
-    color: string;
+    colorId: string;
   },
   callback: () => void
 ) => {
   return (dispatch: Dispatch) => {
-    dispatch({
-      type: ADD_SERVICE_CATEGORY_REQUEST,
-    });
-
-    httpRequest("services", "POST", data)
+    dispatch(addCategoryRequest());
+    httpRequest("api/services/categories", "POST", data)
       .then((res: any) => {
-        if (res.data.status === "OK") {
-          dispatch({ type: ADD_SERVICE_CATEGORY, payload: res.data.data });
-          dispatch({ type: ADD_SERVICE_CATEGORY_SUCCESS });
-          callback();
-        } else {
-          throw new Error(res.data.error);
+        if (res.statusText === "OK") {
+          dispatch(addCategorySuccess(res.data));
+          setTimeout(() => {
+            dispatch(clearAddCategorySuccess());
+            callback();
+          }, 3000);
         }
       })
       .catch((err) => {
-        check401(err);
-        dispatch({
-          type: SERVICE_CATEGORY_ADD_FAIL,
-          payload: { message: err.message },
-        });
+        dispatch(addCategoryFail(err));
         setTimeout(() => {
-          dispatch({ type: CLEAR_SERVICE_CATEGORY_ADD_FAIL });
+          dispatch(clearAddCategoryError());
         }, 2000);
       });
   };
@@ -306,4 +348,46 @@ export const addServiceFail = (e: {
 
 export const clearAddServiceError = () => {
   return { type: CLEAR_MESSAGE_SERVIC_ADD_FAIL };
+};
+
+export const addCategoryRequest = () => {
+  return {
+    type: ADD_SERVICE_CATEGORY_REQUEST,
+  };
+};
+export const addCategorySuccess = (data: {
+  data: ICategory;
+  message: string;
+}) => {
+  return {
+    type: ADD_SERVICE_CATEGORY_SUCCESS,
+    payload: {
+      data: {
+        _id: data.data._id,
+        name: data.data.name,
+        colorId: data.data.colorId,
+      },
+
+      message: data.message,
+    },
+  };
+};
+export const clearAddCategorySuccess = () => {
+  return { type: CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS };
+};
+export const addCategoryFail = (e: {
+  response: { data: { message: string } };
+}) => {
+  return {
+    type: SERVICE_CATEGORY_ADD_FAIL,
+    payload: {
+      message: e.response.data.message
+        ? e.response.data.message
+        : '"Что-то пошло не так, попробуйте снова"',
+    },
+  };
+};
+
+export const clearAddCategoryError = () => {
+  return { type: CLEAR_SERVICE_CATEGORY_ADD_FAIL };
 };

@@ -5,7 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 
 import ServicesHeader from "../ServicesHeader";
-import { getColors, getServices } from "../../actions/actionsServices";
+import {
+  getCategories,
+  getColors,
+  getServices,
+} from "../../actions/actionsServices";
 import ServicList from "../ServiceList";
 import { IService } from "../../types";
 import ModalEditService from "../ModalEditServic";
@@ -14,6 +18,7 @@ const ServicesPage = () => {
   useEffect(() => {
     dispatch(getColors());
     dispatch(getServices());
+    dispatch(getCategories());
   }, [dispatch]);
   const initialSelectedServic = {
     _id: "1",
@@ -65,7 +70,7 @@ const ServicesPage = () => {
     }
   );
   return (
-    <div className="Services">
+    <div className="services">
       <ServicesHeader
         categoryList={categoryList}
         filter={filter}
@@ -82,6 +87,7 @@ const ServicesPage = () => {
         open={openEdit}
         handleClose={() => setOpenEdit(false)}
         selectedServic={selectedServic}
+        categoryList={categoryList}
       />
     </div>
   );

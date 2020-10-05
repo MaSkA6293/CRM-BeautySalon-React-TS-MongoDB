@@ -27,6 +27,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 import { addService } from "../../actions/actionsServices";
+import { ICategory } from "../../types";
 
 export const getTime = (time: string) => {
   return time.split(":").map((el) => parseInt(el.replace(/^0(\d)/, "$1")));
@@ -44,9 +45,10 @@ const AddClientSchema = Yup.object().shape({
 
 type FormAddServiceProps = {
   handleClose: any;
+  categoryList: ICategory[];
 };
 
-const FormAddService = ({ handleClose }: FormAddServiceProps) => {
+const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
   const { colors, serviceMessageFail, serviceMessageSuccess } = useSelector(
     ({ colors, services }: IGlobalStore) => {
       return {
@@ -206,13 +208,14 @@ const FormAddService = ({ handleClose }: FormAddServiceProps) => {
                       renderValue={(selected: any) =>
                         selected
                           .map((_id: string) => {
-                            return names.find((el) => el._id.toString() === _id)
-                              ?.name;
+                            return categoryList.find(
+                              (el) => el._id.toString() === _id
+                            )?.name;
                           })
                           .join(", ")
                       }
                     >
-                      {names.map((item, index) => (
+                      {categoryList.map((item, index) => (
                         <MenuItem
                           key={index}
                           value={item._id.toString()}

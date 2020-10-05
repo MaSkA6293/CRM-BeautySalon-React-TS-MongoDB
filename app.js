@@ -17,6 +17,7 @@ const authRoutes = require("./routes/auth.routes");
 const clientRoutes = require("./routes/client.routes");
 const colorRoutes = require("./routes/color.routes");
 const serviceRoutes = require("./routes/service.routes");
+const serviceCategoryesRoutes = require("./routes/serviceCategory.routes");
 
 const app = express();
 app.use(morgan("tiny"));
@@ -64,6 +65,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/client", clientRoutes);
 app.use("/api/color", colorRoutes);
 app.use("/api/services", serviceRoutes);
+app.use("/api/services/categories", serviceCategoryesRoutes);
 
 app.post("/tasks", TaskController.create);
 app.get("/tasks", TaskController.read);

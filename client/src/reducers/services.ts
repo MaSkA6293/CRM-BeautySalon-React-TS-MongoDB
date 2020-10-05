@@ -21,18 +21,26 @@ import {
   CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
   DELET_SERVIC_FAIL,
   CLEAR_MESSAGE_SERVIC_DELET_FAIL,
+  ADD_SERVICE_CATEGORY_REQUEST,
+  ADD_SERVICE_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
+  SERVICE_CATEGORY_ADD_FAIL,
+  CLEAR_SERVICE_CATEGORY_ADD_FAIL,
+  GET_CATEGORIES_REQUEST,
+  GET_CATEGORIES_REQUEST_SUCCESS,
+  GET_CATEGORIES_REQUEST_FAIL,
+  CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
 } from "../constants";
 
 export const initialState: IstateService = {
   categoryIsAdded: false,
-  categoryAddIsFail: false,
   categoryAdded: false,
+  categoryAddIsFail: false,
   categoryAddError: false,
-  categoryList: [
-    { _id: "1", name: "Стрижка", colorId: "5f282d9fcd3ab22fce501b00" },
-    { _id: "2", name: "Окрашивание", colorId: "5f282db5cd3ab22fce501b01" },
-    { _id: "3", name: "Укладка", colorId: "5f282dcecd3ab22fce501b03" },
-  ],
+
+  categoriesIsLoading: false,
+  categoriesLoaded: false,
+  categoryList: [],
 
   servicesList: [],
   servicesIsLoading: true,
@@ -146,6 +154,53 @@ const stateServices = (
     case DELET_SERVIC_FAIL:
       return { ...state, serviceMessageFail: action.payload.message };
     case CLEAR_MESSAGE_SERVIC_DELET_FAIL:
+      return { ...state, serviceMessageFail: "" };
+
+    case GET_CATEGORIES_REQUEST:
+      return {
+        ...state,
+        categoriesIsLoading: true,
+        categoriesLoaded: false,
+        categoryList: [],
+      };
+    case GET_CATEGORIES_REQUEST_SUCCESS:
+      return {
+        ...state,
+        categoriesIsLoading: false,
+        categoriesLoaded: true,
+        categoryList: action.payload,
+      };
+    case GET_CATEGORIES_REQUEST_FAIL:
+      return {
+        ...state,
+        categoriesIsLoading: false,
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL:
+      return {
+        ...state,
+        servicesGetIsFail: false,
+        servicesGetError: "",
+      };
+
+    case ADD_SERVICE_CATEGORY_REQUEST:
+      return { ...state, categoryIsAdded: true, categoryAdded: false };
+    case ADD_SERVICE_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        categoryIsAdded: false,
+        categoryAdded: true,
+        categoryList: [...state.categoryList, action.payload.data],
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS:
+      return {
+        ...state,
+        serviceMessageSuccess: "",
+      };
+    case SERVICE_CATEGORY_ADD_FAIL:
+      return { ...state, serviceMessageFail: action.payload.message };
+    case CLEAR_SERVICE_CATEGORY_ADD_FAIL:
       return { ...state, serviceMessageFail: "" };
 
     default:

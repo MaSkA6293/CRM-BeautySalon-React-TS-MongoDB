@@ -31,6 +31,7 @@ import { editService, deletServic } from "../../actions/actionsServices";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AreYouSure from "../AreYouSure";
+import { ICategory } from "../../types";
 
 export const getTimeFromArray = (time: number[]) => {
   return time
@@ -50,6 +51,7 @@ const AddClientSchema = Yup.object().shape({
 });
 
 type FormEditServiceProps = {
+  categoryList: ICategory[];
   handleClose: () => void;
   selectedServic: {
     _id: string;
@@ -65,6 +67,7 @@ type FormEditServiceProps = {
 const FormEditService = ({
   handleClose,
   selectedServic,
+  categoryList,
 }: FormEditServiceProps) => {
   const {
     colors,
@@ -247,13 +250,14 @@ const FormEditService = ({
                       renderValue={(selected: any) =>
                         selected
                           .map((_id: string) => {
-                            return names.find((el) => el._id.toString() === _id)
-                              ?.name;
+                            return categoryList.find(
+                              (el) => el._id.toString() === _id
+                            )?.name;
                           })
                           .join(", ")
                       }
                     >
-                      {names.map((item, index) => (
+                      {categoryList.map((item, index) => (
                         <MenuItem
                           key={index}
                           value={item._id.toString()}

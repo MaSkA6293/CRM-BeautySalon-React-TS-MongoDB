@@ -1,21 +1,15 @@
 import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import FormAddService from "../FormAddService";
+import FormAddCategory from "../FormAddCategory";
 import "./styles.scss";
-import { ICategory } from "../../types";
 
-type ModalAddServiceProps = {
+type ModalAddCategoryProps = {
   open: boolean;
   handleClose: () => void;
-  categoryList: ICategory[];
 };
 
-const ModalAddService = ({
-  open,
-  handleClose,
-  categoryList,
-}: ModalAddServiceProps) => {
+const ModalAddCategory = ({ open, handleClose }: ModalAddCategoryProps) => {
   return (
     <Dialog
       open={open}
@@ -25,10 +19,10 @@ const ModalAddService = ({
       className="dialog"
     >
       <DialogContent>
-        <FormAddService handleClose={handleClose} categoryList={categoryList} />
+        <FormAddCategory handleClose={handleClose} />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default ModalAddService;
+export default ModalAddCategory;
