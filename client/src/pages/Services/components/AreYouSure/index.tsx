@@ -8,11 +8,13 @@ type AlertDialogProps = {
   open: boolean;
   setOpen: (data: boolean) => void;
   handlerDelet: () => void;
+  text: string;
 };
 export default function AlertDialog({
   open,
   setOpen,
   handlerDelet,
+  text,
 }: AlertDialogProps) {
   const handleClose = () => {
     setOpen(false);
@@ -26,9 +28,7 @@ export default function AlertDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Вы действительно хотите удалить услугу?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{text}</DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Нет

@@ -23,20 +23,20 @@ router.get(
   CategoryController.getAllCategories
 );
 
-// router.put(
-//   "/",
-//   passport.authenticate("jwt", {
-//     session: false,
-//   }),
-//   ServiceController.update
-// );
+router.put(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  CategoryController.update
+);
 
-// router.delete(
-//   "/",
-//   passport.authenticate("jwt", {
-//     session: false,
-//   }),
-//   ServiceController.delet
-// );
+router.delete(
+  "/",
+  passport.authenticate("jwt", {
+    session: false,
+  }),
+  CategoryController.delet
+);
 
 module.exports = router;

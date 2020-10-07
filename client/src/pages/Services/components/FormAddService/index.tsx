@@ -94,12 +94,6 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
     dispatch(addService(data, handleClose));
   };
 
-  const names = [
-    { name: "Стрижка", _id: "1", colorId: "red" },
-    { name: "Окрашивание", _id: "2", colorId: "green" },
-    { name: "Укладка", _id: "3", colorId: "blue" },
-  ];
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCategory(event.target.value as string[]);
   };

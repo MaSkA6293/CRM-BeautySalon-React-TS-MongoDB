@@ -26,6 +26,16 @@ import {
   GET_CATEGORIES_REQUEST_SUCCESS,
   GET_CATEGORIES_REQUEST_FAIL,
   CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
+  EDIT_CATEGORY_REQUEST,
+  EDIT_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+  EDIT_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+  DELET_CATEGORY_REQUEST,
+  DELET_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
+  DELET_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
 } from "../../../constants";
 import {
   addCategoryRequest,
@@ -52,6 +62,16 @@ import {
   getCategoriesRequestSuccess,
   getCategoriesFail,
   clearGetCategoriesError,
+  editCategoryRequest,
+  editCategorySuccess,
+  clearEditCategorySuccess,
+  editCategoryFail,
+  clearEditCategoryError,
+  deletCategoryRequest,
+  deletCategorySuccess,
+  clearDeletCategorySuccess,
+  deletCategoryFail,
+  clearDeletCategoryError,
 } from "./actionsServices";
 
 const mockStore = configureStore([thunk]);
@@ -373,6 +393,130 @@ describe("Categories action get", () => {
     store.dispatch(clearGetCategoriesError());
     const actions = store.getActions();
     const expectActions = [{ type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL }];
+    expect(actions).toEqual(expectActions);
+  });
+});
+
+describe("Category action edit", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore(initialState);
+  });
+  it("editCategoryRequest", () => {
+    store.dispatch(editCategoryRequest());
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: EDIT_CATEGORY_REQUEST,
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("editCategorySuccess", () => {
+    const data = {
+      data: {
+        id: 1,
+        name: "haircut",
+        colorId: 4,
+      },
+      message: "Success",
+    };
+    store.dispatch(editCategorySuccess(data));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: EDIT_CATEGORY_SUCCESS,
+        payload: { data: data.data, message: data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearEditCategorySuccess", () => {
+    store.dispatch(clearEditCategorySuccess());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS }];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("editCategoryFail", () => {
+    const error = { response: { data: { message: "some error" } } };
+    store.dispatch(editCategoryFail(error));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: EDIT_CATEGORY_FAIL,
+        payload: { message: error.response.data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearEditCategoryError", () => {
+    store.dispatch(clearEditCategoryError());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_MESSAGE_CATEGORY_EDIT_FAIL }];
+    expect(actions).toEqual(expectActions);
+  });
+});
+
+describe("Category action delet", () => {
+  let store;
+  beforeEach(() => {
+    store = mockStore(initialState);
+  });
+  it("deletCategoryRequest", () => {
+    store.dispatch(deletCategoryRequest());
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: DELET_CATEGORY_REQUEST,
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("deletServiceSuccess", () => {
+    const data = {
+      _id: "1",
+      message: "Success",
+    };
+    store.dispatch(deletCategorySuccess(data));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: DELET_CATEGORY_SUCCESS,
+        payload: { _id: data._id, message: data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearDeletCategorySuccess", () => {
+    store.dispatch(clearDeletCategorySuccess());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS }];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("deletCategoryFail", () => {
+    const error = { response: { data: { message: "some error" } } };
+    store.dispatch(deletCategoryFail(error));
+    const actions = store.getActions();
+    const expectActions = [
+      {
+        type: DELET_CATEGORY_FAIL,
+        payload: { message: error.response.data.message },
+      },
+    ];
+    expect(actions).toEqual(expectActions);
+  });
+
+  it("clearDeletCategoryError", () => {
+    store.dispatch(clearDeletCategoryError());
+    const actions = store.getActions();
+    const expectActions = [{ type: CLEAR_MESSAGE_CATEGORY_DELET_FAIL }];
     expect(actions).toEqual(expectActions);
   });
 });

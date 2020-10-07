@@ -8,9 +8,9 @@ import ModalAddNewCategory from "../ModalAddNewCategory";
 import { getColors } from "../../actions/actionsServices";
 import { getCategories } from "../../actions/actionsServices";
 import { ICategory } from "../../types";
-import { IColor } from "../../../../types/typesColors";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import CategoryList from "../CategoryList";
+import ModalEditCategory from "../ModalEditCatrgory";
 
 const CategoriesPage = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const CategoriesPage = () => {
   const initialCategory = {
     _id: "1",
     name: "test name",
-    colorId: "1",
+    color: { _id: "12345", hex: "red" },
   };
   const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
@@ -36,8 +36,8 @@ const CategoriesPage = () => {
             _id: item._id,
             name: item.name,
             color: colors.colorsList.find(
-              (el: IColor) => el._id === item.colorId
-            )?.hex!,
+              (el) => el._id.toString() === item.colorId
+            )!,
           };
         }),
         colors: colors.colorsList,
@@ -59,13 +59,19 @@ const CategoriesPage = () => {
         ""
       )}
 
-      {CategoryList.length > 0 && colors && (
+      {categoryList.length > 0 && colors.length && (
         <CategoryList
           categoryList={categoryList}
           setOpenEdit={setOpenEdit}
           setSelectedCategory={setSelectedCategory}
         />
       )}
+      <ModalEditCategory
+        open={openEdit}
+        handleClose={() => setOpenEdit(false)}
+        selectedCategory={selectedCategory}
+        categoryList={categoryList}
+      />
     </div>
   );
 };

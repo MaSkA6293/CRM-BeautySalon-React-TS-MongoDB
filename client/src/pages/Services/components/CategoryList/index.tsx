@@ -1,10 +1,11 @@
 import React from "react";
+import { IColor } from "../../../../types/typesColors";
 import Category from "../Category";
 type CategoryListProps = {
   categoryList: {
     _id: string;
     name: string;
-    color: string;
+    color: IColor;
   }[];
   setOpenEdit: any;
   setSelectedCategory: any;

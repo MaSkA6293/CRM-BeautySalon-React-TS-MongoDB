@@ -30,6 +30,16 @@ import {
   GET_CATEGORIES_REQUEST_SUCCESS,
   GET_CATEGORIES_REQUEST_FAIL,
   CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
+  EDIT_CATEGORY_REQUEST,
+  EDIT_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+  EDIT_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+  DELET_CATEGORY_REQUEST,
+  DELET_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
+  DELET_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
 } from "../constants";
 
 export const initialState: IstateService = {
@@ -37,6 +47,12 @@ export const initialState: IstateService = {
   categoryAdded: false,
   categoryAddIsFail: false,
   categoryAddError: false,
+
+  categoryIsEdited: false,
+  categoryEdited: false,
+
+  categoryIsDeleted: false,
+  categoryDeleted: false,
 
   categoriesIsLoading: false,
   categoriesLoaded: false,
@@ -201,6 +217,52 @@ const stateServices = (
     case SERVICE_CATEGORY_ADD_FAIL:
       return { ...state, serviceMessageFail: action.payload.message };
     case CLEAR_SERVICE_CATEGORY_ADD_FAIL:
+      return { ...state, serviceMessageFail: "" };
+
+    case EDIT_CATEGORY_REQUEST:
+      return { ...state, categoryIsEdited: true, categoryEdited: false };
+    case EDIT_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        categoryIsEdited: false,
+        categoryEdited: true,
+        categoryList: state.categoryList.map((category) =>
+          category._id === action.payload.data._id
+            ? action.payload.data
+            : category
+        ),
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS:
+      return {
+        ...state,
+        serviceMessageSuccess: "",
+      };
+    case EDIT_CATEGORY_FAIL:
+      return { ...state, serviceMessageFail: action.payload.message };
+    case CLEAR_MESSAGE_CATEGORY_EDIT_FAIL:
+      return { ...state, serviceMessageFail: "" };
+
+    case DELET_CATEGORY_REQUEST:
+      return { ...state, categoryIsDeleted: true, categoryDeleted: false };
+    case DELET_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        categoryIsDeleted: false,
+        categoryDeleted: true,
+        categoryList: state.categoryList.filter(
+          (category) => category._id !== action.payload._id
+        ),
+        serviceMessageSuccess: action.payload.message,
+      };
+    case CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS:
+      return {
+        ...state,
+        serviceMessageSuccess: "",
+      };
+    case DELET_CATEGORY_FAIL:
+      return { ...state, serviceMessageFail: action.payload.message };
+    case CLEAR_MESSAGE_CATEGORY_DELET_FAIL:
       return { ...state, serviceMessageFail: "" };
 
     default:

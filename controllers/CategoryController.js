@@ -53,45 +53,41 @@ module.exports.getAllCategories = async (req, res) => {
   }
 };
 
-// module.exports.update = async (req, res) => {
-//   try {
-//     const query = { _id: req.body._id };
-//     const update = req.body;
-//     const newWrite = await ServiceModels.findOneAndUpdate(query, update, {
-//       new: true,
-//     });
+module.exports.update = async (req, res) => {
+  try {
+    const query = { _id: req.body._id };
+    const update = req.body;
+    const newWrite = await CategoryModels.findOneAndUpdate(query, update, {
+      new: true,
+    });
+    const userData = {
+      data: {
+        _id: newWrite._id,
+        name: newWrite.name,
+        colorId: newWrite.colorId,
+      },
+      message: "Категория успешно обновлена",
+    };
 
-//     const userData = {
-//       data: {
-//         _id: newWrite._id,
-//         name: newWrite.name,
-//         duration: newWrite.duration,
-//         cost: newWrite.cost,
-//         categoriesId: newWrite.categoriesId,
-//         colorId: newWrite.colorId,
-//       },
-//       message: "Услуга успешно обновлена",
-//     };
-//     res.status(200).json(userData);
-//   } catch (e) {
-//     res.status(500).send({
-//       message: ERROR_MESSAGE_STATUS_500,
-//     });
-//   }
-// };
+    res.status(200).json(userData);
+  } catch (e) {
+    res.status(500).send({
+      message: ERROR_MESSAGE_STATUS_500,
+    });
+  }
+};
 
-// module.exports.delet = async (req, res) => {
-//   console.log(req.body);
-//   try {
-//     await ServiceModels.deleteOne({
-//       _id: req.body._id,
-//     });
-//     res
-//       .status(200)
-//       .json({ _id: req.body._id, message: "Услуга успешно удалена" });
-//   } catch (e) {
-//     res.status(500).send({
-//       message: ERROR_MESSAGE_STATUS_500,
-//     });
-//   }
-// };
+module.exports.delet = async (req, res) => {
+  try {
+    await CategoryModels.deleteOne({
+      _id: req.body._id,
+    });
+    res
+      .status(200)
+      .json({ _id: req.body._id, message: "Категория успешно удалена" });
+  } catch (e) {
+    res.status(500).send({
+      message: ERROR_MESSAGE_STATUS_500,
+    });
+  }
+};

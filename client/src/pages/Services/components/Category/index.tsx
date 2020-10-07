@@ -9,10 +9,14 @@ type ServiceProps = {
   data: {
     _id: string;
     name: string;
-    color: string;
+    color: IColor;
   };
-  setOpenEdit: any;
-  setSelectedCategory: any;
+  setOpenEdit: (value: boolean) => void;
+  setSelectedCategory: (data: {
+    _id: string;
+    name: string;
+    color: IColor;
+  }) => void;
 };
 
 export default function Category({
@@ -20,7 +24,7 @@ export default function Category({
   setOpenEdit,
   setSelectedCategory,
 }: ServiceProps) {
-  const handlerClick = (data: { _id: string; name: string; color: string }) => {
+  const handlerClick = (data: { _id: string; name: string; color: IColor }) => {
     setOpenEdit(true);
     setSelectedCategory(data);
   };
@@ -39,7 +43,7 @@ export default function Category({
             <div className="category__title">
               <div
                 className="category__color"
-                style={{ backgroundColor: data.color }}
+                style={{ backgroundColor: data.color.hex }}
               ></div>
               <div className="category__name">{data.name}</div>
             </div>

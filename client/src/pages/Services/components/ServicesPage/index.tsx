@@ -76,7 +76,7 @@ const ServicesPage = () => {
         filter={filter}
         setFilter={setFilter}
       />
-      {servicesList.length > 0 && colors && (
+      {servicesList.length > 0 && colors.length && (
         <ServicList
           servicesList={servicesList}
           setOpenEdit={setOpenEdit}

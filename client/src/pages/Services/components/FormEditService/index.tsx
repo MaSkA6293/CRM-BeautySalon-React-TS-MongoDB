@@ -128,12 +128,6 @@ const FormEditService = ({
     dispatch(editService(data, handleClose));
   };
 
-  const names = [
-    { name: "Стрижка", _id: "1", colorId: "red" },
-    { name: "Окрашивание", _id: "2", colorId: "green" },
-    { name: "Укладка", _id: "3", colorId: "blue" },
-  ];
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCategory(event.target.value as string[]);
   };
@@ -142,7 +136,12 @@ const FormEditService = ({
   };
   return (
     <>
-      <AreYouSure open={open} setOpen={setOpen} handlerDelet={handlerDelet} />
+      <AreYouSure
+        open={open}
+        setOpen={setOpen}
+        handlerDelet={handlerDelet}
+        text={"Вы действительно хотите удалить услугу?"}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={AddClientSchema}

@@ -34,6 +34,16 @@ import {
   GET_CATEGORIES_REQUEST_SUCCESS,
   GET_CATEGORIES_REQUEST_FAIL,
   CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
+  EDIT_CATEGORY_REQUEST,
+  EDIT_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+  EDIT_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+  DELET_CATEGORY_REQUEST,
+  DELET_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
+  DELET_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
 } from "../../../constants";
 import { IService, ICategory } from "../types";
 
@@ -53,33 +63,6 @@ export const getCategories = () => {
         }, 2000);
       });
   };
-};
-
-export const getCategoriesRequest = () => {
-  return { type: GET_CATEGORIES_REQUEST };
-};
-export const getCategoriesRequestSuccess = (data: ICategory[]) => {
-  return {
-    type: GET_CATEGORIES_REQUEST_SUCCESS,
-    payload: data,
-  };
-};
-
-export const getCategoriesFail = (e: {
-  response: { data: { message: string } };
-}) => {
-  return {
-    type: GET_CATEGORIES_REQUEST_FAIL,
-    payload: {
-      message: e.response.data.message
-        ? e.response.data.message
-        : '"Что-то пошло не так, попробуйте снова"',
-    },
-  };
-};
-
-export const clearGetCategoriesError = () => {
-  return { type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL };
 };
 
 export const addCategory = (
@@ -108,6 +91,130 @@ export const addCategory = (
         }, 2000);
       });
   };
+};
+
+export const editCategory = (
+  data: {
+    _id: string;
+    name: string;
+    colorId: string;
+  },
+  callback: () => void
+) => {
+  return (dispatch: Dispatch) => {
+    dispatch(editCategoryRequest());
+    httpRequest("api/services/categories", "PUT", data)
+      .then((res: any) => {
+        if (res.statusText === "OK") {
+          dispatch(editCategorySuccess(res.data));
+          setTimeout(() => {
+            dispatch(clearEditCategorySuccess());
+            callback();
+          }, 3000);
+        }
+      })
+      .catch((e) => {
+        dispatch(editCategoryFail(e));
+        setTimeout(() => {
+          dispatch(clearEditCategoryError());
+        }, 2000);
+      });
+  };
+};
+
+export const editCategoryRequest = () => {
+  return {
+    type: EDIT_CATEGORY_REQUEST,
+  };
+};
+
+export const editCategorySuccess = (data: {
+  data: ICategory;
+  message: string;
+}) => {
+  return {
+    type: EDIT_CATEGORY_SUCCESS,
+    payload: { data: data.data, message: data.message },
+  };
+};
+
+export const clearEditCategorySuccess = () => {
+  return { type: CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS };
+};
+
+export const editCategoryFail = (e: {
+  response: { data: { message: string } };
+}) => {
+  return {
+    type: EDIT_CATEGORY_FAIL,
+    payload: {
+      message: e.response.data.message
+        ? e.response.data.message
+        : '"Что-то пошло не так, попробуйте снова"',
+    },
+  };
+};
+
+export const clearEditCategoryError = () => {
+  return { type: CLEAR_MESSAGE_CATEGORY_EDIT_FAIL };
+};
+
+export const deletCategory = (_id: string, callback: () => void) => {
+  return (dispatch: Dispatch) => {
+    dispatch(deletCategoryRequest());
+    httpRequest("api/services/categories", "DELETE", { _id })
+      .then((res) => {
+        if (res.statusText === "OK") {
+          dispatch(deletCategorySuccess(res.data));
+          setTimeout(() => {
+            dispatch(clearDeletCategorySuccess());
+            callback();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        dispatch(deletCategoryFail(err));
+        setTimeout(() => {
+          dispatch(clearDeletCategoryError());
+        }, 2000);
+      });
+  };
+};
+
+//delet
+export const deletCategoryRequest = () => {
+  return {
+    type: DELET_CATEGORY_REQUEST,
+  };
+};
+export const deletCategorySuccess = (data: {
+  _id: string;
+  message: string;
+}) => {
+  return {
+    type: DELET_CATEGORY_SUCCESS,
+    payload: { _id: data._id, message: data.message },
+  };
+};
+
+export const clearDeletCategorySuccess = () => {
+  return { type: CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS };
+};
+
+export const deletCategoryFail = (e: {
+  response: { data: { message: string } };
+}) => {
+  return {
+    type: DELET_CATEGORY_FAIL,
+    payload: {
+      message: e.response.data.message
+        ? e.response.data.message
+        : '"Что-то пошло не так, попробуйте снова"',
+    },
+  };
+};
+export const clearDeletCategoryError = () => {
+  return { type: CLEAR_MESSAGE_CATEGORY_DELET_FAIL };
 };
 
 export const getColors = () => {
@@ -390,4 +497,31 @@ export const addCategoryFail = (e: {
 
 export const clearAddCategoryError = () => {
   return { type: CLEAR_SERVICE_CATEGORY_ADD_FAIL };
+};
+
+export const getCategoriesRequest = () => {
+  return { type: GET_CATEGORIES_REQUEST };
+};
+export const getCategoriesRequestSuccess = (data: ICategory[]) => {
+  return {
+    type: GET_CATEGORIES_REQUEST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getCategoriesFail = (e: {
+  response: { data: { message: string } };
+}) => {
+  return {
+    type: GET_CATEGORIES_REQUEST_FAIL,
+    payload: {
+      message: e.response.data.message
+        ? e.response.data.message
+        : '"Что-то пошло не так, попробуйте снова"',
+    },
+  };
+};
+
+export const clearGetCategoriesError = () => {
+  return { type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL };
 };

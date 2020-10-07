@@ -27,6 +27,16 @@ import {
   GET_CATEGORIES_REQUEST_SUCCESS,
   GET_CATEGORIES_REQUEST_FAIL,
   CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
+  EDIT_CATEGORY_REQUEST,
+  EDIT_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+  EDIT_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+  DELET_CATEGORY_REQUEST,
+  DELET_CATEGORY_SUCCESS,
+  CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
+  DELET_CATEGORY_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
 } from "../../constants";
 
 export interface ICategoryValues {
@@ -54,6 +64,10 @@ export interface ICategory {
   colorId: string;
 }
 export interface IstateService {
+  readonly categoryIsDeleted: boolean;
+  readonly categoryDeleted: boolean;
+  readonly categoryIsEdited: boolean;
+  readonly categoryEdited: boolean;
   readonly servicesList: IService[];
   readonly servicesIsLoading: boolean;
   readonly servicesLoaded: boolean;
@@ -200,6 +214,51 @@ interface IGetCategoriesRequestFailClear {
   type: typeof CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL;
 }
 
+// edit
+interface IEditCategoryRequest {
+  type: typeof EDIT_CATEGORY_REQUEST;
+}
+
+interface IEditCategorySuccess {
+  type: typeof EDIT_CATEGORY_SUCCESS;
+  payload: { data: ICategory; message: string };
+}
+
+interface IEditCategoryClearMessageSuccess {
+  type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS;
+}
+
+interface IEditCategoryFail {
+  type: typeof EDIT_CATEGORY_FAIL;
+  payload: { message: string };
+}
+interface IEditCategoryFailClear {
+  type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_FAIL;
+}
+
+// delet
+
+interface IDeletCategoryRequest {
+  type: typeof DELET_CATEGORY_REQUEST;
+}
+
+interface IDeletCategorySuccess {
+  type: typeof DELET_CATEGORY_SUCCESS;
+  payload: { _id: string; message: string };
+}
+
+interface IDeletCategoryClearMessageSuccess {
+  type: typeof CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS;
+}
+
+interface IDeletCategoryFail {
+  type: typeof DELET_CATEGORY_FAIL;
+  payload: { message: string };
+}
+interface IDeletCategoryFailClear {
+  type: typeof CLEAR_MESSAGE_CATEGORY_DELET_FAIL;
+}
+
 export type ServiceActionTypes =
   | IAddServiceRequest
   | IAddServiceSuccess
@@ -228,7 +287,17 @@ export type ServiceActionTypes =
   | IGetCategoriesRequest
   | IGetCategoriesRequestSuccess
   | IGetCategoriesRequestFail
-  | IGetCategoriesRequestFailClear;
+  | IGetCategoriesRequestFailClear
+  | IEditCategoryRequest
+  | IEditCategorySuccess
+  | IEditCategoryClearMessageSuccess
+  | IEditCategoryFail
+  | IEditCategoryFailClear
+  | IDeletCategoryRequest
+  | IDeletCategorySuccess
+  | IDeletCategoryClearMessageSuccess
+  | IDeletCategoryFail
+  | IDeletCategoryFailClear;
 
 // export interface IClient {
 //   _id: number;

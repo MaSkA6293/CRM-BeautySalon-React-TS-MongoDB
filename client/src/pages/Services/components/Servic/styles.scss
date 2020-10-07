@@ -1,6 +1,7 @@
 .servic {
   display: flex;
   width: 100%;
+  padding-top: 5px;
   &__body {
     display: flex;
     justify-content: flex-start;
@@ -14,7 +15,7 @@
     padding: 0 10px 0 0;
   }
   &__color {
-    width: 25px;
+    min-width: 25px;
     height: 25px;
     border-radius: 50%;
   }
