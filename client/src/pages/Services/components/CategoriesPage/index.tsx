@@ -5,8 +5,8 @@ import Header from "../../../../components/Header";
 import CategoryHeader from "../CategoryHeader";
 import ModalAddNewCategory from "../ModalAddNewCategory";
 
-import { getColors } from "../../actions/actionsServices";
-import { getCategories } from "../../actions/actionsServices";
+import { runFetchCategoryPageData } from "../../../../sagas/fetchCategoryPageData";
+
 import { ICategory } from "../../types";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import CategoryList from "../CategoryList";
@@ -15,8 +15,7 @@ import ModalEditCategory from "../ModalEditCatrgory";
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getColors());
-    dispatch(getCategories());
+    dispatch(runFetchCategoryPageData())
   }, [dispatch]);
 
   const initialCategory = {
@@ -56,8 +55,8 @@ const CategoriesPage = () => {
           handleClose={() => setIsOpenAddCategory(false)}
         />
       ) : (
-        ""
-      )}
+          ""
+        )}
 
       {categoryList.length > 0 && colors.length && (
         <CategoryList

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./Services.scss";
-
+import cogoToast from "cogo-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
-
+import Spiner from "../../../../components/Spiner"
 import ServicesHeader from "../ServicesHeader";
 import {
-  getCategories,
-  getColors,
-  getServices,
-} from "../../actions/actionsServices";
+  servicPageRequest
+} from "../../../../sagas/fetchServicePageData";
 import ServicList from "../ServiceList";
 import { IService } from "../../types";
 import ModalEditService from "../ModalEditServic";
 const ServicesPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getColors());
-    dispatch(getServices());
-    dispatch(getCategories());
+    dispatch(servicPageRequest())
   }, [dispatch]);
   const initialSelectedServic = {
     _id: "1",
@@ -28,12 +24,15 @@ const ServicesPage = () => {
     color: { _id: "12345", hex: "red" },
     categoriesId: ["1", "2"],
   };
+
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedServic, setSelectedServic] = useState(initialSelectedServic);
   const [filter, setFilter] = useState("all");
-  const { servicesList, colors, categoryList } = useSelector(
+  const { servicesList, colors, categoryList, servicePageRequest, serviceMessageFail } = useSelector(
     ({ services, colors }: IGlobalStore) => {
       return {
+        serviceMessageFail: services.serviceMessageFail,
+        servicePageRequest: services.servicePageRequest,
         servicesList: services.servicesList
           .filter((el: any) => {
             if (filter === "all") {
@@ -69,6 +68,11 @@ const ServicesPage = () => {
       };
     }
   );
+  useEffect(() => {
+    serviceMessageFail &&
+      cogoToast.error(<div className="message">{serviceMessageFail}</div>);
+  }, [serviceMessageFail]);
+
   return (
     <div className="services">
       <ServicesHeader
@@ -76,6 +80,7 @@ const ServicesPage = () => {
         filter={filter}
         setFilter={setFilter}
       />
+      {servicePageRequest ? <Spiner /> : ""}
       {servicesList.length > 0 && colors.length && (
         <ServicList
           servicesList={servicesList}

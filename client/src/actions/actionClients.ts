@@ -22,7 +22,11 @@ import {
 import { Dispatch } from "redux";
 import { IClient } from "../types/typesClients";
 
-import { httpRequest, check401 } from "../utils/network";
+import { httpRequest } from "../utils/network";
+
+export const getClientsRequest = () => {
+  return { type: CLIENTS_REQUEST };
+};
 
 export const getClients = () => {
   return (dispatch: Dispatch) => {
@@ -39,7 +43,7 @@ export const getClients = () => {
         }
       })
       .catch((err) => {
-        check401(err);
+        //  check401(err);
         dispatch({
           type: CLIENTS_REQUEST_FAIL,
           payload: { message: err.response.data.message },
@@ -72,7 +76,7 @@ export const editClient = (data: IClient, callback: () => void) => {
         }
       })
       .catch((err) => {
-        check401(err);
+        //  check401(err);
         dispatch({
           type: EDIT_CLIENT_FAIL,
           payload: { message: err.message },
@@ -107,7 +111,7 @@ export const deletClient = (_id: number, callback: () => void) => {
         }
       })
       .catch((err) => {
-        check401(err);
+        //  check401(err);
         dispatch({
           type: CLIENT_DELET_FAIL,
           payload: { message: err.message },
@@ -145,7 +149,7 @@ export const addClient = (
         }
       })
       .catch((err) => {
-        check401(err);
+        //  check401(err);
         dispatch({
           type: CLIENT_ADD_FAIL,
           payload: { message: err.response.data.message },

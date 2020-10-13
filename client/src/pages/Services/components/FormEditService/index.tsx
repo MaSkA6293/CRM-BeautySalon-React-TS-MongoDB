@@ -26,8 +26,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-import { editService, deletServic } from "../../actions/actionsServices";
-
+import { rundDeletService } from "../../../../sagas/deletService";
+import { runEditServic } from "../../../../sagas/editService"
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AreYouSure from "../AreYouSure";
@@ -95,12 +95,6 @@ const FormEditService = ({
   );
   const [open, setOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (colors.length > 0) {
-  //     setSelectedColor(colors[0]._id.toString());
-  //   }
-  // }, [colors]);
-
   useEffect(() => {
     serviceMessageFail &&
       cogoToast.error(<div className="message">{serviceMessageFail}</div>);
@@ -125,14 +119,14 @@ const FormEditService = ({
       colorId: selectedColor._id,
       categoriesId: category,
     };
-    dispatch(editService(data, handleClose));
+    dispatch(runEditServic(data, handleClose))
   };
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCategory(event.target.value as string[]);
   };
   const handlerDelet = () => {
-    dispatch(deletServic(selectedServic._id, handleClose));
+    dispatch(rundDeletService(selectedServic._id, handleClose));
   };
   return (
     <>

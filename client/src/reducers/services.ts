@@ -40,9 +40,12 @@ import {
   CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
   DELET_CATEGORY_FAIL,
   CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
+  SERVICE_PAGE_REQUEST, GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS, GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR
 } from "../constants";
 
 export const initialState: IstateService = {
+  servicePageRequest: false,
+
   categoryIsAdded: false,
   categoryAdded: false,
   categoryAddIsFail: false,
@@ -81,6 +84,14 @@ const stateServices = (
   action: ServiceActionTypes
 ) => {
   switch (action.type) {
+
+    case SERVICE_PAGE_REQUEST:
+      return { ...state, servicePageRequest: true }
+    case GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS:
+      return { ...state, servicePageRequest: false, servicesList: action.payload.services, categoryList: action.payload.categories }
+    case GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR:
+      return { ...state, servicePageRequest: false, serviceMessageFail: action.payload.message }
+
     case GET_SERVICES_REQUEST:
       return {
         ...state,
@@ -124,7 +135,7 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case ADD_SERVIC_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return { ...state, serviceMessageFail: action.payload.message, serviceIsAdded: false, };
     case CLEAR_MESSAGE_SERVIC_ADD_FAIL:
       return { ...state, serviceMessageFail: "" };
 
@@ -146,7 +157,7 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case EDIT_SERVIC_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return { ...state, serviceMessageFail: action.payload.message, serviceIsEdited: false };
     case CLEAR_MESSAGE_SERVIC_EDIT_FAIL:
       return { ...state, serviceMessageFail: "" };
 
@@ -168,7 +179,7 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case DELET_SERVIC_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return { ...state, serviceMessageFail: action.payload.message, serviceIsDeleted: false, };
     case CLEAR_MESSAGE_SERVIC_DELET_FAIL:
       return { ...state, serviceMessageFail: "" };
 
@@ -215,7 +226,7 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case SERVICE_CATEGORY_ADD_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return { ...state, serviceMessageFail: action.payload.message, categoryIsAdded: false, };
     case CLEAR_SERVICE_CATEGORY_ADD_FAIL:
       return { ...state, serviceMessageFail: "" };
 
@@ -239,7 +250,10 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case EDIT_CATEGORY_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return {
+        ...state, serviceMessageFail: action.payload.message,
+        categoryIsEdited: false,
+      };
     case CLEAR_MESSAGE_CATEGORY_EDIT_FAIL:
       return { ...state, serviceMessageFail: "" };
 
@@ -261,7 +275,10 @@ const stateServices = (
         serviceMessageSuccess: "",
       };
     case DELET_CATEGORY_FAIL:
-      return { ...state, serviceMessageFail: action.payload.message };
+      return {
+        ...state, serviceMessageFail: action.payload.message,
+        categoryIsDeleted: false,
+      };
     case CLEAR_MESSAGE_CATEGORY_DELET_FAIL:
       return { ...state, serviceMessageFail: "" };
 

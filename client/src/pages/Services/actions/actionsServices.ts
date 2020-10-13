@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 
-import { httpRequest, check401 } from "../../../utils/network";
+import { httpRequest } from "../../../utils/network";
 import {
   ADD_SERVICE_CATEGORY_REQUEST,
   ADD_SERVICE_CATEGORY_SUCCESS,
@@ -20,20 +20,6 @@ import {
   GET_SERVICES_REQUEST_SUCCESS,
   GET_SERVICES_REQUEST_FAIL,
   CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
-  EDIT_SERVIC_REQUEST,
-  EDIT_SERVIC_SUCCESS,
-  CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
-  EDIT_SERVIC_FAIL,
-  CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
-  DELET_SERVIC_REQUEST,
-  DELET_SERVIC_SUCCESS,
-  CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
-  DELET_SERVIC_FAIL,
-  CLEAR_MESSAGE_SERVIC_DELET_FAIL,
-  GET_CATEGORIES_REQUEST,
-  GET_CATEGORIES_REQUEST_SUCCESS,
-  GET_CATEGORIES_REQUEST_FAIL,
-  CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
   EDIT_CATEGORY_REQUEST,
   EDIT_CATEGORY_SUCCESS,
   CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
@@ -43,27 +29,13 @@ import {
   DELET_CATEGORY_SUCCESS,
   CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
   DELET_CATEGORY_FAIL,
-  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL
 } from "../../../constants";
 import { IService, ICategory } from "../types";
 
-export const getCategories = () => {
-  return (dispatch: Dispatch) => {
-    dispatch(getCategoriesRequest());
-    httpRequest("api/services/categories", "GET")
-      .then((res: any) => {
-        if (res.statusText === "OK") {
-          dispatch(getCategoriesRequestSuccess(res.data));
-        }
-      })
-      .catch((err) => {
-        dispatch(getCategoriesFail(err));
-        setTimeout(() => {
-          dispatch(clearGetCategoriesError());
-        }, 2000);
-      });
-  };
-};
+
+
+
 
 export const addCategory = (
   data: {
@@ -230,7 +202,6 @@ export const getColors = () => {
         }
       })
       .catch((err) => {
-        check401(err);
         dispatch({
           type: COLORS_REQUEST_FAIL,
           payload: { message: err.response.data.message },
@@ -255,7 +226,6 @@ export const getServices = () => {
         }
       })
       .catch((err) => {
-        check401(err);
         dispatch({
           type: GET_SERVICES_REQUEST_FAIL,
           payload: { message: err.response.data.message },
@@ -298,130 +268,42 @@ export const addService = (
   };
 };
 
-export const editService = (
-  data: {
-    _id: string;
-    name: string;
-    duration: number[];
-    cost: number;
-    colorId: string;
-    categoriesId: string[];
-  },
-  callback: () => void
-) => {
-  return (dispatch: Dispatch) => {
-    dispatch(editServiceRequest());
-    httpRequest("api/services", "PUT", data)
-      .then((res: any) => {
-        if (res.statusText === "OK") {
-          dispatch(editServiceSuccess(res.data));
-          setTimeout(() => {
-            dispatch(clearEditServiceSuccess());
-            callback();
-          }, 3000);
-        }
-      })
-      .catch((e) => {
-        dispatch(editServiceFail(e));
-        setTimeout(() => {
-          dispatch(clearEditServiceError());
-        }, 2000);
-      });
-  };
-};
+// export const editService = (
+//   data: {
+//     _id: string;
+//     name: string;
+//     duration: number[];
+//     cost: number;
+//     colorId: string;
+//     categoriesId: string[];
+//   },
+//   callback: () => void
+// ) => {
+//   return (dispatch: Dispatch) => {
+//     dispatch(editServiceRequest());
+//     httpRequest("api/services", "PUT", data)
+//       .then((res: any) => {
+//         if (res.statusText === "OK") {
+//           dispatch(editServiceSuccess(res.data));
+//           setTimeout(() => {
+//             dispatch(clearEditServiceSuccess());
+//             callback();
+//           }, 3000);
+//         }
+//       })
+//       .catch((e) => {
+//         dispatch(editServiceFail(e));
+//         setTimeout(() => {
+//           dispatch(clearEditServiceError());
+//         }, 2000);
+//       });
+//   };
+// };
 
-export const deletServic = (_id: string, callback: () => void) => {
-  console.log(_id, callback);
-  return (dispatch: Dispatch) => {
-    dispatch(deletServiceRequest());
-    httpRequest("api/services", "DELETE", { _id })
-      .then((res) => {
-        if (res.statusText === "OK") {
-          dispatch(deletServiceSuccess(res.data));
-          setTimeout(() => {
-            dispatch(clearDeletServiceSuccess());
-            callback();
-          }, 3000);
-        }
-      })
-      .catch((err) => {
-        dispatch(deletServiceFail(err));
-        setTimeout(() => {
-          dispatch(clearDeletServiceError());
-        }, 2000);
-      });
-  };
-};
 
 //delet
-export const deletServiceRequest = () => {
-  return {
-    type: DELET_SERVIC_REQUEST,
-  };
-};
-export const deletServiceSuccess = (data: { _id: string; message: string }) => {
-  return {
-    type: DELET_SERVIC_SUCCESS,
-    payload: { _id: data._id, message: data.message },
-  };
-};
-
-export const clearDeletServiceSuccess = () => {
-  return { type: CLEAR_MESSAGE_SERVIC_DELET_SUCCESS };
-};
-
-export const deletServiceFail = (e: {
-  response: { data: { message: string } };
-}) => {
-  return {
-    type: DELET_SERVIC_FAIL,
-    payload: {
-      message: e.response.data.message
-        ? e.response.data.message
-        : '"Что-то пошло не так, попробуйте снова"',
-    },
-  };
-};
-export const clearDeletServiceError = () => {
-  return { type: CLEAR_MESSAGE_SERVIC_DELET_FAIL };
-};
 //edit
-export const editServiceRequest = () => {
-  return {
-    type: EDIT_SERVIC_REQUEST,
-  };
-};
 
-export const editServiceSuccess = (data: {
-  data: IService;
-  message: string;
-}) => {
-  return {
-    type: EDIT_SERVIC_SUCCESS,
-    payload: { data: data.data, message: data.message },
-  };
-};
-
-export const clearEditServiceSuccess = () => {
-  return { type: CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS };
-};
-
-export const editServiceFail = (e: {
-  response: { data: { message: string } };
-}) => {
-  return {
-    type: EDIT_SERVIC_FAIL,
-    payload: {
-      message: e.response.data.message
-        ? e.response.data.message
-        : '"Что-то пошло не так, попробуйте снова"',
-    },
-  };
-};
-
-export const clearEditServiceError = () => {
-  return { type: CLEAR_MESSAGE_SERVIC_EDIT_FAIL };
-};
 // add
 export const addServiceRequest = () => {
   return {
@@ -497,31 +379,4 @@ export const addCategoryFail = (e: {
 
 export const clearAddCategoryError = () => {
   return { type: CLEAR_SERVICE_CATEGORY_ADD_FAIL };
-};
-
-export const getCategoriesRequest = () => {
-  return { type: GET_CATEGORIES_REQUEST };
-};
-export const getCategoriesRequestSuccess = (data: ICategory[]) => {
-  return {
-    type: GET_CATEGORIES_REQUEST_SUCCESS,
-    payload: data,
-  };
-};
-
-export const getCategoriesFail = (e: {
-  response: { data: { message: string } };
-}) => {
-  return {
-    type: GET_CATEGORIES_REQUEST_FAIL,
-    payload: {
-      message: e.response.data.message
-        ? e.response.data.message
-        : '"Что-то пошло не так, попробуйте снова"',
-    },
-  };
-};
-
-export const clearGetCategoriesError = () => {
-  return { type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL };
 };

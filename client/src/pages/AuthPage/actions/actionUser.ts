@@ -52,6 +52,7 @@ export const sugnInHandler = (data: { email: string; password: string }) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch(userLoginFail(error));
         setTimeout(() => {
           dispatch(clearLoginFail());

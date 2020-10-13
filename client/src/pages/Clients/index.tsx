@@ -8,7 +8,7 @@ import { IGlobalStore } from "../../reducers/rootReducer";
 import {
   editClient,
   deletClient,
-  getClients,
+  getClientsRequest,
 } from "../../actions/actionClients";
 
 import { IClient } from "../../types/typesClients";
@@ -29,7 +29,7 @@ const Clients = () => {
   const [selectedClient, setSelectedClient] = useState(initialSelectedClient);
 
   useEffect(() => {
-    dispatch(getClients());
+    dispatch(getClientsRequest());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

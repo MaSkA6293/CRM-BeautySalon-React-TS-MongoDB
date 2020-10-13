@@ -35,7 +35,7 @@ import {
   DELET_CATEGORY_SUCCESS,
   CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
   DELET_CATEGORY_FAIL,
-  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL, SERVICE_PAGE_REQUEST
 } from "../../../constants";
 import {
   addCategoryRequest,
@@ -71,7 +71,7 @@ import {
   deletCategorySuccess,
   clearDeletCategorySuccess,
   deletCategoryFail,
-  clearDeletCategoryError,
+  clearDeletCategoryError, servicPageRequest
 } from "./actionsServices";
 
 const mockStore = configureStore([thunk]);
@@ -142,132 +142,8 @@ describe("Services action add", () => {
     expect(actions).toEqual(expectActions);
   });
 });
-describe("Services action edit", () => {
-  let store;
-  beforeEach(() => {
-    store = mockStore(initialState);
-  });
-  it("editServiceRequest", () => {
-    store.dispatch(editServiceRequest());
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: EDIT_SERVIC_REQUEST,
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
 
-  it("editServiceSuccess", () => {
-    const data = {
-      data: {
-        id: 1,
-        name: "haircut",
-        duration: [1, 20],
-        cost: 500,
-        colorId: 4,
-        categoriesId: ["222", "666"],
-      },
-      message: "Success",
-    };
-    store.dispatch(editServiceSuccess(data));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: EDIT_SERVIC_SUCCESS,
-        payload: { data: data.data, message: data.message },
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
 
-  it("clearEditServiceSuccess", () => {
-    store.dispatch(clearEditServiceSuccess());
-    const actions = store.getActions();
-    const expectActions = [{ type: CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS }];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("editServiceFail", () => {
-    const error = { response: { data: { message: "some error" } } };
-    store.dispatch(editServiceFail(error));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: EDIT_SERVIC_FAIL,
-        payload: { message: error.response.data.message },
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("clearEditServiceError", () => {
-    store.dispatch(clearEditServiceError());
-    const actions = store.getActions();
-    const expectActions = [{ type: CLEAR_MESSAGE_SERVIC_EDIT_FAIL }];
-    expect(actions).toEqual(expectActions);
-  });
-});
-
-describe("Services action delet", () => {
-  let store;
-  beforeEach(() => {
-    store = mockStore(initialState);
-  });
-  it("deletServiceRequest", () => {
-    store.dispatch(deletServiceRequest());
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: DELET_SERVIC_REQUEST,
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("deletServiceSuccess", () => {
-    const data = {
-      _id: "1",
-      message: "Success",
-    };
-    store.dispatch(deletServiceSuccess(data));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: DELET_SERVIC_SUCCESS,
-        payload: { _id: data._id, message: data.message },
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("clearDeletServiceSuccess", () => {
-    store.dispatch(clearDeletServiceSuccess());
-    const actions = store.getActions();
-    const expectActions = [{ type: CLEAR_MESSAGE_SERVIC_DELET_SUCCESS }];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("deletServiceFail", () => {
-    const error = { response: { data: { message: "some error" } } };
-    store.dispatch(deletServiceFail(error));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: DELET_SERVIC_FAIL,
-        payload: { message: error.response.data.message },
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("clearDeletServiceError", () => {
-    store.dispatch(clearDeletServiceError());
-    const actions = store.getActions();
-    const expectActions = [{ type: CLEAR_MESSAGE_SERVIC_DELET_FAIL }];
-    expect(actions).toEqual(expectActions);
-  });
-});
 
 describe("Categories action add", () => {
   let store;
@@ -340,62 +216,6 @@ describe("Categories action add", () => {
   });
 });
 
-describe("Categories action get", () => {
-  let store;
-  beforeEach(() => {
-    store = mockStore(initialState);
-  });
-  it("getCategoriesRequest", () => {
-    store.dispatch(getCategoriesRequest());
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: GET_CATEGORIES_REQUEST,
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("getCategoriesRequestSuccess", () => {
-    const responsedata = [
-      {
-        _id: "1",
-        name: "test name",
-        colorId: "2",
-      },
-    ];
-
-    store.dispatch(getCategoriesRequestSuccess(responsedata));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: GET_CATEGORIES_REQUEST_SUCCESS,
-        payload: responsedata,
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("getCategoriesFail", () => {
-    const error = { response: { data: { message: "some error" } } };
-    store.dispatch(getCategoriesFail(error));
-    const actions = store.getActions();
-    const expectActions = [
-      {
-        type: GET_CATEGORIES_REQUEST_FAIL,
-        payload: { message: error.response.data.message },
-      },
-    ];
-    expect(actions).toEqual(expectActions);
-  });
-
-  it("clearGetCategoriesError", () => {
-    store.dispatch(clearGetCategoriesError());
-    const actions = store.getActions();
-    const expectActions = [{ type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL }];
-    expect(actions).toEqual(expectActions);
-  });
-});
 
 describe("Category action edit", () => {
   let store;
@@ -520,3 +340,6 @@ describe("Category action delet", () => {
     expect(actions).toEqual(expectActions);
   });
 });
+
+
+

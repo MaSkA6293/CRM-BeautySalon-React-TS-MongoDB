@@ -36,7 +36,7 @@ import {
   DELET_CATEGORY_SUCCESS,
   CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
   DELET_CATEGORY_FAIL,
-  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
+  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,SERVICE_PAGE_REQUEST,GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
 } from "../../constants";
 
 export interface ICategoryValues {
@@ -64,6 +64,9 @@ export interface ICategory {
   colorId: string;
 }
 export interface IstateService {
+
+readonly servicePageRequest:boolean;
+
   readonly categoryIsDeleted: boolean;
   readonly categoryDeleted: boolean;
   readonly categoryIsEdited: boolean;
@@ -259,6 +262,20 @@ interface IDeletCategoryFailClear {
   type: typeof CLEAR_MESSAGE_CATEGORY_DELET_FAIL;
 }
 
+
+
+interface  IServisePageRequest {
+  type: typeof SERVICE_PAGE_REQUEST
+}
+interface IServicePageRequestServicesAndCategoryesSuccess{
+  type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
+  payload:{services:IService[],categories:ICategory[]}
+}
+interface IServicePageRequestServicesAndCategoryesFail {
+  type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
+  payload: {message:string}
+}
+
 export type ServiceActionTypes =
   | IAddServiceRequest
   | IAddServiceSuccess
@@ -297,7 +314,7 @@ export type ServiceActionTypes =
   | IDeletCategorySuccess
   | IDeletCategoryClearMessageSuccess
   | IDeletCategoryFail
-  | IDeletCategoryFailClear;
+  | IDeletCategoryFailClear|IServisePageRequest|IServicePageRequestServicesAndCategoryesSuccess|IServicePageRequestServicesAndCategoryesFail
 
 // export interface IClient {
 //   _id: number;

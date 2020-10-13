@@ -133,7 +133,7 @@ interface IRequestClientsSuccess {
 
 interface IRequestClientsFail {
   type: typeof CLIENTS_REQUEST_FAIL;
-  payload: { message: string };
+  payload: Error;
 }
 
 interface IRequestClientsFailClear {
