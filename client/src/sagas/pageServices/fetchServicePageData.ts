@@ -1,15 +1,15 @@
 import { call, all, put, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 import {
   SERVICE_PAGE_REQUEST,
   COLORS_REQUEST_SUCCESS,
   GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
   GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
   CLEAR_ERROR_REQUEST_FAIL
-} from "../constants";
+} from "../../constants";
 
-import { IColor } from "../types/typesColors";
-import { ICategory, IService } from "../pages/Services/types";
+import { IColor } from "../../types/typesColors";
+import { ICategory, IService } from "../../pages/Services/types";
 
 export function* fetchServicePageData(): Generator<any, any, any> {
   try {

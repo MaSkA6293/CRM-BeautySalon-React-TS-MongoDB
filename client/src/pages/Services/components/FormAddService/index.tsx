@@ -25,8 +25,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-
-import { addService } from "../../actions/actionsServices";
+import { runAddService } from "../../../../sagas/pageServices/addService"
 import { ICategory } from "../../types";
 
 export const getTime = (time: string) => {
@@ -91,7 +90,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
       colorId: selectedColor,
       categoriesId: category,
     };
-    dispatch(addService(data, handleClose));
+    dispatch(runAddService(data, handleClose));
   };
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -233,7 +232,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
-                        ?.hex
+                      ?.hex
                     : "#4791db",
                 }}
               ></div>

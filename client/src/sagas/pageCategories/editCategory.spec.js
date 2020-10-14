@@ -1,48 +1,50 @@
 import {
-    editService,
-    editServiceRequest,
-    editServiceSuccess,
-    clearEditServiceSuccess,
-    editServiceFail,
-    clearEditServiceError
-} from './editService'
+    runEditCategory,
+    editCategory,
+    editCategoryRequest,
+    editCategorySuccess,
+    clearEditCategorySuccess,
+    editCategoryFail,
+    clearEditCategoryError
+} from './editCategory'
 import {
-    EDIT_SERVIC_REQUEST,
-    EDIT_SERVIC_SUCCESS,
-    CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
-    EDIT_SERVIC_FAIL,
-    CLEAR_MESSAGE_SERVIC_EDIT_FAIL
-} from '../constants'
+    EDIT_CATEGORY,
+    EDIT_CATEGORY_REQUEST,
+    EDIT_CATEGORY_SUCCESS,
+    CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+    EDIT_CATEGORY_FAIL,
+    CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+} from '../../constants'
 import { call, put, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 
-describe("test saga editService", () => {
+describe("test saga editCategory", () => {
     const action = { payload: { data: { id: "1" }, callback: () => { } } };
-    const saga = editService(action);
+    const saga = editCategory(action);
     let output = null;
-    it("should put action editServiceRequest", () => {
+    it("should put action editCategoryRequest", () => {
         output = saga.next().value;
-        let expected = put(editServiceRequest())
+        let expected = put(editCategoryRequest())
         expect(output).toEqual(expected)
     });
     it("should call api", (done) => {
         output = saga.next().value;
         done();
-        let expected = call(httpRequest, "api/services", "PUT", action.payload.data);
+        let expected = call(httpRequest, "api/services/categories", "PUT", action.payload.data);
         expect(output).toEqual(expected)
     })
-    it('test response.statusText === "OK"', () => {
-        const response = { statusText: "OK", data: [] }
+    it('test should put editCategorySuccess', () => {
+        const response = { data: [] }
         output = saga.next(response).value
-        let expected = put(editServiceSuccess(response.data))
+        let expected = put(editCategorySuccess(response.data))
         expect(output).toEqual(expected)
     })
     it("should delay(3000)", () => {
         expect(saga.next().value).toEqual(delay(3000))
     })
-    it('should put clearSuccess message ', () => {
+    it('should put clearEditCategorySuccess ', () => {
         output = saga.next().value;
-        let expected = put(clearEditServiceSuccess());
+        let expected = put(clearEditCategorySuccess());
         expect(output).toEqual(expected)
     })
     it("should call callback", () => {
@@ -58,9 +60,9 @@ describe("test saga editService", () => {
 
 })
 
-describe("Tests error editService", () => {
+describe("Tests error editCategory", () => {
     const action = { payload: { data: { id: "1" }, callback: () => { } } };
-    const sagaError = editService(action);
+    const sagaError = editCategory(action);
     let output = null;
     it("throw error", () => {
         const error = {
@@ -69,7 +71,7 @@ describe("Tests error editService", () => {
         sagaError.next();
         sagaError.next();
         output = sagaError.throw(error).value;
-        let expected = put(editServiceFail(error));
+        let expected = put(editCategoryFail(error));
         expect(output).toEqual(expected);
     });
     it("should delay(2000)", () => {
@@ -78,7 +80,7 @@ describe("Tests error editService", () => {
 
     it("should put clear error", () => {
         output = sagaError.next().value
-        let expected = put(clearEditServiceError());
+        let expected = put(clearEditCategoryError());
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -90,57 +92,57 @@ describe("Tests error editService", () => {
 
 
 
-describe("Services action edit", () => {
-    it("editServiceRequest", () => {
-        const actions = editServiceRequest();
+describe("Tests action edit", () => {
+    it("runEditCategory", () => {
+        const data = {
+            _id: "string",
+            name: "string",
+            colorId: 'string'
+        }
+        const callback = () => { }
+        const actions = runEditCategory(data, callback);
+        const expectActions = { type: EDIT_CATEGORY, payload: { data, callback } };
+        expect(actions).toEqual(expectActions);
+    });
+    it("editCategoryRequest", () => {
+        const actions = editCategoryRequest();
         const expectActions = {
-            type: EDIT_SERVIC_REQUEST,
+            type: EDIT_CATEGORY_REQUEST,
         };
         expect(actions).toEqual(expectActions);
     });
-
-    it("editServiceSuccess", () => {
+    it("editCategorySuccess", () => {
         const data = {
-            data: {
-                id: 1,
-                name: "haircut",
-                duration: [1, 20],
-                cost: 500,
-                colorId: 4,
-                categoriesId: ["222", "666"],
-            },
+            data: {},
             message: "Success",
         };
-        const actions = editServiceSuccess(data);
+        const actions = editCategorySuccess(data);
         const expectActions =
         {
-            type: EDIT_SERVIC_SUCCESS,
+            type: EDIT_CATEGORY_SUCCESS,
             payload: { data: data.data, message: data.message },
         };
 
         expect(actions).toEqual(expectActions);
     });
-
-    it("clearEditServiceSuccess", () => {
-        const actions = clearEditServiceSuccess();
-        const expectActions = { type: CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS };
+    it("clearEditCategorySuccess", () => {
+        const actions = clearEditCategorySuccess();
+        const expectActions = { type: CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS };
         expect(actions).toEqual(expectActions);
     });
-
-    it("editServiceFail", () => {
+    it("editCategoryFail", () => {
         const error = { response: { data: { message: "some error" } } };
-        const actions = editServiceFail(error);
+        const actions = editCategoryFail(error);
         const expectActions =
         {
-            type: EDIT_SERVIC_FAIL,
+            type: EDIT_CATEGORY_FAIL,
             payload: { message: error.response.data.message },
         };
         expect(actions).toEqual(expectActions);
     });
-
-    it("clearEditServiceError", () => {
-        const actions = clearEditServiceError();
-        const expectActions = { type: CLEAR_MESSAGE_SERVIC_EDIT_FAIL };
+    it("clearEditCategoryError", () => {
+        const actions = clearEditCategoryError();
+        const expectActions = { type: CLEAR_MESSAGE_CATEGORY_EDIT_FAIL };
         expect(actions).toEqual(expectActions);
     });
 });

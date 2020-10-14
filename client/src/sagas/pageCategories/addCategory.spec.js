@@ -1,45 +1,44 @@
 import {
-    rundDeletService,
-    deletServic,
-    deletServiceRequest,
-    deletServiceSuccess,
-    clearDeletServiceSuccess,
-    deletServiceFail,
-    clearDeletServiceError
-} from './deletService';
+    runAddCategory,
+    addCategory,
+    addCategoryRequest,
+    addCategorySuccess,
+    clearAddCategorySuccess,
+    addCategoryFail,
+    clearAddCategoryError
+} from './addCategory';
 import {
-    DELET_SERVICE,
-    DELET_SERVIC_REQUEST,
-    DELET_SERVIC_SUCCESS,
-    CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
-    DELET_SERVIC_FAIL,
-    CLEAR_MESSAGE_SERVIC_DELET_FAIL
-} from '../constants'
+    ADD_CATEGORY,
+    ADD_SERVICE_CATEGORY_REQUEST,
+    ADD_SERVICE_CATEGORY_SUCCESS,
+    CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
+    SERVICE_CATEGORY_ADD_FAIL,
+    CLEAR_SERVICE_CATEGORY_ADD_FAIL
+} from '../../constants'
 import { call, delay, put } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 
-describe("test saga deletService", () => {
+describe("test saga addCategory", () => {
     const action = { payload: { data: { _id: "1" }, callback: () => { } } };
-    const saga = deletServic(action);
+    const saga = addCategory(action);
     let output = null;
-    it("should put deletServiceRequest", () => {
+    it("should put addCategoryRequest", () => {
         output = saga.next().value;
-        let expected = put(deletServiceRequest());
+        let expected = put(addCategoryRequest());
         expect(output).toEqual(expected)
     });
     it("should call api/services", (done) => {
         output = saga.next().value;
         done();
-        let expected = call(httpRequest, "api/services", "DELETE", action.payload._id);
+        let expected = call(httpRequest, "api/services/categories", "POST", action.payload.data);
         expect(output).toEqual(expected)
     })
-    it('test response.statusText === "OK"', () => {
-        const response = { statusText: "OK", data: [] }
+    it('test should put addServiceSuccess', () => {
+        const response = { data: { data: [], message: '' } }
         output = saga.next(response).value
-        let expected = put(deletServiceSuccess(response.data))
+        let expected = put(addCategorySuccess(response.data))
         expect(output).toEqual(expected)
     })
-
     it("should delay 3000", () => {
         output = saga.next().value;
         let expected = delay(3000)
@@ -47,7 +46,7 @@ describe("test saga deletService", () => {
     })
     it('should put clearSuccess message ', () => {
         output = saga.next().value;
-        let expected = put(clearDeletServiceSuccess())
+        let expected = put(clearAddCategorySuccess())
         expect(output).toEqual(expected)
     })
     it("should call callback", () => {
@@ -60,14 +59,12 @@ describe("test saga deletService", () => {
         let expected = true;
         expect(output).toBe(expected)
     })
-
 })
 
 
-describe("test deletService Error", () => {
-
+describe("test addCategory Error", () => {
     const action = { payload: { data: { _id: "1" }, callback: () => { } } };
-    const sagaError = deletServic(action);
+    const sagaError = addCategory(action);
     let output = null;
     it("test error", () => {
         const error = {
@@ -76,7 +73,7 @@ describe("test deletService Error", () => {
         sagaError.next();
         sagaError.next();
         output = sagaError.throw(error).value;
-        let expected = put(deletServiceFail(error));
+        let expected = put(addCategoryFail(error));
         expect(output).toEqual(expected);
     })
     it("should delay 2000", () => {
@@ -86,7 +83,7 @@ describe("test deletService Error", () => {
     })
     it("should clear error", () => {
         output = sagaError.next().value;
-        let expected = put(clearDeletServiceError());
+        let expected = put(clearAddCategoryError());
         expect(output).toEqual(expected);
     })
     it("should end", () => {
@@ -98,48 +95,47 @@ describe("test deletService Error", () => {
 
 
 
-describe("test deletService actions", () => {
-
-    it("rundDeletService", () => {
-        const _id = '1';
+describe("test addCategory actions", () => {
+    it("runAddService", () => {
+        const data = {};
         const callback = () => { }
-        const actions = rundDeletService(_id, callback);
-        const expectActions = { type: DELET_SERVICE, payload: { _id, callback } };
+        const actions = runAddCategory(data, callback);
+        const expectActions = { type: ADD_CATEGORY, payload: { data, callback } };
         expect(actions).toEqual(expectActions);
     });
-
-
-    it("deletServiceRequest", () => {
-        const actions = deletServiceRequest();
+    it("addCategoryRequest", () => {
+        const actions = addCategoryRequest();
         const expectActions = {
-            type: DELET_SERVIC_REQUEST,
+            type: ADD_SERVICE_CATEGORY_REQUEST,
         };
         expect(actions).toEqual(expectActions);
     });
-
-
-    it("deletServiceSuccess", () => {
-        const data = { _id: 'id', message: 'message' }
-        const actions = deletServiceSuccess(data);
+    it("addCategorySuccess", () => {
+        const data = { data: { _id: 'id', name: 'name', colorId: '2' }, message: 'message' }
+        const actions = addCategorySuccess(data);
         const expectActions = {
-            type: DELET_SERVIC_SUCCESS,
-            payload: { _id: data._id, message: data.message },
+            type: ADD_SERVICE_CATEGORY_SUCCESS,
+            payload: {
+                data: {
+                    _id: data.data._id,
+                    name: data.data.name,
+                    colorId: data.data.colorId,
+                },
+                message: data.message,
+            },
         };
         expect(actions).toEqual(expectActions);
     });
-
-
-    it("clearDeletServiceSuccess", () => {
-        const actions = clearDeletServiceSuccess();
-        const expectActions = { type: CLEAR_MESSAGE_SERVIC_DELET_SUCCESS };
+    it("clearAddCategorySuccess", () => {
+        const actions = clearAddCategorySuccess();
+        const expectActions = { type: CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS };
         expect(actions).toEqual(expectActions);
     });
-
-    it("deletServiceFail", () => {
+    it("addCategoryFail", () => {
         const error = { response: { data: { message: "some error" } } };
-        const actions = deletServiceFail(error);
+        const actions = addCategoryFail(error);
         const expectActions = {
-            type: DELET_SERVIC_FAIL,
+            type: SERVICE_CATEGORY_ADD_FAIL,
             payload: {
                 message: error.response.data.message
                     ? error.response.data.message
@@ -148,13 +144,9 @@ describe("test deletService actions", () => {
         };
         expect(actions).toEqual(expectActions);
     });
-
-
-    it("clearDeletServiceError", () => {
-        const actions = clearDeletServiceError();
-        const expectActions = { type: CLEAR_MESSAGE_SERVIC_DELET_FAIL };
+    it("clearAddCategoryError", () => {
+        const actions = clearAddCategoryError();
+        const expectActions = { type: CLEAR_SERVICE_CATEGORY_ADD_FAIL };
         expect(actions).toEqual(expectActions);
     });
-
-
 })

@@ -7,14 +7,14 @@ import {
   clearErrorRequest
 } from "./fetchServicePageData";
 import { call, put, all, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 import {
   COLORS_REQUEST_SUCCESS,
   GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
   GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
   SERVICE_PAGE_REQUEST,
   CLEAR_ERROR_REQUEST_FAIL
-} from "../constants";
+} from "../../constants";
 
 describe("FetchClients Saga", () => {
   const saga = fetchServicePageData();
@@ -27,7 +27,6 @@ describe("FetchClients Saga", () => {
     done();
     expect(output).toEqual(expected);
   });
-
   it("should put colors request success", () => {
     const colors = { data: [] };
     const categories = { data: [] };
@@ -36,7 +35,6 @@ describe("FetchClients Saga", () => {
     let expected = put(colorsRequestSuccess(colors))
     expect(output).toEqual(expected);
   });
-
   it("should put services and categories request success", () => {
     const categories = { data: [] };
     const services = { data: [] };
@@ -61,13 +59,11 @@ describe("tests Error FetchClients saga", () => {
     let expected = put(requestError())
     expect(output).toEqual(expected);
   });
-
   it("should delay(4000)", () => {
     output = sagaError.next().value;
     let expected = delay(4000)
     expect(output).toEqual(expected)
   });
-
   it("should put clear error after delay", () => {
     output = sagaError.next().value;
     let expected = put(clearErrorRequest());
@@ -75,17 +71,12 @@ describe("tests Error FetchClients saga", () => {
   })
 })
 
-
-
-
 describe('tests action fetchServicePageData', () => {
   it("test servicPageRequest", () => {
     const output = servicPageRequest();
     const expected = { type: SERVICE_PAGE_REQUEST }
     expect(output).toEqual(expected)
   })
-
-
   it("test colorsRequestSuccess", () => {
     const colors = { data: [] };
     const output = colorsRequestSuccess(colors);
@@ -95,7 +86,6 @@ describe('tests action fetchServicePageData', () => {
     }
     expect(output).toEqual(expected)
   })
-
   it("test servicesAndCategoriesSuccess", () => {
     const categories = { data: [] };
     const services = { data: [] };
@@ -106,7 +96,6 @@ describe('tests action fetchServicePageData', () => {
     }
     expect(output).toEqual(expected)
   })
-
   it("test requestError", () => {
     const output = requestError();
     const expected = {
@@ -115,12 +104,9 @@ describe('tests action fetchServicePageData', () => {
     }
     expect(output).toEqual(expected)
   })
-
   it("test clearErrorRequest", () => {
     const output = clearErrorRequest();
     const expected = { type: CLEAR_ERROR_REQUEST_FAIL }
     expect(output).toEqual(expected)
   })
-
-
 })

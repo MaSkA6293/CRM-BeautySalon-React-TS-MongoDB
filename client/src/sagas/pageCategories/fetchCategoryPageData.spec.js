@@ -1,5 +1,5 @@
 import { call, put, all, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 
 import {
     GET_CATEGORIES_REQUEST,
@@ -8,7 +8,7 @@ import {
     CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
     COLORS_REQUEST_SUCCESS,
     CATEGORY_PAGE_REQUEST
-} from "../constants"
+} from "../../constants"
 import {
     getCategoriesRequest,
     getCategoriesRequestSuccess,
@@ -32,7 +32,6 @@ describe("fetchCategoryPageData Saga", () => {
         done();
         expect(output).toEqual(expected);
     });
-
     it("should put categories request success", () => {
         const colors = { data: [] };
         const categories = { data: [] };
@@ -52,7 +51,6 @@ describe("fetchCategoryPageData Saga", () => {
         let expected = true
         expect(output).toEqual(expected);
     });
-
 });
 
 
@@ -80,15 +78,7 @@ describe("tests Error fetchCategoryPageData Saga", () => {
     })
 })
 
-
-
-
-
-
-
-
 describe("Categories action get", () => {
-
     it("getColorsRequestSuccess", () => {
         const data = []
         const actions = getColorsRequestSuccess(data);
@@ -105,7 +95,6 @@ describe("Categories action get", () => {
             { type: CATEGORY_PAGE_REQUEST }
         expect(actions).toEqual(expectActions);
     });
-
     it("getCategoriesRequest", () => {
         const actions = getCategoriesRequest();
         const expectActions =
@@ -115,7 +104,6 @@ describe("Categories action get", () => {
 
         expect(actions).toEqual(expectActions);
     });
-
     it("getCategoriesRequestSuccess", () => {
         const responsedata = [
             {
@@ -133,7 +121,6 @@ describe("Categories action get", () => {
 
         expect(actions).toEqual(expectActions);
     });
-
     it("fetchFail", () => {
         const error = { response: { data: { message: "some error" } } };
         const actions = fetchFail(error);
@@ -145,7 +132,6 @@ describe("Categories action get", () => {
 
         expect(actions).toEqual(expectActions);
     });
-
     it("clearFetchFailError", () => {
         const actions = clearFetchFailError();
         const expectActions = { type: CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL };

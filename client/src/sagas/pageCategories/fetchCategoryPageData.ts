@@ -1,5 +1,5 @@
-import { httpRequest } from "../utils/network"
-import { ICategory } from "../pages/Services/types"
+import { httpRequest } from "../../utils/network"
+import { ICategory } from "../../pages/Services/types"
 import { call, delay, put, all } from "redux-saga/effects";
 import {
     GET_CATEGORIES_REQUEST,
@@ -8,13 +8,12 @@ import {
     CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
     CATEGORY_PAGE_REQUEST,
     COLORS_REQUEST_SUCCESS
-} from "../constants"
-import { IColor } from "../types/typesColors";
+} from "../../constants"
+import { IColor } from "../../types/typesColors";
 
 
 export function* fetchCategoryPageData(): Generator<any, any, any> {
     try {
-
         const [categories, colors] = yield all([
             call(httpRequest, "api/services/categories", "GET"),
             call(httpRequest, "api/color", "GET")

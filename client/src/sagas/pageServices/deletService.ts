@@ -1,6 +1,6 @@
 
 import { call, delay, put } from "redux-saga/effects";
-import { httpRequest } from "../utils/network"
+import { httpRequest } from "../../utils/network"
 import {
     DELET_SERVICE,
     DELET_SERVIC_REQUEST,
@@ -8,19 +8,17 @@ import {
     CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
     DELET_SERVIC_FAIL,
     CLEAR_MESSAGE_SERVIC_DELET_FAIL
-} from "../constants"
+} from "../../constants"
 
 
 export function* deletServic(action: { payload: { _id: string, callback: () => void } }) {
     try {
         yield put(deletServiceRequest());
         const response = yield call(httpRequest, "api/services", "DELETE", { _id: action.payload._id })
-        if (response.statusText === "OK") {
-            yield put(deletServiceSuccess(response.data))
-            yield delay(3000)
-            yield put(clearDeletServiceSuccess())
-            yield call(action.payload.callback)
-        }
+        yield put(deletServiceSuccess(response.data))
+        yield delay(3000)
+        yield put(clearDeletServiceSuccess())
+        yield call(action.payload.callback)
     } catch (e) {
         yield put(deletServiceFail(e))
         yield delay(2000)

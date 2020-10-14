@@ -5,7 +5,7 @@ import Header from "../../../../components/Header";
 import CategoryHeader from "../CategoryHeader";
 import ModalAddNewCategory from "../ModalAddNewCategory";
 
-import { runFetchCategoryPageData } from "../../../../sagas/fetchCategoryPageData";
+import { runFetchCategoryPageData } from "../../../../sagas/pageCategories/fetchCategoryPageData";
 
 import { ICategory } from "../../types";
 import { IGlobalStore } from "../../../../reducers/rootReducer";

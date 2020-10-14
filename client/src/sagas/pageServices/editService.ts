@@ -6,9 +6,9 @@ import {
     CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
     EDIT_SERVIC_FAIL,
     CLEAR_MESSAGE_SERVIC_EDIT_FAIL
-} from "../constants"
-import { httpRequest } from "../utils/network"
-import { IService } from "../pages/Services/types"
+} from "../../constants"
+import { httpRequest } from "../../utils/network"
+import { IService } from "../../pages/Services/types"
 
 export function* editService(action: {
     payload: {
@@ -25,12 +25,10 @@ export function* editService(action: {
     try {
         yield put(editServiceRequest())
         const response = yield call(httpRequest, "api/services", "PUT", action.payload.data)
-        if (response.statusText === "OK") {
-            yield put(editServiceSuccess(response.data))
-            yield delay(3000)
-            yield put(clearEditServiceSuccess())
-            yield call(action.payload.callback)
-        }
+        yield put(editServiceSuccess(response.data))
+        yield delay(3000)
+        yield put(clearEditServiceSuccess())
+        yield call(action.payload.callback)
     } catch (e) {
         yield put(editServiceFail(e))
         yield delay(2000)

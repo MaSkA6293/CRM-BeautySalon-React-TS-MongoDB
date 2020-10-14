@@ -26,8 +26,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-import { rundDeletService } from "../../../../sagas/deletService";
-import { runEditServic } from "../../../../sagas/editService"
+import { rundDeletService } from "../../../../sagas/pageServices/deletService";
+import { runEditServic } from "../../../../sagas/pageServices/editService"
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AreYouSure from "../AreYouSure";

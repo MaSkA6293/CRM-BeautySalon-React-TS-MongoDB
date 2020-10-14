@@ -14,9 +14,8 @@ import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 
 import SelectColor from "./SelectColor";
-
-import { editCategory, deletCategory } from "../../actions/actionsServices";
-
+import { runEditCategory } from "../../../../sagas/pageCategories/editCategory"
+import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory"
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AreYouSure from "../AreYouSure";
@@ -81,11 +80,11 @@ const FormEditCategory = ({
       name: values.name,
       colorId: selectedColor._id,
     };
-    dispatch(editCategory(data, handleClose));
+    dispatch(runEditCategory(data, handleClose));
   };
 
   const handlerDelet = () => {
-    dispatch(deletCategory(selectedCategory._id, handleClose));
+    dispatch(rundDeletCategory(selectedCategory._id, handleClose));
   };
   return (
     <>

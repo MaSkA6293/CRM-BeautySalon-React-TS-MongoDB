@@ -10,9 +10,7 @@ import { IClient } from "../types/typesClients";
 export function* fetchClients() {
   try {
     const response = yield call(httpRequest, "api/client", "GET");
-    if (response.statusText === "OK") {
-      yield put(clientsRequestSuccess(response));
-    }
+    yield put(clientsRequestSuccess(response));
   } catch (err) {
     yield put(clientsRequestFail(err));
     yield delay(4000);

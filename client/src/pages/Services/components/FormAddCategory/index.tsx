@@ -16,7 +16,7 @@ import cogoToast from "cogo-toast";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import SelectColor from "./SelectColor";
-import { addCategory } from "../../actions/actionsServices";
+import { runAddCategory } from "../../../../sagas/pageCategories/addCategory";
 
 const initialValues = {
   name: "",
@@ -67,7 +67,7 @@ const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
       name: values.name,
       colorId: selectedColor,
     };
-    dispatch(addCategory(data, handleClose));
+    dispatch(runAddCategory(data, handleClose));
   };
   return (
     <>
@@ -110,7 +110,7 @@ const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
-                        ?.hex
+                      ?.hex
                     : "#4791db",
                 }}
               ></div>

@@ -26,10 +26,7 @@ describe("FetchClients Saga", () => {
   });
   it("should put clients request success", () => {
     const response = {
-      statusText: "OK",
-      data: [
-        { _id: "1", name: "test1", female: "fTest1", phone: "999" }
-      ],
+      data: [],
     };
     output = saga.next(response).value;
     let expected = put(clientsRequestSuccess(response));
@@ -44,7 +41,7 @@ describe("FetchClients Saga", () => {
 
 
 
-describe("Saga fetchClients test err if statusText: 'not OK' message exists", () => {
+describe("Saga fetchClients test err, message exists", () => {
   const sagaError = fetchClients();
   let outputError = null;
   it("should payload:error.response.data.message ", () => {
@@ -54,16 +51,14 @@ describe("Saga fetchClients test err if statusText: 'not OK' message exists", ()
     let expected = put(clientsRequestFail(error));
     expect(outputError).toEqual(expected);
   });
-
   it("should delay 4000", () => {
     expect(sagaError.next().value).toEqual(delay(4000));
   });
-  it("should clear message", () => {
+  it("should put clientsRequestClearFail", () => {
     outputError = sagaError.next().value;
     let expected = put(clientsRequestClearFail());
     expect(outputError).toEqual(expected);
   });
-
   it("should return done=true", function () {
     outputError = sagaError.next().done;
     let expected = true;
@@ -71,10 +66,10 @@ describe("Saga fetchClients test err if statusText: 'not OK' message exists", ()
   });
 });
 
-describe("Saga fetchClients test err if statusText: 'not OK' message not exists", () => {
+describe("Saga fetchClients test err, message not exists", () => {
   const sagaError = fetchClients();
   let output = null;
-  it('should break on error if statusText: "not OK" message not exists', (done) => {
+  it('should break on error, message not exists', (done) => {
     sagaError.next().value;
     done();
     const error = { response: { data: { message: "" } } };
@@ -98,15 +93,8 @@ describe("Saga fetchClients test err if statusText: 'not OK' message not exists"
 });
 
 
-
 describe("tests actions fetchClients", () => {
   let output = null;
-  it("clientsRequestClearFail", () => {
-    output = clientsRequestClearFail();
-    let expected = { type: CLEAR_ERROR_REQUEST_FAIL }
-    expect(output).toEqual(expected)
-  })
-
   it("clientsRequestSuccess", () => {
     let response = { data: [] }
     output = clientsRequestSuccess(response);
@@ -116,7 +104,6 @@ describe("tests actions fetchClients", () => {
     }
     expect(output).toEqual(expected)
   })
-
   it("clientsRequestFail", () => {
     let err = { response: { data: { message: 'err' } } }
     output = clientsRequestFail(err);
@@ -128,7 +115,11 @@ describe("tests actions fetchClients", () => {
     }
     expect(output).toEqual(expected)
   })
-
+  it("clientsRequestClearFail", () => {
+    output = clientsRequestClearFail();
+    let expected = { type: CLEAR_ERROR_REQUEST_FAIL }
+    expect(output).toEqual(expected)
+  })
 
 
 })

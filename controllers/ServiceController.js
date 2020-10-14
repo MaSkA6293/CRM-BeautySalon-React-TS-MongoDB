@@ -12,7 +12,6 @@ module.exports.add = async (req, res) => {
         message: "Не корректные данные при создании услуги",
       });
     }
-
     const service = new ServiceModels({
       name: req.body.name,
       duration: req.body.duration,

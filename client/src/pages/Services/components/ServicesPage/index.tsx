@@ -7,7 +7,7 @@ import Spiner from "../../../../components/Spiner"
 import ServicesHeader from "../ServicesHeader";
 import {
   servicPageRequest
-} from "../../../../sagas/fetchServicePageData";
+} from "../../../../sagas/pageServices/fetchServicePageData";
 import ServicList from "../ServiceList";
 import { IService } from "../../types";
 import ModalEditService from "../ModalEditServic";
