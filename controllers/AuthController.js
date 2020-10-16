@@ -7,7 +7,8 @@ const { validationResult } = require("express-validator");
 module.exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const errors = validationResult(req);
+    const errors = validationResult(req.body);
+    console.log(email,)
     if (!errors.isEmpty()) {
       return res.status(401).json({
         errors: errors.array(),
@@ -23,7 +24,7 @@ module.exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({ email, password: hashedPassword });
     await user.save();
-    res.status(200).json({ message: "Пользователь создан" });
+    res.status(200).json({ message: "Пользователь успешно зарегистрирован" });
   } catch (e) {
     res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
   }

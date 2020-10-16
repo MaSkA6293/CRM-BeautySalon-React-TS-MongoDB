@@ -1,13 +1,13 @@
 import {
-  USER_REQUEST,
-  USER_REQUEST_SUCCESS,
-  USER_REQUEST_FAIL,
-  CLEAR_USER_REQUEST_FAIL,
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAIL,
-  CLEAR_LOGIN_FAIL,
-  USER_LOGOOUT,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
+  CLEAR_SIGNUP_MESSAGE,
+  SIGNIN_REQUEST,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAIL,
+  CLEAR_SIGNIN_MESSAGE,
+  SIGN_OUT,
   USER_READY,
 } from "../../constants";
 
@@ -28,41 +28,41 @@ export interface IstateUser {
 
 //  USER
 interface IUserRequestAction {
-  type: typeof USER_REQUEST;
+  type: typeof SIGNUP_REQUEST;
 }
 
 interface IUserRequestSuccess {
-  type: typeof USER_REQUEST_SUCCESS;
+  type: typeof SIGNUP_SUCCESS;
   payload: { message: string };
 }
 
 interface IRequestUserFail {
-  type: typeof USER_REQUEST_FAIL;
+  type: typeof SIGNUP_FAIL;
   payload: { message: string };
 }
 interface IRequestUserFailClear {
-  type: typeof CLEAR_USER_REQUEST_FAIL;
+  type: typeof CLEAR_SIGNUP_MESSAGE;
 }
 
 interface IUserLoginRequest {
-  type: typeof USER_LOGIN_REQUEST;
+  type: typeof SIGNIN_REQUEST;
 }
 
 interface IUserLoginSuccess {
-  type: typeof USER_LOGIN_SUCCESS;
+  type: typeof SIGNIN_SUCCESS;
   payload: { token: string; id: string; refresh_token: string };
 }
 
 interface ILoginUserFail {
-  type: typeof USER_LOGIN_FAIL;
+  type: typeof SIGNIN_FAIL;
   payload: { message: string };
 }
 interface ILoginUserFailClear {
-  type: typeof CLEAR_LOGIN_FAIL;
+  type: typeof CLEAR_SIGNIN_MESSAGE;
 }
 
 interface ILogoOut {
-  type: typeof USER_LOGOOUT;
+  type: typeof SIGN_OUT;
 }
 interface IUserReady {
   type: typeof USER_READY;

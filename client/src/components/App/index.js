@@ -7,11 +7,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import { purple } from "@material-ui/core/colors";
 import { useRoutes } from "../../routes";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  authHandler,
-  userReady,
-} from "../../pages/AuthPage/actions/actionUser";
-
+import {runSignOut} from "../../sagas/pageAuth/signOut"
+import { userReady, signInSuccess } from "../../sagas/pageAuth/signIn"
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -21,8 +18,8 @@ const theme = createMuiTheme({
     },
     secondary: {
       // This is green.A700 as hex.
-      main: "#11cb5f",
-    },
+      main: "#fff",
+    }
   },
 });
 
@@ -38,10 +35,11 @@ const App = () => {
     dispatch(userReady(false));
     const data = JSON.parse(localStorage.getItem("userData") || "[]");
     if (data && data.token) {
-      dispatch(authHandler(data.token, data.refresh_token, data.id));
-    } else {
-      dispatch(userReady(true));
+      dispatch(signInSuccess(data.token, data.refresh_token, data.id));
+    }else{
+      dispatch(runSignOut())
     }
+  
   }, [dispatch]);
 
   const routes = useRoutes(userIsLogined);

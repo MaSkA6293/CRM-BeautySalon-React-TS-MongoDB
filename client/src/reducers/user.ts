@@ -1,14 +1,14 @@
 import { UserActionTypes, IstateUser } from "../pages/AuthPage/types";
 import {
-  USER_REQUEST,
-  USER_REQUEST_SUCCESS,
-  USER_REQUEST_FAIL,
-  CLEAR_USER_REQUEST_FAIL,
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAIL,
-  CLEAR_LOGIN_FAIL,
-  USER_LOGOOUT,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
+  CLEAR_SIGNUP_MESSAGE,
+  SIGNIN_REQUEST,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAIL,
+  CLEAR_SIGNIN_MESSAGE,
+  SIGN_OUT,
   USER_READY,
 } from "../constants";
 
@@ -30,21 +30,21 @@ const stateUser = (
   action: UserActionTypes
 ) => {
   switch (action.type) {
-    case USER_REQUEST:
+    case SIGNUP_REQUEST:
       return {
         ...state,
         userIsLoading: true,
         userLoaded: false,
         userCreateSuccess: "",
       };
-    case USER_REQUEST_SUCCESS:
+    case SIGNUP_SUCCESS:
       return {
         ...state,
         userIsLoading: false,
         userLoaded: true,
         userCreateSuccess: action.payload.message,
       };
-    case USER_REQUEST_FAIL:
+    case SIGNUP_FAIL:
       return {
         ...state,
         userIsLoading: false,
@@ -52,27 +52,29 @@ const stateUser = (
         userGetError: action.payload.message,
       };
 
-    case CLEAR_USER_REQUEST_FAIL:
+    case CLEAR_SIGNUP_MESSAGE:
       return {
         ...state,
         userGetIsFail: false,
         userGetError: "",
+        userCreateSuccess: "",
       };
 
-    case USER_LOGIN_REQUEST:
+    case SIGNIN_REQUEST:
       return {
         ...state,
         userIsLogining: true,
         userIsLogined: false,
       };
-    case USER_LOGIN_SUCCESS:
+    case SIGNIN_SUCCESS:
       return {
         ...state,
         userIsLogining: false,
         userIsLogined: true,
         userData: action.payload,
+        userReady:true
       };
-    case USER_LOGIN_FAIL:
+    case SIGNIN_FAIL:
       return {
         ...state,
         userIsLogining: false,
@@ -80,16 +82,18 @@ const stateUser = (
         userLoginError: action.payload.message,
       };
 
-    case CLEAR_LOGIN_FAIL:
+    case CLEAR_SIGNIN_MESSAGE:
       return {
         ...state,
         userLoginIsFail: false,
         userLoginError: "",
       };
-    case USER_LOGOOUT:
+    case SIGN_OUT:
       return {
         ...state,
         userData: { token: "", id: "" },
+        userIsLogined:false,
+        userReady:true
       };
     case USER_READY:
       return { ...state, userReady: action.payload };

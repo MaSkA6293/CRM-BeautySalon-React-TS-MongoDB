@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
 
-import { registerHandler, sugnInHandler } from "./actions/actionUser";
+import { runSignUp } from "../../sagas/pageAuth/signUp"
+import { runSignIn } from "../../sagas/pageAuth/signIn"
 import { IGlobalStore } from "../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import cogoToast from "cogo-toast";
@@ -53,11 +54,10 @@ export const AuthPage = () => {
   const dispatch = useDispatch();
 
   const signUp = (values: any) => {
-    console.log("Перед диспатч", values);
-    dispatch(registerHandler(values));
+    dispatch(runSignUp(values));
   };
   const signIn = (values: any) => {
-    dispatch(sugnInHandler(values));
+    dispatch(runSignIn(values));
   };
   return (
     <div className="contaner">

@@ -1,13 +1,16 @@
 .HomeHeader {
   display: flex;
-  flex: 1 1 100%;
   align-items: center;
   max-width: 760px;
   min-width: 320px;
-  justify-content: center;
+  flex: 100%;
   margin: auto;
   &__label {
-    font-weight: 400;
-    font-size: 2rem;
+    flex: 1;
+    justify-content: center;
+    display: flex;
+  }
+  &__menu{
+    padding-right: 20px;
   }
 }

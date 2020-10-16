@@ -8,7 +8,10 @@ import {
   ADD_SERVIC,
   ADD_CATEGORY,
   DELET_CATEGORY,
-  EDIT_CATEGORY
+  EDIT_CATEGORY,
+  USER_SIGNUP,
+  USER_SIGNIN,
+  USER_SIGNOUT
 } from '../constants'
 import { fetchClients } from "./fetchClients"
 import { fetchServicePageData } from "./pageServices/fetchServicePageData"
@@ -19,6 +22,9 @@ import { addService } from "./pageServices/addService"
 import { addCategory } from './pageCategories/addCategory'
 import { deletCategory } from "./pageCategories/deletCategory"
 import { editCategory } from './pageCategories/editCategory'
+import { signUp } from "./pageAuth/signUp"
+import { signIn } from "./pageAuth/signIn"
+import { signOut } from './pageAuth/signOut'
 export default function* rootSaga() {
   //page clients
   yield takeEvery(CLIENTS_REQUEST, fetchClients)
@@ -32,5 +38,8 @@ export default function* rootSaga() {
   yield takeEvery(ADD_CATEGORY, addCategory)
   yield takeEvery(DELET_CATEGORY, deletCategory)
   yield takeEvery(EDIT_CATEGORY, editCategory)
-  //page Auth 
+  //page Auth
+  yield takeEvery(USER_SIGNUP, signUp)
+  yield takeEvery(USER_SIGNIN, signIn)
+  yield takeEvery(USER_SIGNOUT, signOut)
 }

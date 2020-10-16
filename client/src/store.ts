@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware } from "redux";
 import rootReducer from "./reducers/rootReducer";
-import thunk from "redux-thunk";
+//import thunk from "redux-thunk";
 
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
@@ -16,7 +16,8 @@ const composeEnhancers =
 const configureStore = () =>
   createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
+  //  composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
+    composeEnhancers(applyMiddleware( sagaMiddleware))
   );
 
 const store = configureStore();

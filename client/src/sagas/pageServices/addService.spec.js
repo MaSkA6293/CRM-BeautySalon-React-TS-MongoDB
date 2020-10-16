@@ -19,7 +19,7 @@ import { call, delay, put } from "redux-saga/effects";
 import { httpRequest } from "../../utils/network";
 
 describe("test saga addService", () => {
-    const action = { payload: { data: { _id: "1" }, callback: () => { } } };
+    const action = { payload: { data: { email: "", password: '' }, callback: () => { } } };
     const saga = addService(action);
     let output = null;
     it("should put addServiceRequest", () => {
