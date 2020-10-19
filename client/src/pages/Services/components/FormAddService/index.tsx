@@ -25,7 +25,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import { runAddService } from "../../../../sagas/pageServices/addService"
+import { runAddService } from "../../../../sagas/pageServices/addService";
 import { ICategory } from "../../types";
 
 export const getTime = (time: string) => {
@@ -48,15 +48,19 @@ type FormAddServiceProps = {
 };
 
 const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
-  const { colors, serviceMessageFail, serviceMessageSuccess } = useSelector(
-    ({ colors, services }: IGlobalStore) => {
-      return {
-        colors: colors.colorsList,
-        serviceMessageFail: services.serviceMessageFail,
-        serviceMessageSuccess: services.serviceMessageSuccess,
-      };
-    }
-  );
+  const {
+    colors,
+    serviceMessageFail,
+    serviceMessageSuccess,
+    serviceIsAdded,
+  } = useSelector(({ colors, services }: IGlobalStore) => {
+    return {
+      colors: colors.colorsList,
+      serviceMessageFail: services.serviceMessageFail,
+      serviceMessageSuccess: services.serviceMessageSuccess,
+      serviceIsAdded: services.serviceIsAdded,
+    };
+  });
   const dispatch = useDispatch();
 
   const [selectedColor, setSelectedColor] = useState<string>("");
@@ -232,7 +236,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
-                      ?.hex
+                        ?.hex
                     : "#4791db",
                 }}
               ></div>
@@ -240,6 +244,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                 <SelectColor
                   setSelectedColor={setSelectedColor}
                   colors={colors}
+                  disabled={serviceIsAdded}
                 />
               </div>
             </div>
@@ -247,11 +252,15 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
               <Button
                 color="primary"
                 type="submit"
-                disabled={!dirty || !isValid}
+                disabled={!dirty || !isValid || serviceIsAdded}
               >
                 Добавить
               </Button>
-              <Button onClick={handleClose} color="primary">
+              <Button
+                onClick={handleClose}
+                color="primary"
+                disabled={serviceIsAdded}
+              >
                 Отмена
               </Button>
             </DialogActions>

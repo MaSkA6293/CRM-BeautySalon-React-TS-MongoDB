@@ -1,11 +1,8 @@
 import React from "react";
-
 import { useHistory } from "react-router-dom";
 import "./styles.scss";
 import Header from "../../../../components/Header";
 import { faUserPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
-import Typography from "@material-ui/core/Typography";
 import CustomIcon from "../../../../components/CustomIcon";
 
 type ClientHeaderProps = {
@@ -20,22 +17,15 @@ const ClientsHeader = ({ setAddIsOpen }: ClientHeaderProps) => {
 
   return (
     <Header>
-      <div className="ClientsHeader">
+      <div className="clients-header">
         <CustomIcon
-          addClass={["ClientsHeader__arrowBack"]}
+          addClass={["clients-header__arrow-back"]}
           click={() => handlerClickGoHome()}
           icon={faArrowLeft}
         />
-        <Typography
-          variant="h5"
-          component="h2"
-          className="ClientsHeader__title"
-        >
-          Клиенты
-        </Typography>
-
+        <span className="clients-header__title">Клиенты</span>
         <CustomIcon
-          addClass={["ClientsHeader__addUser"]}
+          addClass={["clients-header__add-user"]}
           click={() => setAddIsOpen(true)}
           icon={faUserPlus}
         />

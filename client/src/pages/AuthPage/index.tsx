@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
 
-import { runSignUp } from "../../sagas/pageAuth/signUp"
-import { runSignIn } from "../../sagas/pageAuth/signIn"
+import { runSignUp } from "../../sagas/pageAuth/signUp";
+import { runSignIn } from "../../sagas/pageAuth/signIn";
 import { IGlobalStore } from "../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 import cogoToast from "cogo-toast";

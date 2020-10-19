@@ -37,7 +37,7 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
     },
   ];
   return (
-    <div className="ClientsList">
+    <div className="clients-list">
       <List component="nav" aria-label="main mailbox folders">
         {clients.map((client: any) => {
           return (
@@ -45,21 +45,21 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
               key={client._id}
               alignItems="center"
               button
-              className="ClientsList__item"
+              className="clients-list__item"
             >
               <Avatar
                 style={{
                   backgroundColor: client.color ? client.color : "#9e51b0",
                 }}
-                className="ClientsList__avatar"
+                className="clients-list__avatar"
               >
                 {client.name[0]}
               </Avatar>
-              <div className="ClientsList__client">
-                <div className="ClientsList__nameFamale">
+              <div className="clients-list__client">
+                <div className="clients-list__name-and-surname">
                   {`${client.name} ${client.female} `}
                 </div>
-                <div className="ClientsList__phone">
+                <div className="clients-list__phone">
                   {" "}
                   <FontAwesomeIcon icon={faPhoneAlt} />
                   {` ${client.phone}`}
@@ -68,7 +68,7 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
               <MenuItemClient
                 options={options}
                 id={client._id}
-                addClass={"ClientsList__icon"}
+                addClass={"clients-list__icon"}
               />
             </ListItem>
           );

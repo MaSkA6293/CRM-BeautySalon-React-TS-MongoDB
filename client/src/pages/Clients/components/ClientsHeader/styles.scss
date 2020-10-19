@@ -1,6 +1,6 @@
-.ClientsHeader {
+.clients-header {
   display: flex;
-  flex: 1 1 100%;
+  flex: 100%;
   align-items: center;
   max-width: 760px;
   min-width: 290px;
@@ -10,9 +10,9 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    //  margin-left: 10px;
+    font-size: 1.5rem;
   }
-  &__addUser {
+  &__add-user {
     font-size: 1.4rem;
     display: flex;
     cursor: pointer;
@@ -21,7 +21,7 @@
     align-items: center;
     justify-content: center;
   }
-  &__arrowBack {
+  &__arrow-back {
     width: 40px;
     height: 40px;
     display: flex;
@@ -34,18 +34,31 @@
 }
 
 @media screen and (min-width: 425px) {
-  .ClientsHeader {
+  .clients-header {
     &__title {
-      font-size: 1.3rem;
-      margin-left: 40px;
+      font-size: 1.6rem;
     }
-    &__addUser {
+    &__add-user {
       font-size: 1.3rem;
       display: flex;
       cursor: pointer;
     }
-    &__arrowBack {
+    &__arrow-back {
       font-size: 1.3rem;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .clients-header {
+    &__title {
+      font-size: 1.6rem;
+    }
+  }
+}
+@media screen and (min-width: 625px) {
+  .clients-header {
+    &__title {
+      font-size: 1.6rem;
     }
   }
 }

@@ -39,11 +39,13 @@ function SimpleDialog({
 type SelectColorProps = {
   setSelectedColor: any;
   colors: IColor[];
+  disabled: boolean;
 };
 
 export default function SelectColor({
   setSelectedColor,
   colors,
+  disabled,
 }: SelectColorProps) {
   const [open, setOpen] = useState(false);
 
@@ -54,7 +56,12 @@ export default function SelectColor({
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => setOpen(true)}
+        disabled={disabled}
+      >
         Цвет услуги
       </Button>
       <SimpleDialog

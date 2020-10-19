@@ -68,7 +68,7 @@ const refreshToken = async () => {
       })
       .catch((err) => {
         check401(err);
-         localStorage.removeItem("userData");
+        localStorage.removeItem("userData");
         // window.location.reload(true);
       });
   }

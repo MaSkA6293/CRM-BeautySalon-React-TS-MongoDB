@@ -110,7 +110,7 @@ const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
-                      ?.hex
+                        ?.hex
                     : "#4791db",
                 }}
               ></div>

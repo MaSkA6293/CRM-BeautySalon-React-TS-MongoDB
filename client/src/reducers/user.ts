@@ -72,7 +72,7 @@ const stateUser = (
         userIsLogining: false,
         userIsLogined: true,
         userData: action.payload,
-        userReady:true
+        userReady: true,
       };
     case SIGNIN_FAIL:
       return {
@@ -92,8 +92,8 @@ const stateUser = (
       return {
         ...state,
         userData: { token: "", id: "" },
-        userIsLogined:false,
-        userReady:true
+        userIsLogined: false,
+        userReady: true,
       };
     case USER_READY:
       return { ...state, userReady: action.payload };

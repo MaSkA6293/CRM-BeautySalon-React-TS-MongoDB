@@ -14,8 +14,8 @@ import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 
 import SelectColor from "./SelectColor";
-import { runEditCategory } from "../../../../sagas/pageCategories/editCategory"
-import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory"
+import { runEditCategory } from "../../../../sagas/pageCategories/editCategory";
+import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AreYouSure from "../AreYouSure";

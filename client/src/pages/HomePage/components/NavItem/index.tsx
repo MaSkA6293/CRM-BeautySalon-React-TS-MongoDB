@@ -11,9 +11,11 @@ type MenuItemType = {
 
 const NavItem = ({ icon, title, addClass }: MenuItemType) => {
   return (
-    <div className={classNames("NavItem", addClass)}>
-      <FontAwesomeIcon icon={icon} />
-      <h2>{title}</h2>
+    <div className={classNames("nav-item", addClass)}>
+      <div className="nav-item__icon">
+        <FontAwesomeIcon icon={icon} />
+      </div>
+      <span className="nav-item__title">{title}</span>
     </div>
   );
 };

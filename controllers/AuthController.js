@@ -8,7 +8,7 @@ module.exports.register = async (req, res) => {
   try {
     const { email, password } = req.body;
     const errors = validationResult(req.body);
-    console.log(email,)
+    console.log(email);
     if (!errors.isEmpty()) {
       return res.status(401).json({
         errors: errors.array(),

@@ -1,4 +1,4 @@
-.HomeHeader {
+.home-header {
   display: flex;
   align-items: center;
   max-width: 760px;
@@ -6,11 +6,48 @@
   flex: 100%;
   margin: auto;
   &__label {
+    font-size: 1.5rem;
     flex: 1;
     justify-content: center;
     display: flex;
   }
-  &__menu{
+  &__menu {
     padding-right: 20px;
+  }
+  &__icon-menu {
+    font-size: 1.6rem;
+    display: flex;
+    color: #fafafa;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .home-header {
+    &__label {
+      font-size: 1.6rem;
+    }
+    &__icon-menu {
+      font-size: 1.7rem;
+    }
+  }
+}
+@media screen and (min-width: 500px) {
+  .home-header {
+    &__label {
+      font-size: 1.7rem;
+    }
+    &__icon-menu {
+      font-size: 1.8rem;
+    }
+  }
+}
+@media screen and (min-width: 625px) {
+  .home-header {
+    &__label {
+      font-size: 1.9rem;
+    }
+    &__icon-menu {
+      font-size: 1.9rem;
+    }
   }
 }

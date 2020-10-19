@@ -1,35 +1,35 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./styles.scss";
 import Header from ".././.././../../components/Header";
-import Button from '@material-ui/core/Button';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Typography from "@material-ui/core/Typography";
-import HeaderMenu from "../HomeHeaderMenu"
+import Button from "@material-ui/core/Button";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import HeaderMenu from "../HomeHeaderMenu";
 
 const HomeHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const handleClick = (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   return (
     <Header>
-      <div className="HomeHeader">
-        <div className="HomeHeader__label">
-          <Typography variant="h4" component="h1">
-            Beauty Servise
-        </Typography>
+      <div className="home-header">
+        <span className="home-header__label">Beauty Servise</span>
+        <div className="home-header__menu">
+          <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <div className="home-header__icon-menu">
+              <AccountCircle color={"secondary"} fontSize={"inherit"} />
+            </div>
+          </Button>
+          <HeaderMenu handleClose={handleClose} anchorEl={anchorEl} />
         </div>
-        <div className="HomeHeader__menu">
-        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-     <AccountCircle color={"secondary"} fontSize={"large"} />
-         </Button>
-         <HeaderMenu handleClose={handleClose} anchorEl={anchorEl}/>
-        </div>
-
       </div>
     </Header>
   );

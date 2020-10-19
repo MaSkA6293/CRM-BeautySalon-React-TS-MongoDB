@@ -19,23 +19,23 @@ export function* fetchClients() {
 }
 
 export const clientsRequestClearFail = () => {
-  return { type: CLEAR_ERROR_REQUEST_FAIL }
-}
+  return { type: CLEAR_ERROR_REQUEST_FAIL };
+};
 
 export const clientsRequestSuccess = (response: { data: IClient[] }) => {
   return {
     type: CLIENTS_REQUEST_SUCCESS,
     payload: response.data,
-  }
-}
+  };
+};
 
 export const clientsRequestFail = (err: {
-  response: { data: { message: string } }
+  response: { data: { message: string } };
 }) => {
   return {
     type: CLIENTS_REQUEST_FAIL,
     payload: err.response.data.message
       ? err.response.data.message
       : "Что-то пошло не так, попробуйте снова",
-  }
-}
+  };
+};

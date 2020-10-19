@@ -2,7 +2,6 @@ import { Dispatch } from "redux";
 
 import { httpRequest } from "../../../utils/network";
 import {
-
   COLORS_REQUEST,
   COLORS_REQUEST_SUCCESS,
   COLORS_REQUEST_FAIL,
@@ -12,12 +11,6 @@ import {
   GET_SERVICES_REQUEST_FAIL,
   CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
 } from "../../../constants";
-
-
-
-
-
-
 
 //delet
 export const getColors = () => {
@@ -68,7 +61,6 @@ export const getServices = () => {
   };
 };
 
-
 // export const editService = (
 //   data: {
 //     _id: string;
@@ -101,9 +93,7 @@ export const getServices = () => {
 //   };
 // };
 
-
 //delet
 //edit
 
 // add
-

@@ -15,7 +15,7 @@ import ModalEditCategory from "../ModalEditCatrgory";
 const CategoriesPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(runFetchCategoryPageData())
+    dispatch(runFetchCategoryPageData());
   }, [dispatch]);
 
   const initialCategory = {
@@ -55,8 +55,8 @@ const CategoriesPage = () => {
           handleClose={() => setIsOpenAddCategory(false)}
         />
       ) : (
-          ""
-        )}
+        ""
+      )}
 
       {categoryList.length > 0 && colors.length && (
         <CategoryList

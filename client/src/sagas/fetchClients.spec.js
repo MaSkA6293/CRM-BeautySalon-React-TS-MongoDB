@@ -2,7 +2,7 @@ import {
   fetchClients,
   clientsRequestSuccess,
   clientsRequestFail,
-  clientsRequestClearFail
+  clientsRequestClearFail,
 } from "./fetchClients";
 import { call, put, delay } from "redux-saga/effects";
 import { httpRequest } from "../utils/network";
@@ -11,7 +11,6 @@ import {
   CLIENTS_REQUEST_FAIL,
   CLEAR_ERROR_REQUEST_FAIL,
 } from "../constants";
-
 
 describe("FetchClients Saga", () => {
   const saga = fetchClients();
@@ -38,8 +37,6 @@ describe("FetchClients Saga", () => {
     expect(output).toEqual(expected);
   });
 });
-
-
 
 describe("Saga fetchClients test err, message exists", () => {
   const sagaError = fetchClients();
@@ -69,7 +66,7 @@ describe("Saga fetchClients test err, message exists", () => {
 describe("Saga fetchClients test err, message not exists", () => {
   const sagaError = fetchClients();
   let output = null;
-  it('should break on error, message not exists', (done) => {
+  it("should break on error, message not exists", (done) => {
     sagaError.next().value;
     done();
     const error = { response: { data: { message: "" } } };
@@ -87,39 +84,36 @@ describe("Saga fetchClients test err, message not exists", () => {
   });
   it("should return done=true", () => {
     output = sagaError.next().done;
-    let expected = true
+    let expected = true;
     expect(output).toEqual(expected);
   });
 });
 
-
 describe("tests actions fetchClients", () => {
   let output = null;
   it("clientsRequestSuccess", () => {
-    let response = { data: [] }
+    let response = { data: [] };
     output = clientsRequestSuccess(response);
     let expected = {
       type: CLIENTS_REQUEST_SUCCESS,
       payload: response.data,
-    }
-    expect(output).toEqual(expected)
-  })
+    };
+    expect(output).toEqual(expected);
+  });
   it("clientsRequestFail", () => {
-    let err = { response: { data: { message: 'err' } } }
+    let err = { response: { data: { message: "err" } } };
     output = clientsRequestFail(err);
     let expected = {
       type: CLIENTS_REQUEST_FAIL,
       payload: err.response.data.message
         ? err.response.data.message
         : "Что-то пошло не так, попробуйте снова",
-    }
-    expect(output).toEqual(expected)
-  })
+    };
+    expect(output).toEqual(expected);
+  });
   it("clientsRequestClearFail", () => {
     output = clientsRequestClearFail();
-    let expected = { type: CLEAR_ERROR_REQUEST_FAIL }
-    expect(output).toEqual(expected)
-  })
-
-
-})
+    let expected = { type: CLEAR_ERROR_REQUEST_FAIL };
+    expect(output).toEqual(expected);
+  });
+});
