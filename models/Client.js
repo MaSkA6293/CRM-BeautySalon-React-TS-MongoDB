@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ClientShema = new Schema({
   id: Number,
   name: String,
-  female: String,
+  surname: String,
   phone: String,
   color: String,
   userId: String,

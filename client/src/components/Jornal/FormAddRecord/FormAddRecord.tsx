@@ -108,7 +108,7 @@ const FormAddRecord = ({
                 {clients.map((client, index) => {
                   return (
                     <option key={index} value={client._id}>
-                      {`${client.name} ${client.female}`}
+                      {`${client.name} ${client.surname}`}
                     </option>
                   );
                 })}

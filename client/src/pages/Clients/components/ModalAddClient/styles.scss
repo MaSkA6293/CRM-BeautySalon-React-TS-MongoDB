@@ -1,40 +1,20 @@
 @import "../../../../colors.scss";
-
-.message {
-  width: max-content;
+.dialog {
+  min-width: 320px;
+  margin: auto;
 }
-.Modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  background-color: $s-lite;
-  padding: 30px 5px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  &__title {
-    margin: 5px 0;
-    font-weight: 400;
-    font-size: 1.2rem;
-  }
-  .Form {
-    width: 90%;
-    font-size: 1rem;
+.form {
+    font-size: 0.95rem;
     display: flex;
     flex-direction: column;
-    &__close {
-      margin: 5px;
-      position: absolute;
-      top: -5px;
-      right: -5px;
-    }
-    &__submit {
-      margin: 20px 0 0;
+    margin: auto;
+    width: 100%;
+    min-width: 208px;
+    &__title {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      color: #9c27b0;
     }
     &__item {
       margin: 5px;
@@ -42,6 +22,8 @@
     &__field {
       display: flex;
       flex-direction: column;
+      flex: 1;
+      padding-bottom: 5px;
       .field {
         &__row {
           display: flex;
@@ -49,30 +31,38 @@
         &__icon {
           display: flex;
           align-items: center;
-
-          padding-top: 20px;
+          padding-top: 16px;
+          &:first-child {
+            justify-content: center;
+          }
         }
         &__error {
-          margin-left: 50px;
+          padding-left: 35px;
         }
         &__body {
           display: flex;
           flex-direction: column;
           width: 100%;
-          margin-left: 15px;
+          padding-left: 10px;
         }
       }
     }
   }
-}
+  @media screen and (min-width: 375px) {
+    .form {
+      width: 270px;
+    }
+  }
 
 @media screen and (min-width: 425px) {
-  .Modal {
-    width: 425px;
+  .form {
+    width: 270px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .form {
+    width: 370px;
   }
 }
 @media screen and (min-width: 625px) {
-  .Modal {
-    width: 500px;
-  }
 }

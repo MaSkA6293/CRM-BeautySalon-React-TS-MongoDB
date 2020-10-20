@@ -81,44 +81,44 @@ const Content = () => {
     <div className="Content">
       {records
         ? records.map((r: IRecord, index: number) => {
-            return (
-              <div
-                key={index}
-                className="Content__ActivWrite ActivWrite"
-                data-recordid={r.id}
-                style={{
-                  height:
-                    diffDates(
-                      +new Date(`${r.date}  ${r.timeEnd}`),
-                      +new Date(`${r.date}  ${r.timeStart}`)
-                    ) + "px",
-                  top:
-                    diffDates(
-                      +new Date(`${r.date}  ${r.timeStart}`),
-                      +new Date(`${r.date}`)
-                    ) -
-                    9 * 60 +
-                    "px",
-                  // backgroundColor: colors.find(
-                  //   (c: IColor) => c._id.toString() === r.color.toString()
-                  // )?.hex,
-                }}
-                onClick={handlerRecordClick}
-              >
-                <div className="ActivWrite__avatar">
-                  <img src={avatarDefault} alt="avatar" />{" "}
-                </div>
-                <div className="ActivWrite__main">
-                  <div className="ActivWrite__name">
-                    {clients.map((c: IClient) =>
-                      c._id === r.clientId ? `${c.name} ${c.female}` : ""
-                    )}
-                  </div>
-                  <div className="ActivWrite__service"> Стрижка</div>
-                </div>
+          return (
+            <div
+              key={index}
+              className="Content__ActivWrite ActivWrite"
+              data-recordid={r.id}
+              style={{
+                height:
+                  diffDates(
+                    +new Date(`${r.date}  ${r.timeEnd}`),
+                    +new Date(`${r.date}  ${r.timeStart}`)
+                  ) + "px",
+                top:
+                  diffDates(
+                    +new Date(`${r.date}  ${r.timeStart}`),
+                    +new Date(`${r.date}`)
+                  ) -
+                  9 * 60 +
+                  "px",
+                // backgroundColor: colors.find(
+                //   (c: IColor) => c._id.toString() === r.color.toString()
+                // )?.hex,
+              }}
+              onClick={handlerRecordClick}
+            >
+              <div className="ActivWrite__avatar">
+                <img src={avatarDefault} alt="avatar" />{" "}
               </div>
-            );
-          })
+              <div className="ActivWrite__main">
+                <div className="ActivWrite__name">
+                  {clients.map((c: IClient) =>
+                    c._id === r.clientId ? `${c.name} ${c.surname}` : ""
+                  )}
+                </div>
+                <div className="ActivWrite__service"> Стрижка</div>
+              </div>
+            </div>
+          );
+        })
         : ""}
 
       {workTime.map((time: string, index: number) => {
@@ -144,8 +144,8 @@ const Content = () => {
           setfinishRecordTime={setfinishRecordTime}
         />
       ) : (
-        ""
-      )}
+          ""
+        )}
       {modalEditIsOpen ? (
         <FormEditRecord
           modalIsOpen={modalEditIsOpen}
@@ -158,8 +158,8 @@ const Content = () => {
           colors={colors}
         />
       ) : (
-        ""
-      )}
+          ""
+        )}
     </div>
   );
 };

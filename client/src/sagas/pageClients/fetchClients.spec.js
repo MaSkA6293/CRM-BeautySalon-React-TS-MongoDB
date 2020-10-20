@@ -5,12 +5,12 @@ import {
   clientsRequestClearFail,
 } from "./fetchClients";
 import { call, put, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 import {
   CLIENTS_REQUEST_SUCCESS,
   CLIENTS_REQUEST_FAIL,
   CLEAR_ERROR_REQUEST_FAIL,
-} from "../constants";
+} from "../../constants";
 
 describe("FetchClients Saga", () => {
   const saga = fetchClients();

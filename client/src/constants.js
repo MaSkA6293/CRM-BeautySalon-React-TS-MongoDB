@@ -10,12 +10,16 @@ export const CREATE_NEW_SERVICE = "CREATE_NEW_SERVICE";
 export const EDIT_CLIENT = "EDIT_CLIENT";
 export const DELET_CLIENT = "DELET_CLIENT";
 
+//Clients
+export const CLEAR_MESSAGE_CLIENT = "CLEAR_MESSAGE_CLIENT";
+// 
+
 // get clients
 export const CLIENTS_REQUEST = "CLIENT_REQUEST";
 export const CLIENTS_REQUEST_SUCCESS = "CLIENTS_REQUEST_SUCCESS";
 export const CLIENTS_REQUEST_FAIL = "CLIENTS_REQUEST_FAIL";
 
-//
+//add client
 
 export const ADD_CLIENT_SUCCESS = "ADD_CLIENT_SUCCESS";
 export const CLIENT_ADD_FAIL = "CLIENT_ADD_FAIL";

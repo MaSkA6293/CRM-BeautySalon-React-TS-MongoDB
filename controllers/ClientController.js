@@ -9,7 +9,7 @@ module.exports.allClients = async (req, res) => {
       return {
         _id: item._id,
         name: item.name,
-        female: item.female,
+        surname: item.surname,
         phone: item.phone,
         color: item.color,
       };
@@ -28,13 +28,13 @@ module.exports.add = async (req, res) => {
     const randomColorId = getRandomIntInclusive(1, 18);
     const client = new ClientModel({
       name: req.body.name,
-      female: req.body.female,
+      surname: req.body.surname,
       phone: req.body.phone,
       color: colors[randomColorId].hex,
       userId: req.user._id,
     });
     const result = await client.save();
-    res.status(200).json(result);
+    res.status(200).json({ client: result, message: "Клиент успешно добавлен" });
   } catch (e) {
     res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
@@ -68,7 +68,7 @@ module.exports.update = async (req, res) => {
     const userData = {
       _id: newWrite._id,
       name: newWrite.name,
-      female: newWrite.female,
+      surname: newWrite.surname,
       phone: newWrite.phone,
       color: newWrite.color,
     };

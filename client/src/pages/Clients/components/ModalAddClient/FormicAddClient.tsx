@@ -3,18 +3,17 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "@material-ui/core";
 import PhoneInput from "./PhoneInput";
-import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { IClientValues } from "../../../../types/typesClients";
 
+import DialogActions from "@material-ui/core/DialogActions";
 import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
 
-import IconButton from "@material-ui/core/IconButton";
 const initialValues: IClientValues = {
   name: "",
-  female: "",
+  surname: "",
   phone: "",
 };
 const hendlerPhoneValue = (value: string) => {
@@ -23,7 +22,7 @@ const hendlerPhoneValue = (value: string) => {
 };
 const AddClientSchema = Yup.object().shape({
   name: Yup.string().min(4, "Минимум 4 символа").required("Обязательное поле"),
-  female: Yup.string()
+  surname: Yup.string()
     .min(4, "Минимум 4 символа")
     .required("Обязательное поле"),
   phone: Yup.string().test("test-phone", "Не корректное значение", function (
@@ -39,32 +38,25 @@ const AddClientSchema = Yup.object().shape({
 type FormicAddClientProps = {
   handlerAddClient: (values: IClientValues) => void;
   clientIsAdded: boolean;
-  clientAddIsFail: boolean;
-  clientAdded: boolean;
   closeModal: () => void;
 };
 
 const FormicAddClient = ({
   handlerAddClient,
   clientIsAdded,
-  clientAddIsFail,
-  clientAdded,
-  closeModal,
+  closeModal
 }: FormicAddClientProps) => {
   return (
     <>
-      <h3 className="Modal__title">Добавить нового клиента</h3>
       <Formik
         initialValues={initialValues}
         validationSchema={AddClientSchema}
         onSubmit={handlerAddClient}
       >
         {({ dirty, isValid, errors }) => (
-          <Form className="Form">
-            <IconButton onClick={closeModal} className="Form__close">
-              <CloseIcon fontSize="small" />
-            </IconButton>{" "}
-            <div className="Form__field field">
+          <Form className="form">
+            <h2 className="form__title">Добавить клиента</h2>
+            <div className="form__field field">
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
@@ -79,7 +71,7 @@ const FormicAddClient = ({
                     fullWidth
                     error={errors.name ? true : false}
                     autoComplete="false"
-                    className="Form__item"
+                    className="form__item"
                   />
                 </div>
               </div>
@@ -89,7 +81,7 @@ const FormicAddClient = ({
                 </FormHelperText>
               </div>
             </div>
-            <div className="Form__field field">
+            <div className="form__field field">
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
@@ -99,22 +91,22 @@ const FormicAddClient = ({
                   <Field
                     as={TextField}
                     label="Фамилия"
-                    type="female"
-                    name="female"
+                    type="surname"
+                    name="surname"
                     fullWidth
-                    error={errors.female ? true : false}
+                    error={errors.surname ? true : false}
                     autoComplete="false"
-                    className="Form__item"
+                    className="form__item"
                   />
                 </div>
               </div>
               <div className="field__error">
                 <FormHelperText id="component-error-text">
-                  {errors.female}
+                  {errors.surname}
                 </FormHelperText>
               </div>
             </div>
-            <div className="Form__field field">
+            <div className="form__field field">
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
@@ -132,7 +124,7 @@ const FormicAddClient = ({
                     }}
                     error={errors.phone ? true : false}
                     autoComplete="false"
-                    className="Form__item"
+                    className="form__item"
                   />{" "}
                 </div>
               </div>
@@ -142,37 +134,28 @@ const FormicAddClient = ({
                 </FormHelperText>
               </div>
             </div>
-            {/* <Field
-              as={TextField}
-              label="Телефон"
-              type="phone"
-              name="phone"
-              fullWidth
-              InputProps={{
-                inputComponent: PhoneInput as any,
-              }}
-              error={errors.phone ? true : false}
-              autoComplete="false"
-              className="Form__item"
-            />{" "}
-            <FormHelperText id="component-error-text">
-              {errors.phone}
-            </FormHelperText> */}
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={
-                !isValid ||
-                !dirty ||
-                clientIsAdded ||
-                clientAddIsFail ||
-                clientAdded
-              }
-              className={"Form__submit"}
-            >
-              {clientIsAdded ? "Добавление клиента..." : "Добавить клиента"}
-            </Button>
+            <DialogActions>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={
+                  !isValid ||
+                  !dirty ||
+                  clientIsAdded
+                }
+                className={"form__submit"}
+              >
+                {clientIsAdded ? "Добавление..." : "Добавить"}
+              </Button>
+              <Button
+                onClick={closeModal}
+                color="primary"
+                disabled={clientIsAdded}
+              >
+                Отмена
+              </Button>
+            </DialogActions>
           </Form>
         )}
       </Formik>

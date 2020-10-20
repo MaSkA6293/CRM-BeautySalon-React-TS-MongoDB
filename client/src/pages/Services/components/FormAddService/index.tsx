@@ -39,7 +39,7 @@ const initialValues = {
 };
 const AddClientSchema = Yup.object().shape({
   name: Yup.string().required("Обязательное поле"),
-  price: Yup.string().required("Обязательное поле"),
+  price: Yup.number().required("Обязательное поле"),
 });
 
 type FormAddServiceProps = {
@@ -236,7 +236,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
-                        ?.hex
+                      ?.hex
                     : "#4791db",
                 }}
               ></div>

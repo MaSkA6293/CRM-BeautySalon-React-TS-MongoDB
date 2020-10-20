@@ -10,7 +10,6 @@ import {
   CLIENTS_REQUEST_SUCCESS,
   CLIENTS_REQUEST_FAIL,
   ADD_CLIENT_SUCCESS,
-  ADD_CLIENT,
   DELET_CLIENT_REQUEST,
   DELET_CLIENT_SUCCESS,
   CLIENT_DELET_FAIL,
@@ -18,17 +17,18 @@ import {
   CLEAR_ERROR_REQUEST_FAIL,
   CLIENT_ADD_FAIL,
   CLEAR_ERROR_CLIENT_ADD_FAIL,
+  CLEAR_MESSAGE_CLIENT
 } from "../constants";
 
 export interface IClient {
   _id: number;
   name: string;
-  female: string;
+  surname: string;
   phone: string;
 }
 export interface IClientValues {
   name: string;
-  female: string;
+  surname: string;
   phone: string;
 }
 export interface IstateClients {
@@ -50,25 +50,27 @@ export interface IstateClients {
   readonly clientIsEditing: boolean;
   readonly clientEditIsFail: boolean;
   readonly clientEditError: string;
+  readonly clientMessageSuccess: string;
+  readonly clientMessageError: string;
 }
+
+//Client
+interface IClearMessageClients {
+  type: typeof CLEAR_MESSAGE_CLIENT;
+}
+
+
+
 // add new Client
 interface IAddClientActionRequest {
   type: typeof ADD_CLIENT_REQUEST;
 }
 
 interface IAddClientActionAdd {
-  type: typeof ADD_CLIENT;
-  payload: {
-    _id: number;
-    name: string;
-    female: string;
-    phone: string;
-  };
+  type: typeof ADD_CLIENT_SUCCESS;
+  payload: { client: IClient, message: string };
 }
 
-interface IAddClientActionSuccess {
-  type: typeof ADD_CLIENT_SUCCESS;
-}
 
 interface IAddClientActionFail {
   type: typeof CLIENT_ADD_FAIL;
@@ -144,7 +146,6 @@ interface IRequestClientsFailClear {
 export type ClientActionTypes =
   | IAddClientActionRequest
   | IAddClientActionAdd
-  | IAddClientActionSuccess
   | IEditClientActionRequest
   | IEditClientAction
   | IEditClientActionSuccess
@@ -160,4 +161,5 @@ export type ClientActionTypes =
   | IRequestClientsFail
   | IRequestClientsFailClear
   | IAddClientActionFail
-  | IAddClientActionClearFail;
+  | IAddClientActionClearFail |
+  IClearMessageClients

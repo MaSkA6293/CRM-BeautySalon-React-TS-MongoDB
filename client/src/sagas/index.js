@@ -12,8 +12,9 @@ import {
   USER_SIGNUP,
   USER_SIGNIN,
   USER_SIGNOUT,
+  ADD_CLIENT,
 } from "../constants";
-import { fetchClients } from "./fetchClients";
+import { fetchClients } from "./pageClients/fetchClients";
 import { fetchServicePageData } from "./pageServices/fetchServicePageData";
 import { editService } from "./pageServices/editService";
 import { fetchCategoryPageData } from "./pageCategories/fetchCategoryPageData";
@@ -25,9 +26,11 @@ import { editCategory } from "./pageCategories/editCategory";
 import { signUp } from "./pageAuth/signUp";
 import { signIn } from "./pageAuth/signIn";
 import { signOut } from "./pageAuth/signOut";
+import { addClient } from "./pageClients/addClient";
 export default function* rootSaga() {
   //page clients
   yield takeEvery(CLIENTS_REQUEST, fetchClients);
+  yield takeEvery(ADD_CLIENT, addClient)
   //page services
   yield takeEvery(SERVICE_PAGE_REQUEST, fetchServicePageData);
   yield takeEvery(EDIT_SERVIC, editService);

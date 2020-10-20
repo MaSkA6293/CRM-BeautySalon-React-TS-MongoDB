@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
-import Modal from "react-modal";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector } from "react-redux";
 import Spiner from "../../../../components/Spiner";
@@ -8,6 +7,11 @@ import { IClient } from "../../../../types/typesClients";
 import { IClientValues } from "../../../../types/typesClients";
 import FormicEditClient from "./FormicEditClient";
 import cogoToast from "cogo-toast";
+
+import DialogContent from "@material-ui/core/DialogContent";
+import Dialog from "@material-ui/core/Dialog";
+
+
 type FormAddClientProps = {
   modalIsOpen: boolean;
   closeModal: () => void;
@@ -50,7 +54,7 @@ export const FormEditClient = ({
       {
         _id: id,
         name: values.name,
-        female: values.female,
+        surname: values.surname,
         phone: values.phone,
       },
       closeModal
@@ -89,28 +93,30 @@ export const FormEditClient = ({
 
   return (
     <div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        className="Modal"
-        contentLabel="Example Modal"
-        ariaHideApp={false}
+      <Dialog
+        open={modalIsOpen}
+        onClose={closeModal}
+        maxWidth="sm"
+        fullWidth={true}
+        className="dialog"
       >
-        <FormicEditClient
-          currentClient={currentClient}
-          closeModal={closeModal}
-          editClient={handlerEditClient}
-          deletClient={handlerDeletClient}
-          clientDeleted={clientDeleted}
-          clientIsDeleting={clientIsDeleting}
-          clientEdited={clientEdited}
-          clientIsEditing={clientIsEditing}
-          clientEditIsFail={clientEditIsFail}
-          clientDeletIsFail={clientDeletIsFail}
-        />
+        <DialogContent>
+          <FormicEditClient
+            currentClient={currentClient}
+            closeModal={closeModal}
+            editClient={handlerEditClient}
+            deletClient={handlerDeletClient}
+            clientDeleted={clientDeleted}
+            clientIsDeleting={clientIsDeleting}
+            clientEdited={clientEdited}
+            clientIsEditing={clientIsEditing}
+            clientEditIsFail={clientEditIsFail}
+            clientDeletIsFail={clientDeletIsFail}
+          />
 
-        {clientIsDeleting || clientIsEditing ? <Spiner /> : ""}
-      </Modal>
+          {clientIsDeleting || clientIsEditing ? <Spiner /> : ""}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

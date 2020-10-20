@@ -57,7 +57,7 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
               </Avatar>
               <div className="clients-list__client">
                 <div className="clients-list__name-and-surname">
-                  {`${client.name} ${client.female} `}
+                  {`${client.name} ${client.surname} `}
                 </div>
                 <div className="clients-list__phone">
                   {" "}

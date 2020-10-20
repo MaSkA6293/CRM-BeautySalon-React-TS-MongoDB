@@ -1,7 +1,4 @@
 import {
-  ADD_CLIENT_REQUEST,
-  ADD_CLIENT,
-  CLIENT_ADD_FAIL,
   EDIT_CLIENT,
   EDIT_CLIENT_REQUEST,
   EDIT_CLIENT_SUCCESS,
@@ -10,14 +7,12 @@ import {
   DELET_CLIENT,
   CLIENTS_REQUEST,
   CLIENTS_REQUEST_SUCCESS,
-  ADD_CLIENT_SUCCESS,
   CLIENTS_REQUEST_FAIL,
   DELET_CLIENT_REQUEST,
   DELET_CLIENT_SUCCESS,
   CLIENT_DELET_FAIL,
   CLEAR_ERROR_DELET_FAIL,
   CLEAR_ERROR_REQUEST_FAIL,
-  CLEAR_ERROR_CLIENT_ADD_FAIL,
 } from "../constants";
 import { Dispatch } from "redux";
 import { IClient } from "../types/typesClients";
@@ -123,40 +118,3 @@ export const deletClient = (_id: number, callback: () => void) => {
   };
 };
 
-export const addClient = (
-  data: {
-    name: string;
-    female: string;
-    phone: string;
-  },
-  callback: () => void
-) => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: ADD_CLIENT_REQUEST,
-    });
-
-    httpRequest("api/client", "POST", data)
-      .then((res: any) => {
-        if (res.statusText === "OK") {
-          setTimeout(() => {
-            dispatch({ type: ADD_CLIENT, payload: res.data });
-            setTimeout(() => {
-              dispatch({ type: ADD_CLIENT_SUCCESS });
-              callback();
-            }, 2000);
-          }, 2000);
-        }
-      })
-      .catch((err) => {
-        //  check401(err);
-        dispatch({
-          type: CLIENT_ADD_FAIL,
-          payload: { message: err.response.data.message },
-        });
-        setTimeout(() => {
-          dispatch({ type: CLEAR_ERROR_CLIENT_ADD_FAIL });
-        }, 2000);
-      });
-  };
-};

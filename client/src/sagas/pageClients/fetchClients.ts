@@ -1,11 +1,11 @@
 import { call, put, delay } from "redux-saga/effects";
-import { httpRequest } from "../utils/network";
+import { httpRequest } from "../../utils/network";
 import {
   CLIENTS_REQUEST_SUCCESS,
   CLIENTS_REQUEST_FAIL,
   CLEAR_ERROR_REQUEST_FAIL,
-} from "../constants";
-import { IClient } from "../types/typesClients";
+} from "../../constants";
+import { IClient } from "../../types/typesClients";
 
 export function* fetchClients() {
   try {

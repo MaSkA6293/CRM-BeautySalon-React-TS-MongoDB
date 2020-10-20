@@ -8,6 +8,7 @@
   &__title {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 0;
     color: #9c27b0;
   }
@@ -23,7 +24,6 @@
     .field {
       &__row {
         display: flex;
-        //   width: 200px;
       }
       &__icon {
         display: flex;

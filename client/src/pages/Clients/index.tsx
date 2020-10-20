@@ -19,7 +19,7 @@ import cogoToast from "cogo-toast";
 const initialSelectedClient = {
   _id: 0,
   name: "",
-  female: "",
+  surname: "",
   phone: "",
 };
 
@@ -68,8 +68,8 @@ const Clients = () => {
         {clientsIsLoading ? (
           <Spiner />
         ) : (
-          <ClientsList clients={clients} edit={handlerEditClient} />
-        )}
+            <ClientsList clients={clients} edit={handlerEditClient} />
+          )}
       </div>
       {addIsOpen ? (
         <ModalAddClient
@@ -77,8 +77,8 @@ const Clients = () => {
           closeModal={() => setAddIsOpen(false)}
         />
       ) : (
-        ""
-      )}
+          ""
+        )}
       {editIsOpen ? (
         <FormEditClient
           modalIsOpen={editIsOpen}
@@ -92,8 +92,8 @@ const Clients = () => {
           }
         />
       ) : (
-        ""
-      )}
+          ""
+        )}
     </>
   );
 };

@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./styles.scss";
-import Modal from "react-modal";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import Spiner from "../../../../components/Spiner";
-import { addClient } from "../../../../actions/actionClients";
+import { runAddClient } from "../../../../sagas/pageClients/addClient";
 import { IClientValues } from "../../../../types/typesClients";
 import FormicAddClient from "./FormicAddClient";
 import cogoToast from "cogo-toast";
+import DialogContent from "@material-ui/core/DialogContent";
+import Dialog from "@material-ui/core/Dialog";
+
 type ModalAddClientProps = {
   modalIsOpen: boolean;
   closeModal: () => void;
@@ -19,12 +21,13 @@ export const ModalAddClient = ({
 }: ModalAddClientProps) => {
   const dispatch = useDispatch();
   const {
+    clientMessageSuccess,
+    clientMessageError,
     clientIsAdded,
-    clientAdded,
-    clientAddIsFail,
-    clientAddError,
   } = useSelector(({ clients }: IGlobalStore) => {
     return {
+      clientMessageSuccess: clients.clientMessageSuccess,
+      clientMessageError: clients.clientMessageError,
       clientIsAdded: clients.clientIsAdded,
       clientAdded: clients.clientAdded,
       clientAddIsFail: clients.clientAddIsFail,
@@ -34,10 +37,10 @@ export const ModalAddClient = ({
 
   const handlerAddClient = (values: IClientValues) => {
     dispatch(
-      addClient(
+      runAddClient(
         {
           name: values.name,
-          female: values.female,
+          surname: values.surname,
           phone: values.phone,
         },
         closeModal
@@ -46,33 +49,34 @@ export const ModalAddClient = ({
   };
 
   useEffect(() => {
-    clientIsAdded &&
-      cogoToast.success(<div className="message">Клиент успешно добавлен</div>);
-  }, [clientIsAdded]);
+    clientMessageSuccess &&
+      cogoToast.success(<div className="message">{clientMessageSuccess}</div>);
+  }, [clientMessageSuccess]);
 
   useEffect(() => {
-    clientAddError &&
-      cogoToast.error(<div className="message">{clientAddError}</div>);
-  }, [clientAddError]);
+    clientMessageError &&
+      cogoToast.error(<div className="message">{clientMessageError}</div>);
+  }, [clientMessageError]);
 
   return (
     <div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        className="Modal"
-        contentLabel="Example Modal"
-        ariaHideApp={false}
+
+      <Dialog
+        open={modalIsOpen}
+        onClose={closeModal}
+        maxWidth="sm"
+        fullWidth={true}
+        className="dialog"
       >
-        <FormicAddClient
-          handlerAddClient={handlerAddClient}
-          clientIsAdded={clientIsAdded}
-          clientAddIsFail={clientAddIsFail}
-          clientAdded={clientAdded}
-          closeModal={closeModal}
-        />
-        {clientIsAdded ? <Spiner /> : ""}
-      </Modal>
+        <DialogContent>
+          <FormicAddClient
+            handlerAddClient={handlerAddClient}
+            clientIsAdded={clientIsAdded}
+            closeModal={closeModal}
+          />
+          {clientIsAdded ? <Spiner /> : ""}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

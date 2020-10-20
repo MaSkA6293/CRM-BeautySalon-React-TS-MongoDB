@@ -7,10 +7,8 @@ import {
   EDIT_CLIENT_FAIL,
   CLEAR_ERROR_EDIT_FAIL,
   ADD_CLIENT_REQUEST,
-  ADD_CLIENT,
   ADD_CLIENT_SUCCESS,
   CLIENT_ADD_FAIL,
-  CLEAR_ERROR_CLIENT_ADD_FAIL,
   DELET_CLIENT,
   DELET_CLIENT_REQUEST,
   DELET_CLIENT_SUCCESS,
@@ -18,6 +16,7 @@ import {
   CLEAR_ERROR_DELET_FAIL,
   CLIENTS_REQUEST_FAIL,
   CLEAR_ERROR_REQUEST_FAIL,
+  CLEAR_MESSAGE_CLIENT,
 } from "../../constants";
 import { ClientActionTypes, IstateClients } from "../../types/typesClients";
 
@@ -43,6 +42,8 @@ const initialState: IstateClients = {
   clientAdded: false,
   clientAddIsFail: false,
   clientAddError: "",
+  clientMessageSuccess: '',
+  clientMessageError: "",
 };
 const stateClients = (
   state: IstateClients = initialState,
@@ -51,28 +52,24 @@ const stateClients = (
   switch (action.type) {
     case ADD_CLIENT_REQUEST:
       return { ...state, clientIsAdded: true, clientAdded: false };
-    case ADD_CLIENT:
+    case ADD_CLIENT_SUCCESS:
       return {
         ...state,
         clientIsAdded: false,
         clientAdded: true,
-        clientsList: [...state.clientsList, action.payload],
+        clientsList: [...state.clientsList, action.payload.client],
+        clientMessageSuccess: action.payload.message
       };
-    case ADD_CLIENT_SUCCESS:
+    case CLEAR_MESSAGE_CLIENT:
       return {
-        ...state,
-        clientAdded: false,
-      };
+        ...state, clientMessageSuccess: '', clientMessageError: ''
+      }
     case CLIENT_ADD_FAIL:
       return {
         ...state,
         clientIsAdded: false,
-        clientAddIsFail: true,
-        clientAddError: action.payload.message,
+        clientMessageError: action.payload.message,
       };
-    case CLEAR_ERROR_CLIENT_ADD_FAIL: {
-      return { ...state, clientAddIsFail: false, clientAddError: "" };
-    }
 
     case EDIT_CLIENT_REQUEST:
       return {
