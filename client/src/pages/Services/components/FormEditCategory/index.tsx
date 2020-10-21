@@ -13,7 +13,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import { useSelector, useDispatch } from "react-redux";
 
-import SelectColor from "./SelectColor";
+//import SelectColor from "./SelectColor";
+import SelectColor from "../SelectColor";
 import { runEditCategory } from "../../../../sagas/pageCategories/editCategory";
 import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
@@ -58,7 +59,7 @@ const FormEditCategory = ({
   };
   const dispatch = useDispatch();
 
-  const [selectedColor, setSelectedColor] = useState(selectedCategory.color);
+  const [selectedColor, setSelectedColor] = useState(selectedCategory.color._id);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const FormEditCategory = ({
     const data = {
       _id: selectedCategory._id,
       name: values.name,
-      colorId: selectedColor._id,
+      colorId: selectedColor,
     };
     dispatch(runEditCategory(data, handleClose));
   };
@@ -133,20 +134,22 @@ const FormEditCategory = ({
               </div>
             </div>
 
-            <div className="form__selectColor selectColor">
+            <div className="form__select-color select-color">
               <div
-                className="selectColor__selected selectColor__selected-marginRight "
+                className="select-color__selected select-color__selected-margin-right "
                 style={{
                   backgroundColor: selectedColor
-                    ? selectedColor.hex
+                    ? colors.find((c) => c._id.toString() === selectedColor)
+                      ?.hex
                     : "#4791db",
                 }}
               ></div>
-              <div className="selectColor__button">
+              <div className="select-color__button">
                 <SelectColor
                   setSelectedColor={setSelectedColor}
                   colors={colors}
-                  serviceIsEdited={serviceIsEdited}
+                  disabled={serviceIsEdited}
+                  title={"Цвет категории"}
                 />
               </div>
             </div>

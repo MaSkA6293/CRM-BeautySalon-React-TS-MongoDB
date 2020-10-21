@@ -68,7 +68,7 @@ export const ModalAddClient = ({
         fullWidth={true}
         className="dialog"
       >
-        <DialogContent>
+        <DialogContent style={{ minWidth: "200px", overflow: "hidden" }}>
           <FormicAddClient
             handlerAddClient={handlerAddClient}
             clientIsAdded={clientIsAdded}

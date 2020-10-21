@@ -18,8 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
-import SelectColor from "./SelectColor";
-
+import SelectColor from "../SelectColor";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -137,7 +136,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
               </div>
             </div>
 
-            <div className="form__field field field-marginBottom ">
+            <div className="form__field field field-margin-bottom ">
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
@@ -190,7 +189,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                   {" "}
                   <SettingsIcon />{" "}
                 </div>
-                <div className="field__body  field__body-sizeSelect">
+                <div className="field__body  field__body-size-select">
                   <FormControl>
                     <InputLabel id="demo-mutiple-checkbox-label">
                       Категории
@@ -230,9 +229,9 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
               </div>
             </div>
 
-            <div className="form__selectColor selectColor">
+            <div className="form__select-color select-color">
               <div
-                className="selectColor__selected selectColor__selected-marginRight "
+                className="select-color__selected select-color__selected-margin-right"
                 style={{
                   backgroundColor: selectedColor
                     ? colors.find((c) => c._id.toString() === selectedColor)
@@ -240,11 +239,12 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                     : "#4791db",
                 }}
               ></div>
-              <div className="selectColor__button">
+              <div className="select-color__button">
                 <SelectColor
                   setSelectedColor={setSelectedColor}
                   colors={colors}
                   disabled={serviceIsAdded}
+                  title="Цвет услуги"
                 />
               </div>
             </div>

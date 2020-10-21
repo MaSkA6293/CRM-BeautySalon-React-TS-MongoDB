@@ -19,12 +19,12 @@ function SimpleDialog({
 }: SimpleDialogProps) {
   return (
     <Dialog onClose={onClose} open={open}>
-      <div className="SelectColor">
+      <div className="select-color">
         {colors.map((color, index) => {
           return (
-            <div className="SelectColor__wraper" key={index}>
+            <div className="select-color__wraper" key={index}>
               <div
-                className="SelectColor__item"
+                className="select-color__item"
                 style={{ backgroundColor: color.hex }}
                 onClick={() => handleSelectColor(color._id.toString())}
               ></div>

@@ -1,16 +1,103 @@
-@import "../Jornal/FormAddRecord/FormAddRecord.scss";
-@import "../../colors.scss";
-.App {
+.app {
   min-width: 320px;
   max-width: 768px;
   position: relative;
   display: flex;
-  //border: 1px solid #a9a0a0;
-  //border-radius: 10px;
   margin: 5px auto;
-  // box-shadow: 2px 0px 5px #c4b5df;
   min-height: 100vh;
-  //  background-color: $s-lite;
-  // background-image: linear-gradient(45deg, #d875efa6, #ca74e2b3);
   flex-direction: column;
 }
+
+.form {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  min-width: 208px;
+  overflow:hidden;
+    &__title-btn-delet {
+      padding: 0 0 0 20px;
+    display: flex;
+  }
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    color: #9c27b0;
+    flex:1;
+  }
+  &__item {
+    margin: 5px;
+    input{
+    text-overflow: ellipsis;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 5px;
+    .field {
+      &__row {
+        display: flex;
+      }
+      &__icon {
+        display: flex;
+        align-items: center;
+        padding-top: 16px;
+        &:first-child {
+          justify-content: center;
+        }
+      }
+      &__error {
+        padding-left: 35px;
+      }
+      &__body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-left: 10px;
+      }
+    }
+  }
+  .field__body-size-select {
+    min-width: 185px;
+  }
+  .select-color {
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+    &__selected {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: red;
+    }
+    &__selected-margin-right {
+      margin-right: 10px;
+    }
+    &__button {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      width: 100%;
+    }
+}
+}
+  
+  @media screen and (min-width: 425px) {
+    .form {
+      width: 320px;
+    }
+  }
+  @media screen and (min-width: 500px) {
+    .form {
+      width: 370px;
+    }
+  }
+  @media screen and (min-width: 625px) {
+  }
+  

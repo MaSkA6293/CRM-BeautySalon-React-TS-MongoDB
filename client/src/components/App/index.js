@@ -46,7 +46,7 @@ const App = () => {
     return <Spiner />;
   }
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <Suspense fallback={<Spiner />}>
           <ThemeProvider theme={theme}>{routes}</ThemeProvider>

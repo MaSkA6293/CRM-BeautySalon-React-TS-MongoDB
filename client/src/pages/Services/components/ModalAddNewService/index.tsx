@@ -24,7 +24,7 @@ const ModalAddService = ({
       fullWidth={true}
       className="dialog"
     >
-      <DialogContent>
+      <DialogContent style={{ minWidth: "200px", overflow: "hidden" }}>
         <FormAddService handleClose={handleClose} categoryList={categoryList} />
       </DialogContent>
     </Dialog>

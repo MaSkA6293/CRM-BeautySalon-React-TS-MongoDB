@@ -8,12 +8,16 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
-import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
 
 import AreYouSure from "../../../../components/AreYouSure";
 import { IClientValues } from "../../../../types/typesClients";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
+
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import PersonIcon from '@material-ui/icons/Person';
+
+
 const hendlerPhoneValue = (value: string) => {
   const checkValue = value.replace(/[+?,(,),\s?,\-,_]+/g, "").trim();
   return checkValue.length === 11 ? true : false;
@@ -50,11 +54,8 @@ const FormicEditClient = ({
   editClient,
   deletClient,
   currentClient,
-  clientDeleted,
   clientIsDeleting,
-  clientEdited,
   clientIsEditing,
-  clientEditIsFail,
   clientDeletIsFail,
   closeModal,
 }: FormicEditClientProps) => {
@@ -99,7 +100,7 @@ const FormicEditClient = ({
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
-                  <RecentActorsIcon />{" "}
+                  <PersonIcon />{" "}
                 </div>
                 <div className="field__body">
                   <Field
@@ -123,7 +124,7 @@ const FormicEditClient = ({
                 <div className="field__row">
                   <div className="field__icon">
                     {" "}
-                    <RecentActorsIcon />{" "}
+                    <AccountBoxIcon />{" "}
                   </div>
                   <div className="field__body">
                     <Field
@@ -174,36 +175,27 @@ const FormicEditClient = ({
             </div>
             <DialogActions>
               <Button
-                variant="contained"
                 color="primary"
                 type="submit"
                 name="edit"
                 disabled={
                   !isValid ||
                   !dirty ||
-                  clientDeleted ||
                   clientIsDeleting ||
-                  clientEdited ||
-                  clientIsEditing ||
-                  clientEditIsFail ||
-                  clientDeletIsFail
+                  clientIsEditing
                 }
               >
                 {clientIsEditing ? "Сохренение..." : "Сохранить"}
               </Button>
               <Button
                 onClick={closeModal}
-                variant="contained"
                 color="primary"
                 name="delet"
                 type="button"
                 disabled={
                   !isValid ||
-                  clientDeleted ||
                   clientIsDeleting ||
-                  clientEdited ||
                   clientIsEditing ||
-                  clientEditIsFail ||
                   clientDeletIsFail
                 }
               >

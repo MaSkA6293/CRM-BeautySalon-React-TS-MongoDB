@@ -1,11 +1,9 @@
-@import "../../colors.scss";
-.Clients {
+.clients {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
   align-content: flex-start;
   border-radius: 0 10px 10px 0;
   position: relative;
-  // background-color: $s-lite;
   min-height: 100vh;
 }

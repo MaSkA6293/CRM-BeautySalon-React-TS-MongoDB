@@ -1,13 +1,11 @@
-.SelectColor {
+.select-color {
   display: flex;
   flex-wrap: wrap;
-  width: 260px;
   justify-content: center;
   &__wraper {
     width: 60px;
     height: 60px;
     margin: 2px;
-
     display: flex;
     justify-content: center;
     align-items: center;

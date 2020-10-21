@@ -1,68 +1,68 @@
-@import "../../../../colors.scss";
-.dialog {
-  min-width: 320px;
-  margin: auto;
-}
-.form {
-    font-size: 0.95rem;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    width: 100%;
-    min-width: 208px;
-    &__title {
-      display: flex;
-      justify-content: center;
-      padding: 0;
-      color: #9c27b0;
-    }
-    &__item {
-      margin: 5px;
-    }
-    &__field {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      padding-bottom: 5px;
-      .field {
-        &__row {
-          display: flex;
-        }
-        &__icon {
-          display: flex;
-          align-items: center;
-          padding-top: 16px;
-          &:first-child {
-            justify-content: center;
-          }
-        }
-        &__error {
-          padding-left: 35px;
-        }
-        &__body {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          padding-left: 10px;
-        }
-      }
-    }
-  }
-  @media screen and (min-width: 375px) {
-    .form {
-      width: 270px;
-    }
-  }
+// @import "../../../../colors.scss";
+// .dialog {
+//   min-width: 320px;
+//   margin: auto;
+// }
+// .form {
+//     font-size: 0.95rem;
+//     display: flex;
+//     flex-direction: column;
+//     margin: auto;
+//     width: 100%;
+//     min-width: 208px;
+//     &__title {
+//       display: flex;
+//       justify-content: center;
+//       padding: 0;
+//       color: #9c27b0;
+//     }
+//     &__item {
+//       margin: 5px;
+//     }
+//     &__field {
+//       display: flex;
+//       flex-direction: column;
+//       flex: 1;
+//       padding-bottom: 5px;
+//       .field {
+//         &__row {
+//           display: flex;
+//         }
+//         &__icon {
+//           display: flex;
+//           align-items: center;
+//           padding-top: 16px;
+//           &:first-child {
+//             justify-content: center;
+//           }
+//         }
+//         &__error {
+//           padding-left: 35px;
+//         }
+//         &__body {
+//           display: flex;
+//           flex-direction: column;
+//           width: 100%;
+//           padding-left: 10px;
+//         }
+//       }
+//     }
+//   }
+//   @media screen and (min-width: 375px) {
+//     .form {
+//       width: 270px;
+//     }
+//   }
 
-@media screen and (min-width: 425px) {
-  .form {
-    width: 270px;
-  }
-}
-@media screen and (min-width: 500px) {
-  .form {
-    width: 370px;
-  }
-}
-@media screen and (min-width: 625px) {
-}
+// @media screen and (min-width: 425px) {
+//   .form {
+//     width: 270px;
+//   }
+// }
+// @media screen and (min-width: 500px) {
+//   .form {
+//     width: 370px;
+//   }
+// }
+// @media screen and (min-width: 625px) {
+// }

@@ -8,9 +8,10 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { IClientValues } from "../../../../types/typesClients";
 
 import DialogActions from "@material-ui/core/DialogActions";
-import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
 
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import PersonIcon from '@material-ui/icons/Person';
 const initialValues: IClientValues = {
   name: "",
   surname: "",
@@ -60,7 +61,7 @@ const FormicAddClient = ({
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
-                  <RecentActorsIcon />{" "}
+                  <PersonIcon />{" "}
                 </div>
                 <div className="field__body">
                   <Field
@@ -85,7 +86,7 @@ const FormicAddClient = ({
               <div className="field__row">
                 <div className="field__icon">
                   {" "}
-                  <RecentActorsIcon />{" "}
+                  <AccountBoxIcon />{" "}
                 </div>
                 <div className="field__body">
                   <Field
@@ -136,7 +137,6 @@ const FormicAddClient = ({
             </div>
             <DialogActions>
               <Button
-                variant="contained"
                 color="primary"
                 type="submit"
                 disabled={

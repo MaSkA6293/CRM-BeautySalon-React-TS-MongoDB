@@ -38,17 +38,17 @@ const CategoryHeader = ({ openAddCategory }: ServicesHeaderProps) => {
 
   return (
     <Header>
-      <div className="CategoryHeader">
+      <div className="category-header">
         <Button className={classes.button}>
           <CustomIcon
-            addClass={["CategoryHeader__arrowBack"]}
+            addClass={["category-header__arrow-back"]}
             click={() => handlerClickGoHome()}
             icon={faArrowLeft}
           />
         </Button>
-        <div className="CategoryHeader__title">Категории услуг</div>
+        <div className="category-header__title">Категории услуг</div>
         <div
-          className="CategoryHeader__add"
+          className="category-header__add"
           onClick={() => openAddCategory(true)}
         >
           <Button className={classes.button}>

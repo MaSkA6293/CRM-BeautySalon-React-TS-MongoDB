@@ -8,15 +8,15 @@ import ListItem from "@material-ui/core/ListItem";
 import HomeHeader from "./components/HomeHeader";
 const Home = () => {
   return (
-    <div className="Home">
+    <div className="home">
       <HomeHeader />
-      <div className="Home__menu">
+      <div className="home__menu">
         <Link to="/clients">
           <ListItem button>
             <NavItem
               icon={faUsers}
               title={"Клиенты"}
-              addClass={["Home__NavItem"]}
+              addClass={["home__nav-item"]}
             />
           </ListItem>
         </Link>
@@ -25,7 +25,7 @@ const Home = () => {
             <NavItem
               icon={faList}
               title={"Услуги"}
-              addClass={["Home__NavItem"]}
+              addClass={["home__nav-item"]}
             />
           </ListItem>
         </Link>

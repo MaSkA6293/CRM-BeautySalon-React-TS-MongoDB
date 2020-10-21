@@ -63,7 +63,7 @@ const Clients = () => {
   return (
     <>
       {" "}
-      <div className="Clients">
+      <div className="clients">
         <ClientHeader setAddIsOpen={setAddIsOpen} />
         {clientsIsLoading ? (
           <Spiner />

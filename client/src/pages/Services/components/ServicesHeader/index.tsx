@@ -61,14 +61,14 @@ const ServicesHeader = ({
 
   return (
     <Header>
-      <div className="ServicesHeader">
+      <div className="services-header">
         <Button className={classes.button} onClick={() => handlerClickGoHome()}>
           <CustomIcon
-            addClass={["ServicesHeader__arrowBack"]}
+            addClass={["services-header__arrow-back"]}
             icon={faArrowLeft}
           />
         </Button>
-        <div className="ServicesHeader__filter">
+        <div className="services-header__filter">
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -92,7 +92,7 @@ const ServicesHeader = ({
         </div>
         <AddNewService setIsOpen={setIsOpenAddService} />
         <div
-          className="ServicesHeader__Category"
+          className="services-header__category"
           onClick={() => handlerClickGoCategiry()}
         >
           <Button className={classes.button}>
