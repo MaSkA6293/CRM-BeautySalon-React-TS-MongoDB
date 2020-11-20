@@ -1,7 +1,9 @@
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const ClientModel = require("../models/Client");
 const ColorsModels = require("../models/Color");
-
+const { validationResult } = require("express-validator");
+const checkId = require('../validations/checkObjectId')
+const { getRandomInt } = require('../utils/getRandom')
 module.exports.allClients = async (req, res) => {
   try {
     const clients = await ClientModel.find({ userId: req.user._id });
@@ -24,8 +26,15 @@ module.exports.allClients = async (req, res) => {
 
 module.exports.add = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(401).json({
+        errors: errors.array(),
+        message: "Не корректные данные при регистрации",
+      });
+    }
     const colors = await ColorsModels.find();
-    const randomColorId = getRandomIntInclusive(1, 18);
+    const randomColorId = getRandomInt(1, 18);
     const client = new ClientModel({
       name: req.body.name,
       surname: req.body.surname,
@@ -44,12 +53,19 @@ module.exports.add = async (req, res) => {
 
 module.exports.delet = async (req, res) => {
   try {
-    await ClientModel.deleteOne({
-      _id: req.params.id,
-    });
-    res
-      .status(200)
-      .json({ id: req.params.id, message: "Клиент успешно удален" });
+    const clientId = req.params.id;
+    if (!checkId(clientId)) {
+      return res.status(400).json({ message: "Не корректный ID" })
+    }
+    const client = await ClientModel.findById(clientId)
+    if (client) {
+      client.remove()
+      res
+        .status(200)
+        .json({ id: req.params.id, message: "Клиент успешно удален" });
+    } else {
+      res.status(400).json({ message: "Ошибка удаления клиента" })
+    }
   } catch (e) {
     res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
@@ -78,8 +94,4 @@ module.exports.update = async (req, res) => {
   }
 };
 
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+

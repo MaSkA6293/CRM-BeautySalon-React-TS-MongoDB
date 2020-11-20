@@ -7,6 +7,7 @@ const compression = require("compression");
 const morgan = require("morgan");
 const passport = require("passport");
 require('dotenv').config()
+
 const ColorController = require("./controllers/ColorController");
 
 const TaskController = require("./controllers/TaskController");
@@ -44,18 +45,17 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || config.get("port");
 
 async function start() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || config.get("mongoURI"), {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
 
-    app.listen(PORT, function () {
-      console.log(`App has been started on port: ${PORT}`);
+    app.listen(process.env.PORT, function () {
+      console.log(`App has been started on port: ${process.env.PORT}`);
     });
   } catch (e) {
     console.log("Server error", e.message);

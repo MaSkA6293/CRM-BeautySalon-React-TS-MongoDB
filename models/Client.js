@@ -7,7 +7,11 @@ const ClientShema = new Schema({
   surname: String,
   phone: String,
   color: String,
-  userId: String,
+  userId: {
+    required: true,
+    ref: "User",
+    type: Schema.Types.ObjectId
+  },
 });
 
 module.exports = mongoose.model("client", ClientShema);
