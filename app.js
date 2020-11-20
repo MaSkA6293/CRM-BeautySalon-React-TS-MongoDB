@@ -6,7 +6,7 @@ const config = require("config");
 const compression = require("compression");
 const morgan = require("morgan");
 const passport = require("passport");
-
+require('dotenv').config()
 const ColorController = require("./controllers/ColorController");
 
 const TaskController = require("./controllers/TaskController");
@@ -20,6 +20,9 @@ const serviceRoutes = require("./routes/service.routes");
 const serviceCategoryesRoutes = require("./routes/serviceCategory.routes");
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
 app.use(morgan("tiny"));
 app.use(compression());
 app.use(passport.initialize());

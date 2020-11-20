@@ -1,0 +1,11 @@
+.confirm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.confirm__title{
+
+}
+.confirm__status{
+color: green;
+}
