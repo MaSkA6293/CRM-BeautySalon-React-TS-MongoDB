@@ -7,6 +7,6 @@ const UserShema = new Schema({
   refresh_token: { type: String },
   confirmed: { type: Boolean, default: false },
   confirmed_hash: { type: String, required: true }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("user", UserShema);

@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import cogoToast from "cogo-toast";
 import Spiner from "../../components/Spiner";
 import AuthForm from "./components/Authform";
-export const AuthPage = () => {
+export const AuthPage: React.FC = (): React.ReactElement => {
   const {
     userIsLoading,
     userLoaded,

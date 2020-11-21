@@ -8,12 +8,6 @@ const morgan = require("morgan");
 const passport = require("passport");
 require('dotenv').config()
 
-const ColorController = require("./controllers/ColorController");
-
-const TaskController = require("./controllers/TaskController");
-
-const ListController = require("./controllers/ListsController");
-
 const authRoutes = require("./routes/auth.routes");
 const clientRoutes = require("./routes/client.routes");
 const colorRoutes = require("./routes/color.routes");
@@ -70,15 +64,6 @@ app.use("/api/color", colorRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/services/categories", serviceCategoryesRoutes);
 
-app.post("/tasks", TaskController.create);
-app.get("/tasks", TaskController.read);
-app.put("/tasks/:id", TaskController.update);
-app.delete("/tasks/:id", TaskController.delete);
-
-app.post("/lists", ListController.create);
-app.get("/lists", ListController.read);
-app.delete("/lists/:id", ListController.delete);
-app.put("/lists/:id", ListController.update);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));

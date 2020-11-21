@@ -21,12 +21,12 @@ type AuthFormProps = {
   signUp: (values: { email: string; password: string }) => void;
 };
 
-const AuthForm = ({
+const AuthForm: React.FC<AuthFormProps> = ({
   userIsLoading,
   signIn,
   signUp,
   userIsLogining,
-}: AuthFormProps) => {
+}: AuthFormProps): React.ReactElement => {
   const [isRegister, setIsRegister] = useState(false);
   const initialValues = {
     email: "",

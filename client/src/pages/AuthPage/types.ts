@@ -16,7 +16,6 @@ export interface IstateUser {
   userIsLoading: boolean;
   userGetIsFail: boolean;
   userGetError: string;
-
   userIsLogining: boolean;
   userIsLogined: boolean;
   userLoginIsFail: boolean;
