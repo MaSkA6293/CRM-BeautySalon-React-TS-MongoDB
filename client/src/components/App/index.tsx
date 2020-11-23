@@ -7,43 +7,32 @@ import { ThemeProvider } from "@material-ui/styles";
 import { purple } from "@material-ui/core/colors";
 import { useRoutes } from "../../routes";
 import { useSelector, useDispatch } from "react-redux";
-import { runSignOut } from "../../sagas/pageAuth/signOut";
-import { userReady, signInSuccess } from "../../sagas/pageAuth/signIn";
+import { runGetUser } from '../../ducks/user/actionCreators/getUser'
+import { selectIsAuth, selectStatusUser } from '../../ducks/user/selector'
+import { UserStatus } from '../../ducks/user/contracts/state'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      // Purple and green play nicely together.
       main: purple[500],
       contrastText: "#fff",
     },
     secondary: {
-      // This is green.A700 as hex.
       main: "#black",
     },
   },
 });
 
-const App = () => {
+const App: React.FC = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const { userIsLogined, checkUser } = useSelector(({ user }) => {
-    return {
-      userIsLogined: user.userIsLogined,
-      checkUser: user.userReady,
-    };
-  });
+  const isAuth = useSelector(selectIsAuth)
+  const statusUser = useSelector(selectStatusUser)
   useEffect(() => {
-    dispatch(userReady(false));
-    const data = JSON.parse(localStorage.getItem("userData") || "[]");
-    if (data && data.token) {
-      dispatch(signInSuccess(data.token, data.refresh_token, data.id));
-    } else {
-      dispatch(runSignOut());
-    }
+    dispatch(runGetUser());
   }, [dispatch]);
+  const routes = useRoutes(isAuth);
 
-  const routes = useRoutes(userIsLogined);
-  if (!checkUser) {
-    return <Spiner />;
+  if (statusUser === UserStatus.NOT_READY) {
+    return <Spiner />
   }
   return (
     <div className="app">
@@ -54,6 +43,8 @@ const App = () => {
       </Router>
     </div>
   );
+
+
 };
 
 export default App;

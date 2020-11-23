@@ -8,7 +8,7 @@
   border-radius: 1%;
   box-shadow: 0px 3px 10px #540e67;
 }
-.Auth {
+.auth {
   display: block;
   margin: auto;
   width: 90%;
@@ -21,8 +21,21 @@
     display: flex;
     justify-content: center;
   }
-
-  .Form {
+  &__variant{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px
+  }
+  &__signIn{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+  }
+  &__signUp{
+    display: flex;
+    flex-direction: column;
+  }
+  .form {
     &__item {
       margin: 3% 0;
     }
@@ -30,18 +43,14 @@
       display: flex;
       justify-content: flex-start;
       width: 100%;
-      button {
-        margin: 5% 0;
-      }
+      padding:5px;  
     }
-    &__signUp {
-      margin-right: 4% !important;
-    }
+   
   }
 }
 
 @media screen and (min-width: 425px) {
-  .Auth {
+  .auth {
     &__title {
       font-size: 2rem;
     }

@@ -3,13 +3,13 @@ import { IstateRecords, IstateApp } from "../types";
 import { IstateService } from "../pages/Services/types";
 import { IstateClients } from "../types/typesClients";
 import { IstateColors } from "../types/typesColors";
-import { IstateUser } from "../pages/AuthPage/types";
+import { IstateUser } from "../ducks/user/contracts/state";
 import app from "./app";
 import clients from "./clients";
 import records from "./records";
 import colors from "./colors";
 import services from "./services";
-import user from "./user";
+import UserReducer from "../ducks/user/reducer";
 
 export interface IGlobalStore {
   app: IstateApp;
@@ -17,7 +17,7 @@ export interface IGlobalStore {
   records: IstateRecords;
   colors: IstateColors;
   services: IstateService;
-  user: IstateUser;
+  UserReducer: IstateUser;
 }
 
 const rootReducer = combineReducers<IGlobalStore>({
@@ -26,6 +26,6 @@ const rootReducer = combineReducers<IGlobalStore>({
   records,
   colors,
   services,
-  user,
+  UserReducer,
 });
 export default rootReducer;

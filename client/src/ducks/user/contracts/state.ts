@@ -1,14 +1,17 @@
 export interface IstateUser {
-    userLoaded: boolean;
     userIsLoading: boolean;
-    userGetIsFail: boolean;
-    userGetError: string;
+    userCreateError: string;
     userIsLogining: boolean;
-    userIsLogined: boolean;
-    userLoginIsFail: boolean;
-    userLoginError: string;
-    userData: { token: string; id: string };
-    userReady: boolean;
+    userLoginingError: string;
+    userData: undefined | User;
     userCreateSuccess: string;
+    statusUser: UserStatus
+}
+export interface User {
+    id: string
 }
 
+export enum UserStatus {
+    READY = "READY",
+    NOT_READY = 'NOT_READY'
+}

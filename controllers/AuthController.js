@@ -6,7 +6,14 @@ const { validationResult } = require("express-validator");
 const generateMD5 = require("../utils/generateHash");
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const jwt_decode = require("jwt-decode");
-const { use } = require("../core/mailer");
+
+module.exports.getUser = async (req, res) => {
+  try {
+    res.status(200).json({ id: req.user._id })
+  } catch (e) {
+    res.status(404).json({ message: ERROR_MESSAGE_STATUS_500 })
+  }
+}
 
 
 module.exports.verify = async (req, res) => {
@@ -55,17 +62,16 @@ module.exports.signUp = async (req, res) => {
       password: hashedPassword,
       confirmed_hash: generateMD5(process.env.MD5SECRET_KEY)
     });
-
-    await user.save();
-
     sendMail({
       from: "admin@beautySalon.com",
       to: user.email,
       subject: "Подтверждение почты CRM",
       html: `Для того, чтобы подтвердить почту, перейдите <a href="http://localhost:${process.env.PORT}/api/auth/verify?hash=${user.confirmed_hash}">по этой ссылке</a>`,
     })
+    await user.save();
 
-    res.status(200).json({ message: "Пользователь успешно зарегистрирован" });
+
+    res.status(200).json({ message: "Вы успешно зарегистрировались, теперь Вы можете войти" });
   } catch (err) {
     res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
@@ -75,6 +81,7 @@ module.exports.signIn = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+
       return res.status(401).json({
         message: "Не корректные данные при входе в систему",
       });
@@ -97,13 +104,14 @@ module.exports.signIn = async (req, res) => {
     const refresh_token = jwt.sign(
       { userId: user.id, email: user.email, payload: token },
       process.env.JWTREFRESH,
-      { expiresIn: "2 days" }
+      { expiresIn: "30 days" }
     );
     const update = { refresh_token: refresh_token };
     await User.findOneAndUpdate({ _id: user._id }, update);
     res.status(200).json({
       token: `Bearer ${token}`,
       refresh_token,
+      user: { id: user._id }
     });
   } catch (e) {
     res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
@@ -141,7 +149,7 @@ module.exports.refresh = async (req, res) => {
       const newRefresh_token = jwt.sign(
         { userId: user.id, email: user.email, payload: newToken },
         process.env.JWTREFRESH,
-        { expiresIn: "2 days" }
+        { expiresIn: "30 days" }
       );
       const update = { refresh_token: newRefresh_token };
       await User.findOneAndUpdate({ _id: user._id }, update);

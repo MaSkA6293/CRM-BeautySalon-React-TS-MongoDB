@@ -19,19 +19,24 @@ export const useRoutes = (isAuthenticated: boolean) => {
         <Route path="/clients">
           <Clients />
         </Route>
-        <Route path="/test">
-          <Test />
-        </Route>
-        <Route path="*">
-          <Redirect to="/Home" />
-        </Route>
+
+        <Redirect to="/" />
       </Switch>
-    );
+    )
   } else {
     return (
       <Switch>
         <Route exact path="/">
-          <AuthPage />
+          <AuthPage variant />
+        </Route>
+        <Route path="/signUp">
+          <AuthPage signUp />
+        </Route>
+        <Route path="/signIn">
+          <AuthPage signIn />
+        </Route>
+        <Route path="/test">
+          <Test isOpen status={'error'} message={'Everything is OK!'} />
         </Route>
         <Redirect to="/" />
       </Switch>

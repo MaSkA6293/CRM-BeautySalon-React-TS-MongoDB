@@ -3,7 +3,7 @@ import React from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import { runSignOut } from "../../../../sagas/pageAuth/signOut";
+import { runSignOut } from "../../../../ducks/user/sagas/signOut";
 import { useDispatch } from "react-redux";
 
 type HeaderMenuProps = {

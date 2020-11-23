@@ -1,55 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { useHistory } from "react-router-dom";
 
 const AddClientSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Не корректное значение")
+  email: Yup.string().email("Не корректное значение")
     .required("Обязательное поле"),
   password: Yup.string()
-    .min(6, "Минимум 6 символов")
     .required("Обязательное поле"),
 });
 type AuthFormProps = {
-  userIsLoading: boolean;
   userIsLogining: boolean;
-  signIn: (values: { email: string; password: string }) => void;
-  signUp: (values: { email: string; password: string }) => void;
+  signIn: (values: InitialValues) => void;
 };
+interface InitialValues {
+  email: string,
+  password: string,
+}
 
 const AuthForm: React.FC<AuthFormProps> = ({
-  userIsLoading,
   signIn,
-  signUp,
   userIsLogining,
 }: AuthFormProps): React.ReactElement => {
-  const [isRegister, setIsRegister] = useState(false);
-  const initialValues = {
+
+  const initialValues: InitialValues = {
     email: "",
     password: "",
   };
 
-  const handleSubmit = (values: any) => {
-    if (isRegister) {
-      signUp(values);
-      setIsRegister((prev) => !prev);
-    } else {
-      signIn(values);
-    }
-  };
+  const handleSubmit = (data: InitialValues) => {
+    signIn(data);
+  }
+  const history = useHistory()
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={AddClientSchema}
-      onSubmit={(values) => handleSubmit(values)}
+      onSubmit={(values: InitialValues) => handleSubmit(values)}
     >
       {({ errors }) => (
-        <Form className="Auth__Form Form">
+        < Form className="auth__form form">
           <Field
             as={TextField}
             label="Email"
@@ -58,11 +52,10 @@ const AuthForm: React.FC<AuthFormProps> = ({
             fullWidth
             error={errors.email ? true : false}
             autoComplete="false"
-            className="Form__item"
+            className="form__item"
+            disabled={userIsLogining}
           />
-          <FormHelperText id="component-error-text">
-            {errors.email}
-          </FormHelperText>
+          <FormHelperText id="component-error-text">{errors.email}</FormHelperText>
           <Field
             as={TextField}
             label="Пароль"
@@ -71,36 +64,39 @@ const AuthForm: React.FC<AuthFormProps> = ({
             fullWidth
             error={errors.password ? true : false}
             autoComplete="false"
-            className="Form__item"
+            className="form__item"
+            disabled={userIsLogining}
           />
           <FormHelperText id="component-error-text">
             {errors.password}
           </FormHelperText>
-          <div className="Form__submit">
+
+          <div className="form__submit">
             <Button
               variant="contained"
               color="primary"
+              fullWidth
               type="submit"
-              disabled={userIsLoading || userIsLogining}
-              className={"Form__signUp"}
+              disabled={userIsLogining}
             >
               Войти
             </Button>
+          </div>
 
+          <div className="form__submit">
             <Button
               variant="contained"
-              type="submit"
-              disabled={userIsLoading || userIsLogining}
-              onClick={() => {
-                setIsRegister((prev) => !prev);
-              }}
+              color="secondary"
+              fullWidth
+              disabled={userIsLogining}
+              onClick={history.goBack}
             >
-              Регистрация
-            </Button>
+              Назад
+              </Button>
           </div>
         </Form>
       )}
-    </Formik>
+    </Formik >
   );
 };
 

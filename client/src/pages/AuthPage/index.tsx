@@ -1,77 +1,99 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
-
-import { runSignUp } from "../../sagas/pageAuth/signUp";
-import { runSignIn } from "../../sagas/pageAuth/signIn";
-import { IGlobalStore } from "../../reducers/rootReducer";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import { runSignUp } from "../../ducks/user/actionCreators/signUp";
+import { runSignIn } from "../../ducks/user/actionCreators/signIn";
 import { useSelector, useDispatch } from "react-redux";
-import cogoToast from "cogo-toast";
-import Spiner from "../../components/Spiner";
-import AuthForm from "./components/Authform";
-export const AuthPage: React.FC = (): React.ReactElement => {
-  const {
-    userIsLoading,
-    userLoaded,
-    userGetIsFail,
-    userGetError,
-    userIsLogining,
-    userLoginIsFail,
-    userLoginError,
-    userCreateSuccess,
-  }: any = useSelector(({ user }: IGlobalStore) => {
-    return {
-      userIsLoading: user.userIsLoading,
-      userLoaded: user.userLoaded,
-      userGetIsFail: user.userGetIsFail,
-      userGetError: user.userGetError,
-      userIsLogining: user.userIsLogining,
-      userLoginIsFail: user.userLoginIsFail,
-      userLoginError: user.userLoginError,
-      userCreateSuccess: user.userCreateSuccess,
-    };
-  });
-  useEffect(() => {
-    userLoaded &&
-      cogoToast.success(
-        <div className="message">Пользователь успешно создан</div>
-      );
-  }, [userLoaded]);
-  useEffect(() => {
-    userCreateSuccess &&
-      cogoToast.success(<div className="message">{userCreateSuccess}</div>);
-  }, [userCreateSuccess]);
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import Message from '../../components/Message'
+import {
+  selectuserIsLoading,
+  selectuserCreateError,
+  selectuserIsLogining,
+  selectuserLoginingError,
+  selectuserCreateSuccess
+} from "../../ducks/user/selector"
+interface AuthPageProps {
+  signIn?: boolean,
+  signUp?: boolean,
+  variant?: boolean
+}
 
-  useEffect(() => {
-    userGetIsFail &&
-      cogoToast.error(<div className="message">{userGetError}</div>);
-  }, [userGetIsFail, userGetError]);
+export const AuthPage: React.FC<AuthPageProps> = ({ signIn, signUp, variant }: AuthPageProps): React.ReactElement => {
 
-  useEffect(() => {
-    userLoginIsFail &&
-      cogoToast.error(<div className="message">{userLoginError}</div>);
-  }, [userLoginIsFail, userLoginError]);
+  const userIsLoading = useSelector(selectuserIsLoading)
+  const userCreateError = useSelector(selectuserCreateError)
+  const userIsLogining = useSelector(selectuserIsLogining)
+  const userLoginingError = useSelector(selectuserLoginingError)
+  const userCreateSuccess = useSelector(selectuserCreateSuccess)
 
   const dispatch = useDispatch();
 
-  const signUp = (values: any) => {
+  const signUpHandler = (values: { email: string; password: string; confirmPassword: string }) => {
     dispatch(runSignUp(values));
   };
-  const signIn = (values: any) => {
+  const signInHandler = (values: { email: string; password: string }) => {
     dispatch(runSignIn(values));
   };
+  const history = useHistory()
+  useEffect(() => {
+    if (userCreateSuccess) {
+      setTimeout(() => {
+        history.push('/signIn')
+      }, 4000)
+    }
+  }, [userCreateSuccess, history])
+
+
   return (
-    <div className="contaner">
-      <div className="Auth">
-        <h1 className="Auth__title">Авторизация</h1>
-        <AuthForm
-          userIsLoading={userIsLoading}
-          userIsLogining={userIsLogining}
-          signIn={signIn}
-          signUp={signUp}
-        />
-        {userIsLoading || (userIsLogining && <Spiner />)}
+    <>
+      { userCreateSuccess && <Message isOpen status={'success'} message={userCreateSuccess} />}
+      { userCreateError && <Message isOpen status={'error'} message={userCreateError} />}
+      { userLoginingError && <Message isOpen status={'error'} message={userLoginingError} />}
+
+      <div className="contaner">
+        <div className="auth">
+          <h1 className="auth__title">Авторизация</h1>
+          {variant && <div className="auth__variant">
+            <div className="auth__signIn">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                onClick={() => {
+                  history.push('/signIn')
+                }}
+              >
+                Войти
+            </Button>
+            </div>
+            <div className="auth__signUp">
+              <Button
+                variant="contained"
+                type="submit"
+                onClick={() => {
+                  history.push('/signUp')
+                }}
+              >
+                Регистрация
+            </Button>
+            </div>
+          </div>
+          }
+          {signIn && <SignIn
+            userIsLogining={userIsLogining}
+            signIn={signInHandler}
+          />
+          }
+          {signUp && <SignUp
+            userIsLoading={userIsLoading}
+            signUp={signUpHandler}
+          />}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

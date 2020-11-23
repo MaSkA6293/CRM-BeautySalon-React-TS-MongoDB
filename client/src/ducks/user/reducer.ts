@@ -1,18 +1,17 @@
 import { UserActionsType, UserActions } from "./contracts/actionTypes";
 import { IstateUser } from "./contracts/state";
-
+import { UserStatus } from './contracts/state'
 export const initialState: IstateUser = {
-    userLoaded: false,
+
     userIsLoading: false,
-    userGetIsFail: false,
-    userGetError: "",
-    userIsLogining: false,
-    userIsLogined: false,
-    userLoginIsFail: false,
-    userLoginError: "",
-    userData: { token: "", id: "" },
-    userReady: false,
     userCreateSuccess: "",
+    userCreateError: "",
+
+    userIsLogining: false,
+    userLoginingError: "",
+
+    userData: undefined,
+    statusUser: UserStatus.NOT_READY
 };
 
 export const UserReducer = (
@@ -24,69 +23,67 @@ export const UserReducer = (
             return {
                 ...state,
                 userIsLoading: true,
-                userLoaded: false,
                 userCreateSuccess: "",
             };
         case UserActionsType.SIGNUP_SUCCESS:
             return {
                 ...state,
                 userIsLoading: false,
-                userLoaded: true,
                 userCreateSuccess: action.payload.message,
             };
         case UserActionsType.SIGNUP_FAIL:
             return {
                 ...state,
                 userIsLoading: false,
-                userGetIsFail: true,
-                userGetError: action.payload.message,
+                userCreateError: action.payload.message,
             };
 
         case UserActionsType.CLEAR_SIGNUP_MESSAGE:
             return {
                 ...state,
-                userGetIsFail: false,
-                userGetError: "",
-                userCreateSuccess: "",
+                userCreateError: "",
+                userCreateSuccess: ''
             };
 
         case UserActionsType.SIGNIN_REQUEST:
             return {
                 ...state,
                 userIsLogining: true,
-                userIsLogined: false,
             };
         case UserActionsType.SIGNIN_SUCCESS:
             return {
                 ...state,
                 userIsLogining: false,
-                userIsLogined: true,
                 userData: action.payload,
-                userReady: true,
             };
         case UserActionsType.SIGNIN_FAIL:
             return {
                 ...state,
                 userIsLogining: false,
-                userLoginIsFail: true,
-                userLoginError: action.payload.message,
+                userLoginingError: action.payload.message,
             };
 
         case UserActionsType.CLEAR_SIGNIN_MESSAGE:
             return {
                 ...state,
-                userLoginIsFail: false,
-                userLoginError: "",
+                userLoginingError: "",
             };
         case UserActionsType.SIGN_OUT:
             return {
                 ...state,
-                userData: { token: "", id: "" },
-                userIsLogined: false,
-                userReady: true,
+                userData: undefined,
+                userIsLogining: false,
+                userIsLoading: false,
+                statusUser: UserStatus.READY,
             };
-        case UserActionsType.USER_READY:
-            return { ...state, userReady: action.payload };
+        case UserActionsType.GET_USER_SUCCESS:
+            return {
+                ...state,
+                userData: action.payload,
+                statusUser: UserStatus.READY,
+
+                userIsLogining: false,
+            }
         default:
             return state;
     }

@@ -60,7 +60,13 @@
     "test:coverage": "jest --coverage"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "max-len": [
+      "error",
+      {
+        "code": 80
+      }
+    ]
   },
   "browserslist": {
     "production": [

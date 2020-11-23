@@ -2,12 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
-const config = require("config");
 const compression = require("compression");
 const morgan = require("morgan");
 const passport = require("passport");
 require('dotenv').config()
-
+const errorHandler = require('./middleware/errorHandler')
 const authRoutes = require("./routes/auth.routes");
 const clientRoutes = require("./routes/client.routes");
 const colorRoutes = require("./routes/color.routes");
@@ -71,9 +70,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
+
+app.use(errorHandler);
 
 module.exports = app;

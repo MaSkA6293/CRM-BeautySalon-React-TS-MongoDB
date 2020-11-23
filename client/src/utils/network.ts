@@ -16,6 +16,7 @@ export const httpRequest = async (
   method: "GET" | "POST" | "DELETE" | "PUT",
   data?: any
 ) => {
+
   await refreshToken();
 
   const headers = {
@@ -34,10 +35,10 @@ export const httpRequest = async (
 
 const refreshToken = async () => {
   const userData = localStorage.getItem("userData")
-    ? await JSON.parse(localStorage.getItem("userData") || "")
+    ? JSON.parse(localStorage.getItem("userData") || "")
     : null;
 
-  if (userData && userData.expires_in - Date.now() < 2 * 60 * 1000) {
+  if (userData && userData.expires_in - Date.now() < 10 * 60 * 1000) {
     const headers = {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -45,7 +46,6 @@ const refreshToken = async () => {
 
     const data = {
       refresh_token: userData.refresh_token,
-      id: userData.id,
     };
 
     return await axios({
@@ -55,21 +55,20 @@ const refreshToken = async () => {
       headers,
     })
       .then((result) => {
-        const { token, userId, refresh_token } = result.data;
+        const { token, refresh_token } = result.data;
         localStorage.setItem(
           "userData",
           JSON.stringify({
             token,
             refresh_token,
-            id: userId,
-            expires_in: Date.now() + 10 * 60 * 1000,
+            expires_in: Date.now() + 60 * 60 * 1000,
           })
         );
       })
       .catch((err) => {
-        check401(err);
+        //   check401(err);
+        console.log(err)
         localStorage.removeItem("userData");
-        // window.location.reload(true);
       });
   }
 };

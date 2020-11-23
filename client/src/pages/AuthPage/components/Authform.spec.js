@@ -1,5 +1,5 @@
 import React from "react";
-import AuthForm from "./Authform";
+import AuthForm from "./SignIn";
 
 const setUp = (props) => shallow(<AuthForm {...props} />);
 

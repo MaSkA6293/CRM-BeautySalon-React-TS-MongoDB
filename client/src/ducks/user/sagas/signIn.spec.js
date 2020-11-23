@@ -15,9 +15,9 @@ import {
   SIGNIN_SUCCESS,
   SIGNIN_FAIL,
   CLEAR_SIGNIN_MESSAGE,
-} from "../../constants";
+} from "../../../constants";
 import { call, delay, put } from "redux-saga/effects";
-import { httpRequest } from "../../utils/network";
+import { httpRequest } from "../../../utils/network";
 
 describe("test saga signIn", () => {
   const action = {
