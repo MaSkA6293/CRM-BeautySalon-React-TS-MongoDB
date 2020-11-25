@@ -1,9 +1,10 @@
+const { validationResult } = require("express-validator");
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const ClientModel = require("../models/Client");
 const ColorsModels = require("../models/Color");
-const { validationResult } = require("express-validator");
-const checkId = require('../validations/checkObjectId')
-const { getRandomInt } = require('../utils/getRandom')
+const checkId = require("../validations/checkObjectId");
+const { getRandomInt } = require("../utils/getRandom");
+
 module.exports.allClients = async (req, res) => {
   try {
     const clients = await ClientModel.find({ userId: req.user._id });
@@ -17,7 +18,7 @@ module.exports.allClients = async (req, res) => {
       };
     });
     res.status(200).json(userData);
-  } catch (e) {
+  } catch {
     res.status(500).send({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -43,9 +44,11 @@ module.exports.add = async (req, res) => {
       userId: req.user._id,
     });
     const result = await client.save();
-    res.status(200).json({ client: result, message: "Клиент успешно добавлен" });
-  } catch (e) {
-    res.status(500).json({
+    return res
+      .status(200)
+      .json({ client: result, message: "Клиент успешно добавлен" });
+  } catch {
+    return res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
   }
@@ -55,19 +58,18 @@ module.exports.delet = async (req, res) => {
   try {
     const clientId = req.params.id;
     if (!checkId(clientId)) {
-      return res.status(400).json({ message: "Не корректный ID" })
+      return res.status(400).json({ message: "Не корректный ID" });
     }
-    const client = await ClientModel.findById(clientId)
+    const client = await ClientModel.findById(clientId);
     if (client) {
-      client.remove()
-      res
+      client.remove();
+      return res
         .status(200)
         .json({ id: req.params.id, message: "Клиент успешно удален" });
-    } else {
-      res.status(400).json({ message: "Ошибка удаления клиента" })
     }
-  } catch (e) {
-    res.status(500).json({
+    return res.status(400).json({ message: "Ошибка удаления клиента" });
+  } catch {
+    return res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
   }
@@ -89,9 +91,7 @@ module.exports.update = async (req, res) => {
       color: newWrite.color,
     };
     res.status(200).json(userData);
-  } catch (e) {
+  } catch {
     res.send({ error: ERROR_MESSAGE_STATUS_500 });
   }
 };
-
-

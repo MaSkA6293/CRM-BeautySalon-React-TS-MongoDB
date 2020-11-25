@@ -1,8 +1,7 @@
 import { UserActionsType, UserActions } from "./contracts/actionTypes";
 import { IstateUser } from "./contracts/state";
-import { UserStatus } from './contracts/state'
+import { UserStatus } from "./contracts/state";
 export const initialState: IstateUser = {
-
     userIsLoading: false,
     userCreateSuccess: "",
     userCreateError: "",
@@ -11,13 +10,10 @@ export const initialState: IstateUser = {
     userLoginingError: "",
 
     userData: undefined,
-    statusUser: UserStatus.NOT_READY
+    statusUser: UserStatus.NOT_READY,
 };
 
-export const UserReducer = (
-    state: IstateUser = initialState,
-    action: UserActions
-) => {
+export const UserReducer = (state: IstateUser = initialState, action: UserActions) => {
     switch (action.type) {
         case UserActionsType.SIGNUP_REQUEST:
             return {
@@ -42,7 +38,7 @@ export const UserReducer = (
             return {
                 ...state,
                 userCreateError: "",
-                userCreateSuccess: ''
+                userCreateSuccess: "",
             };
 
         case UserActionsType.SIGNIN_REQUEST:
@@ -83,7 +79,7 @@ export const UserReducer = (
                 statusUser: UserStatus.READY,
 
                 userIsLogining: false,
-            }
+            };
         default:
             return state;
     }

@@ -1,6 +1,6 @@
-import { IGlobalStore } from '../../reducers/rootReducer'
-import { IstateUser } from './contracts/state'
-import { UserStatus } from "./contracts/state"
+import { IGlobalStore } from "../../reducers/rootReducer";
+import { IstateUser } from "./contracts/state";
+import { UserStatus } from "./contracts/state";
 export const selectUserState = (state: IGlobalStore): IstateUser => state.UserReducer;
 export const selectStatusUser = (state: IGlobalStore): UserStatus => selectUserState(state).statusUser;
 export const selectIsAuth = (state: IGlobalStore): boolean => !!selectUserState(state).userData;

@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const compression = require("compression");
 const morgan = require("morgan");
 const passport = require("passport");
-require('dotenv').config()
-const errorHandler = require('./middleware/errorHandler')
+require("dotenv").config();
+const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/auth.routes");
 const clientRoutes = require("./routes/client.routes");
 const colorRoutes = require("./routes/color.routes");
@@ -16,12 +16,13 @@ const serviceCategoryesRoutes = require("./routes/serviceCategory.routes");
 const app = express();
 
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 app.use(morgan("tiny"));
 app.use(compression());
 app.use(passport.initialize());
 require("./middleware/passport/passport")(passport);
-app.use(function (req, res, next) {
+
+app.use((_req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Headers",
     "X-Requested-With,content-type"
@@ -38,7 +39,6 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 async function start() {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
@@ -47,11 +47,14 @@ async function start() {
       useFindAndModify: false,
     });
 
-    app.listen(process.env.PORT, function () {
+    app.listen(process.env.PORT, () => {
+      // eslint-disable-next-line no-console
       console.log(`App has been started on port: ${process.env.PORT}`);
     });
-  } catch (e) {
-    console.log("Server error", e.message);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log("Server error", error.message);
+    // eslint-disable-next-line unicorn/no-process-exit
     process.exit();
   }
 }
@@ -62,7 +65,6 @@ app.use("/api/client", clientRoutes);
 app.use("/api/color", colorRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/services/categories", serviceCategoryesRoutes);
-
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));

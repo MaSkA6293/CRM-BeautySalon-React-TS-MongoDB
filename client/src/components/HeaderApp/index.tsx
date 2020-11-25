@@ -9,54 +9,48 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SideBar from "../SideBar";
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    offset: theme.mixins.toolbar,
-  })
+    createStyles({
+        root: {
+            flexGrow: 1,
+        },
+        menuButton: {
+            marginRight: theme.spacing(2),
+        },
+        title: {
+            flexGrow: 1,
+        },
+        offset: theme.mixins.toolbar,
+    }),
 );
 
-export default function ButtonAppBar({
-  menu,
-  title,
-  login,
-  children,
-  props,
-}: any) {
-  const classes = useStyles();
-  const [isOpenBar, setIsOpenBar] = useState(false);
+export default function ButtonAppBar({ menu, title, login, children, props }: any) {
+    const classes = useStyles();
+    const [isOpenBar, setIsOpenBar] = useState(false);
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        {children}
-        <Toolbar>
-          {menu && (
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setIsOpenBar((prev) => !prev)}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
-          <Typography variant="h6" className={classes.title}>
-            {title}
-          </Typography>
-          {login && <Button color="inherit">Login</Button>}
-        </Toolbar>
-      </AppBar>
-      <div className={classes.offset} />
-      <SideBar isOpenBar={isOpenBar} setIsOpen={setIsOpenBar} />
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <AppBar position="fixed">
+                {children}
+                <Toolbar>
+                    {menu && (
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="menu"
+                            onClick={() => setIsOpenBar((prev) => !prev)}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    )}
+                    <Typography variant="h6" className={classes.title}>
+                        {title}
+                    </Typography>
+                    {login && <Button color="inherit">Login</Button>}
+                </Toolbar>
+            </AppBar>
+            <div className={classes.offset} />
+            <SideBar isOpenBar={isOpenBar} setIsOpen={setIsOpenBar} />
+        </div>
+    );
 }

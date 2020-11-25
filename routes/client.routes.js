@@ -1,10 +1,11 @@
 const { Router } = require("express");
+
 const router = Router();
-const ERROR_MESSAGE = "Ошибка сервера. Что-то пошло не так...";
+const passport = require("passport");
 const ClientController = require("../controllers/ClientController");
 
-const passport = require("passport");
-const addNewClientValidation = require('../validations/addNewClient')
+const addNewClientValidation = require("../validations/addNewClient");
+
 router.get(
   "/",
   passport.authenticate("jwt", {
@@ -17,10 +18,10 @@ router.post(
   "/",
   passport.authenticate("jwt", {
     session: false,
-  }), addNewClientValidation,
+  }),
+  addNewClientValidation,
   ClientController.add
 );
-
 
 router.delete(
   "/:id",

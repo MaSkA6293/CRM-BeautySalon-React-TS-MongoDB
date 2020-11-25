@@ -1,24 +1,24 @@
 import {
-  CHANGE_DATE,
-  NEXT_DATE,
-  PREV_DATE,
-  ADD_NEW_RECORD,
-  CREATE_NEW_RECORD,
-  EDIT_RECORD,
-  DELET_RECORD,
+    CHANGE_DATE,
+    NEXT_DATE,
+    PREV_DATE,
+    ADD_NEW_RECORD,
+    CREATE_NEW_RECORD,
+    EDIT_RECORD,
+    DELET_RECORD,
 } from "./constants";
 
 export interface IstateRecords {
-  records: IRecord[];
+    records: IRecord[];
 }
 
 export interface IRecord {
-  id: number;
-  clientId: number;
-  date: string;
-  timeStart: string;
-  timeEnd: string;
-  color: number;
+    id: number;
+    clientId: number;
+    date: string;
+    timeStart: string;
+    timeEnd: string;
+    color: number;
 }
 
 // export interface IColor {
@@ -26,8 +26,8 @@ export interface IRecord {
 //   hex: string;
 // }
 export interface IstateApp {
-  date: Date;
-  workTime: string[];
+    date: Date;
+    workTime: string[];
 }
 
 // export interface IstateColors {
@@ -37,67 +37,61 @@ export interface IstateApp {
 // Actions
 
 interface IChangeDataAction {
-  type: typeof CHANGE_DATE;
-  payload: { date: Date };
+    type: typeof CHANGE_DATE;
+    payload: { date: Date };
 }
 
 interface INextDataAction {
-  type: typeof NEXT_DATE;
-  payload: { date: Date };
+    type: typeof NEXT_DATE;
+    payload: { date: Date };
 }
 
 interface IPrevDataAction {
-  type: typeof PREV_DATE;
-  payload: { date: Date };
+    type: typeof PREV_DATE;
+    payload: { date: Date };
 }
 
 interface IAddNewClientdAction {
-  type: typeof ADD_NEW_RECORD;
-  payload: {
-    client: {
-      id: number;
-      name: string;
-      famale: string;
-      phone: string;
+    type: typeof ADD_NEW_RECORD;
+    payload: {
+        client: {
+            id: number;
+            name: string;
+            famale: string;
+            phone: string;
+        };
     };
-  };
 }
 interface IAddRecordAction {
-  type: typeof CREATE_NEW_RECORD;
-  payload: {
-    id: number;
-    clientId: number;
-    date: string;
-    timeStart: string;
-    timeEnd: string;
-    color: number;
-  };
+    type: typeof CREATE_NEW_RECORD;
+    payload: {
+        id: number;
+        clientId: number;
+        date: string;
+        timeStart: string;
+        timeEnd: string;
+        color: number;
+    };
 }
 interface IEditRecordAction {
-  type: typeof EDIT_RECORD;
-  payload: {
-    id: number;
-    clientId: number;
-    date: string;
-    timeStart: string;
-    timeEnd: string;
-    color: number;
-  };
+    type: typeof EDIT_RECORD;
+    payload: {
+        id: number;
+        clientId: number;
+        date: string;
+        timeStart: string;
+        timeEnd: string;
+        color: number;
+    };
 }
 
 interface IDeletRecordAction {
-  type: typeof DELET_RECORD;
-  payload: {
-    id: number;
-  };
+    type: typeof DELET_RECORD;
+    payload: {
+        id: number;
+    };
 }
 
-export type RecordActionTypes =
-  | IAddRecordAction
-  | IEditRecordAction
-  | IDeletRecordAction;
+export type RecordActionTypes = IAddRecordAction | IEditRecordAction | IDeletRecordAction;
 
-export type AppActionTypes =
-  | IChangeDataAction
-  | IPrevDataAction
-  | INextDataAction;
+export type AppActionTypes = IChangeDataAction | IPrevDataAction | INextDataAction;

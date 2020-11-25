@@ -12,20 +12,20 @@ import services from "./services";
 import UserReducer from "../ducks/user/reducer";
 
 export interface IGlobalStore {
-  app: IstateApp;
-  clients: IstateClients;
-  records: IstateRecords;
-  colors: IstateColors;
-  services: IstateService;
-  UserReducer: IstateUser;
+    app: IstateApp;
+    clients: IstateClients;
+    records: IstateRecords;
+    colors: IstateColors;
+    services: IstateService;
+    UserReducer: IstateUser;
 }
 
 const rootReducer = combineReducers<IGlobalStore>({
-  app,
-  clients,
-  records,
-  colors,
-  services,
-  UserReducer,
+    app,
+    clients,
+    records,
+    colors,
+    services,
+    UserReducer,
 });
 export default rootReducer;

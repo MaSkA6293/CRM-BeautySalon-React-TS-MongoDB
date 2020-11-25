@@ -1,42 +1,41 @@
-const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const sendMail = require('../utils/sendEmail')
 const { validationResult } = require("express-validator");
+const jwt_decode = require("jwt-decode");
+const User = require("../models/User");
+const sendMail = require("../utils/sendEmail");
 const generateMD5 = require("../utils/generateHash");
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
-const jwt_decode = require("jwt-decode");
 
 module.exports.getUser = async (req, res) => {
   try {
-    res.status(200).json({ id: req.user._id })
-  } catch (e) {
-    res.status(404).json({ message: ERROR_MESSAGE_STATUS_500 })
+    // eslint-disable-next-line no-underscore-dangle
+    res.status(200).json({ id: req.user._id });
+  } catch {
+    res.status(404).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
-}
-
+};
 
 module.exports.verify = async (req, res) => {
   try {
-    const hash = req.query.hash;
+    const { hash } = req.query;
     if (hash.length !== 32) {
       return res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
     }
-    const user = await User.findOne({ confirmed_hash: hash })
+    const user = await User.findOne({ confirmed_hash: hash });
     if (user) {
       if (!user.confirmed) {
-        user.confirmed = true
-        await user.save()
+        user.confirmed = true;
+        await user.save();
       }
-      res.render("confirm", {
+      return res.render("confirm", {
         title: "Подтверждение учетной записи",
-        status: "успешно подтверждена"
+        status: "успешно подтверждена",
       });
-    } else {
-      res.status(404).send()
     }
-  } catch (error) {
-    res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
+    return res.status(404).send();
+  } catch {
+    return res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
 };
 
@@ -60,20 +59,21 @@ module.exports.signUp = async (req, res) => {
     const user = new User({
       email,
       password: hashedPassword,
-      confirmed_hash: generateMD5(process.env.MD5SECRET_KEY)
+      confirmed_hash: generateMD5(process.env.MD5SECRET_KEY),
     });
     sendMail({
       from: "admin@beautySalon.com",
       to: user.email,
       subject: "Подтверждение почты CRM",
       html: `Для того, чтобы подтвердить почту, перейдите <a href="http://localhost:${process.env.PORT}/api/auth/verify?hash=${user.confirmed_hash}">по этой ссылке</a>`,
-    })
+    });
     await user.save();
 
-
-    res.status(200).json({ message: "Вы успешно зарегистрировались, теперь Вы можете войти" });
-  } catch (err) {
-    res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
+    return res.status(200).json({
+      message: "Вы успешно зарегистрировались, теперь Вы можете войти",
+    });
+  } catch {
+    return res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
 };
 
@@ -81,7 +81,6 @@ module.exports.signIn = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-
       return res.status(401).json({
         message: "Не корректные данные при входе в систему",
       });
@@ -106,37 +105,37 @@ module.exports.signIn = async (req, res) => {
       process.env.JWTREFRESH,
       { expiresIn: "30 days" }
     );
-    const update = { refresh_token: refresh_token };
+    const update = { refresh_token };
     await User.findOneAndUpdate({ _id: user._id }, update);
-    res.status(200).json({
+    return res.status(200).json({
       token: `Bearer ${token}`,
       refresh_token,
-      user: { id: user._id }
+      user: { id: user._id },
     });
-  } catch (e) {
-    res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
+  } catch {
+    return res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
 };
 
 module.exports.refresh = async (req, res) => {
   try {
     const { refresh_token } = req.body;
-    const { userId } = jwt_decode(refresh_token)
+    const { userId } = jwt_decode(refresh_token);
     const user = await User.findOne({ _id: userId });
     if (!user) {
       return res.status(400).json({ message: "Error token" });
     }
-    const decoded = jwt.verify(
+    const decodedToken = jwt.verify(
       refresh_token,
       process.env.JWTREFRESH,
-      function (err, decoded) {
+      (err, decoded) => {
         if (err) {
           return false;
         }
         return decoded;
       }
     );
-    if (!decoded) {
+    if (!decodedToken) {
       return res.status(400).json({ message: "Error token" });
     }
 
@@ -157,10 +156,9 @@ module.exports.refresh = async (req, res) => {
         token: `Bearer ${newToken}`,
         refresh_token: newRefresh_token,
       });
-    } else {
-      return res.status(400).json({ message: "Error token" });
     }
-  } catch (e) {
+    return res.status(400).json({ message: "Error token" });
+  } catch {
     return res.status(500).json({ message: ERROR_MESSAGE_STATUS_500 });
   }
 };

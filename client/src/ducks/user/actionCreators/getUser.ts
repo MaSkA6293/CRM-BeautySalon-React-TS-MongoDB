@@ -1,5 +1,5 @@
-import { UserActionsType } from '../contracts/actionTypes'
-import { User } from '../contracts/state'
+import { UserActionsType } from "../contracts/actionTypes";
+import { User } from "../contracts/state";
 export const runGetUser = () => {
     return {
         type: UserActionsType.GET_USER,
@@ -7,11 +7,11 @@ export const runGetUser = () => {
 };
 
 interface GetUserSuccess {
-    data: User
+    data: User;
 }
 export const getUserSuccess = (data: GetUserSuccess) => {
     return {
         type: UserActionsType.GET_USER_SUCCESS,
-        payload: data
-    }
-}
+        payload: data,
+    };
+};

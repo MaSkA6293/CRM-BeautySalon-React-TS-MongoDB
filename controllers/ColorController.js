@@ -10,7 +10,7 @@ module.exports.create = async (req, res) => {
     });
     await color.save();
     res.status(200).json("success");
-  } catch (e) {
+  } catch {
     res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -21,7 +21,7 @@ module.exports.read = async (req, res) => {
   try {
     const colors = await ColorsModels.find();
     res.status(200).json(colors);
-  } catch (e) {
+  } catch {
     res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });

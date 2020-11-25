@@ -1,181 +1,181 @@
 import {
-  ADD_SERVIC_SUCCESS,
-  ADD_SERVIC_REQUEST,
-  CLEAR_MESSAGE_SERVIC_ADD_SUCCESS,
-  ADD_SERVIC_FAIL,
-  CLEAR_MESSAGE_SERVIC_ADD_FAIL,
-  GET_SERVICES_REQUEST,
-  GET_SERVICES_REQUEST_SUCCESS,
-  GET_SERVICES_REQUEST_FAIL,
-  CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
-  EDIT_SERVIC_REQUEST,
-  EDIT_SERVIC_SUCCESS,
-  CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
-  EDIT_SERVIC_FAIL,
-  CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
-  DELET_SERVIC_REQUEST,
-  DELET_SERVIC_SUCCESS,
-  CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
-  DELET_SERVIC_FAIL,
-  CLEAR_MESSAGE_SERVIC_DELET_FAIL,
-  ADD_SERVICE_CATEGORY_REQUEST,
-  ADD_SERVICE_CATEGORY_SUCCESS,
-  CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
-  SERVICE_CATEGORY_ADD_FAIL,
-  CLEAR_SERVICE_CATEGORY_ADD_FAIL,
-  GET_CATEGORIES_REQUEST,
-  GET_CATEGORIES_REQUEST_SUCCESS,
-  GET_CATEGORIES_REQUEST_FAIL,
-  CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
-  EDIT_CATEGORY_REQUEST,
-  EDIT_CATEGORY_SUCCESS,
-  CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
-  EDIT_CATEGORY_FAIL,
-  CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
-  DELET_CATEGORY_REQUEST,
-  DELET_CATEGORY_SUCCESS,
-  CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
-  DELET_CATEGORY_FAIL,
-  CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
-  SERVICE_PAGE_REQUEST,
-  GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
-  GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
+    ADD_SERVIC_SUCCESS,
+    ADD_SERVIC_REQUEST,
+    CLEAR_MESSAGE_SERVIC_ADD_SUCCESS,
+    ADD_SERVIC_FAIL,
+    CLEAR_MESSAGE_SERVIC_ADD_FAIL,
+    GET_SERVICES_REQUEST,
+    GET_SERVICES_REQUEST_SUCCESS,
+    GET_SERVICES_REQUEST_FAIL,
+    CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL,
+    EDIT_SERVIC_REQUEST,
+    EDIT_SERVIC_SUCCESS,
+    CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS,
+    EDIT_SERVIC_FAIL,
+    CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
+    DELET_SERVIC_REQUEST,
+    DELET_SERVIC_SUCCESS,
+    CLEAR_MESSAGE_SERVIC_DELET_SUCCESS,
+    DELET_SERVIC_FAIL,
+    CLEAR_MESSAGE_SERVIC_DELET_FAIL,
+    ADD_SERVICE_CATEGORY_REQUEST,
+    ADD_SERVICE_CATEGORY_SUCCESS,
+    CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS,
+    SERVICE_CATEGORY_ADD_FAIL,
+    CLEAR_SERVICE_CATEGORY_ADD_FAIL,
+    GET_CATEGORIES_REQUEST,
+    GET_CATEGORIES_REQUEST_SUCCESS,
+    GET_CATEGORIES_REQUEST_FAIL,
+    CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL,
+    EDIT_CATEGORY_REQUEST,
+    EDIT_CATEGORY_SUCCESS,
+    CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS,
+    EDIT_CATEGORY_FAIL,
+    CLEAR_MESSAGE_CATEGORY_EDIT_FAIL,
+    DELET_CATEGORY_REQUEST,
+    DELET_CATEGORY_SUCCESS,
+    CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS,
+    DELET_CATEGORY_FAIL,
+    CLEAR_MESSAGE_CATEGORY_DELET_FAIL,
+    SERVICE_PAGE_REQUEST,
+    GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
+    GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
 } from "../../constants";
 
 export interface ICategoryValues {
-  name: string;
-  comment: string;
-  color: string;
+    name: string;
+    comment: string;
+    color: string;
 }
 type serviceList = {
-  id: number;
-  name: string;
-  price: number;
+    id: number;
+    name: string;
+    price: number;
 };
 
 export interface IService {
-  _id: string;
-  name: string;
-  duration: number[];
-  cost: number;
-  colorId: string;
-  categoriesId: [];
+    _id: string;
+    name: string;
+    duration: number[];
+    cost: number;
+    colorId: string;
+    categoriesId: string[];
 }
 export interface ICategory {
-  _id: string;
-  name: string;
-  colorId: string;
+    _id: string;
+    name: string;
+    colorId: string;
 }
 export interface IstateService {
-  readonly servicePageRequest: boolean;
+    readonly servicePageRequest: boolean;
 
-  readonly categoryIsDeleted: boolean;
-  readonly categoryDeleted: boolean;
-  readonly categoryIsEdited: boolean;
-  readonly categoryEdited: boolean;
-  readonly servicesList: IService[];
-  readonly servicesIsLoading: boolean;
-  readonly servicesLoaded: boolean;
-  readonly servicesGetIsFail: boolean;
-  readonly servicesGetError: string;
-  readonly categoriesIsLoading: boolean;
-  readonly categoriesLoaded: boolean;
-  readonly categoryIsAdded: boolean;
-  readonly categoryAddIsFail: boolean;
-  readonly categoryAdded: boolean;
-  readonly categoryAddError: boolean;
-  readonly categoryList: ICategory[];
-  readonly serviceIsAdded: boolean;
-  readonly serviceAdded: boolean;
-  readonly serviceMessageSuccess: string;
-  readonly serviceMessageFail: string;
-  readonly serviceIsEdited: boolean;
-  readonly serviceEdited: boolean;
-  readonly serviceIsDeleted: boolean;
-  readonly serviceDeleted: boolean;
+    readonly categoryIsDeleted: boolean;
+    readonly categoryDeleted: boolean;
+    readonly categoryIsEdited: boolean;
+    readonly categoryEdited: boolean;
+    readonly servicesList: IService[];
+    readonly servicesIsLoading: boolean;
+    readonly servicesLoaded: boolean;
+    readonly servicesGetIsFail: boolean;
+    readonly servicesGetError: string;
+    readonly categoriesIsLoading: boolean;
+    readonly categoriesLoaded: boolean;
+    readonly categoryIsAdded: boolean;
+    readonly categoryAddIsFail: boolean;
+    readonly categoryAdded: boolean;
+    readonly categoryAddError: boolean;
+    readonly categoryList: ICategory[];
+    readonly serviceIsAdded: boolean;
+    readonly serviceAdded: boolean;
+    readonly serviceMessageSuccess: string;
+    readonly serviceMessageFail: string;
+    readonly serviceIsEdited: boolean;
+    readonly serviceEdited: boolean;
+    readonly serviceIsDeleted: boolean;
+    readonly serviceDeleted: boolean;
 }
 
 //get services
 interface IGetServicesRequest {
-  type: typeof GET_SERVICES_REQUEST;
+    type: typeof GET_SERVICES_REQUEST;
 }
 interface IGetServicesRequestSuccess {
-  type: typeof GET_SERVICES_REQUEST_SUCCESS;
-  payload: IService[];
+    type: typeof GET_SERVICES_REQUEST_SUCCESS;
+    payload: IService[];
 }
 interface IGetServicesRequestFail {
-  type: typeof GET_SERVICES_REQUEST_FAIL;
-  payload: { message: string };
+    type: typeof GET_SERVICES_REQUEST_FAIL;
+    payload: { message: string };
 }
 interface IGetServicesRequestFailClear {
-  type: typeof CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL;
+    type: typeof CLEAR_ERROR_GET_SERVICES_REQUEST_FAIL;
 }
 
 // add servic
 interface IAddServiceRequest {
-  type: typeof ADD_SERVIC_REQUEST;
+    type: typeof ADD_SERVIC_REQUEST;
 }
 
 interface IAddServiceSuccess {
-  type: typeof ADD_SERVIC_SUCCESS;
-  payload: { data: IService; message: string };
+    type: typeof ADD_SERVIC_SUCCESS;
+    payload: { data: IService; message: string };
 }
 
 interface IAddServiceClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_SERVIC_ADD_SUCCESS;
+    type: typeof CLEAR_MESSAGE_SERVIC_ADD_SUCCESS;
 }
 
 interface IAddServiceFail {
-  type: typeof ADD_SERVIC_FAIL;
-  payload: { message: string };
+    type: typeof ADD_SERVIC_FAIL;
+    payload: { message: string };
 }
 interface IAddServiceFailClear {
-  type: typeof CLEAR_MESSAGE_SERVIC_ADD_FAIL;
+    type: typeof CLEAR_MESSAGE_SERVIC_ADD_FAIL;
 }
 
 // edit servic
 interface IEditServiceRequest {
-  type: typeof EDIT_SERVIC_REQUEST;
+    type: typeof EDIT_SERVIC_REQUEST;
 }
 
 interface IEditServiceSuccess {
-  type: typeof EDIT_SERVIC_SUCCESS;
-  payload: { data: IService; message: string };
+    type: typeof EDIT_SERVIC_SUCCESS;
+    payload: { data: IService; message: string };
 }
 
 interface IEditServiceClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS;
+    type: typeof CLEAR_MESSAGE_SERVIC_EDIT_SUCCESS;
 }
 
 interface IEditServiceFail {
-  type: typeof EDIT_SERVIC_FAIL;
-  payload: { message: string };
+    type: typeof EDIT_SERVIC_FAIL;
+    payload: { message: string };
 }
 interface IEditServiceFailClear {
-  type: typeof CLEAR_MESSAGE_SERVIC_EDIT_FAIL;
+    type: typeof CLEAR_MESSAGE_SERVIC_EDIT_FAIL;
 }
 
 // delet servic
 
 interface IDeletServiceRequest {
-  type: typeof DELET_SERVIC_REQUEST;
+    type: typeof DELET_SERVIC_REQUEST;
 }
 
 interface IDeletServiceSuccess {
-  type: typeof DELET_SERVIC_SUCCESS;
-  payload: { _id: string; message: string };
+    type: typeof DELET_SERVIC_SUCCESS;
+    payload: { _id: string; message: string };
 }
 
 interface IDeletServiceClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_SERVIC_DELET_SUCCESS;
+    type: typeof CLEAR_MESSAGE_SERVIC_DELET_SUCCESS;
 }
 
 interface IDeletServiceFail {
-  type: typeof DELET_SERVIC_FAIL;
-  payload: { message: string };
+    type: typeof DELET_SERVIC_FAIL;
+    payload: { message: string };
 }
 interface IDeletServiceFailClear {
-  type: typeof CLEAR_MESSAGE_SERVIC_DELET_FAIL;
+    type: typeof CLEAR_MESSAGE_SERVIC_DELET_FAIL;
 }
 
 //   category
@@ -183,141 +183,141 @@ interface IDeletServiceFailClear {
 // add
 
 interface IAddCategoryRequest {
-  type: typeof ADD_SERVICE_CATEGORY_REQUEST;
+    type: typeof ADD_SERVICE_CATEGORY_REQUEST;
 }
 
 interface IAddCategorySuccess {
-  type: typeof ADD_SERVICE_CATEGORY_SUCCESS;
-  payload: { data: ICategory; message: string };
+    type: typeof ADD_SERVICE_CATEGORY_SUCCESS;
+    payload: { data: ICategory; message: string };
 }
 
 interface IAddCategoryClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS;
+    type: typeof CLEAR_MESSAGE_CATEGORY_ADD_SUCCESS;
 }
 
 interface IAddCategoryFail {
-  type: typeof SERVICE_CATEGORY_ADD_FAIL;
-  payload: { message: string };
+    type: typeof SERVICE_CATEGORY_ADD_FAIL;
+    payload: { message: string };
 }
 interface IAddCategoryFailClear {
-  type: typeof CLEAR_SERVICE_CATEGORY_ADD_FAIL;
+    type: typeof CLEAR_SERVICE_CATEGORY_ADD_FAIL;
 }
 
 //get
 interface IGetCategoriesRequest {
-  type: typeof GET_CATEGORIES_REQUEST;
+    type: typeof GET_CATEGORIES_REQUEST;
 }
 interface IGetCategoriesRequestSuccess {
-  type: typeof GET_CATEGORIES_REQUEST_SUCCESS;
-  payload: ICategory[];
+    type: typeof GET_CATEGORIES_REQUEST_SUCCESS;
+    payload: ICategory[];
 }
 interface IGetCategoriesRequestFail {
-  type: typeof GET_CATEGORIES_REQUEST_FAIL;
-  payload: { message: string };
+    type: typeof GET_CATEGORIES_REQUEST_FAIL;
+    payload: { message: string };
 }
 interface IGetCategoriesRequestFailClear {
-  type: typeof CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL;
+    type: typeof CLEAR_ERROR_GET_CATEGORIES_REQUEST_FAIL;
 }
 
 // edit
 interface IEditCategoryRequest {
-  type: typeof EDIT_CATEGORY_REQUEST;
+    type: typeof EDIT_CATEGORY_REQUEST;
 }
 
 interface IEditCategorySuccess {
-  type: typeof EDIT_CATEGORY_SUCCESS;
-  payload: { data: ICategory; message: string };
+    type: typeof EDIT_CATEGORY_SUCCESS;
+    payload: { data: ICategory; message: string };
 }
 
 interface IEditCategoryClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS;
+    type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_SUCCESS;
 }
 
 interface IEditCategoryFail {
-  type: typeof EDIT_CATEGORY_FAIL;
-  payload: { message: string };
+    type: typeof EDIT_CATEGORY_FAIL;
+    payload: { message: string };
 }
 interface IEditCategoryFailClear {
-  type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_FAIL;
+    type: typeof CLEAR_MESSAGE_CATEGORY_EDIT_FAIL;
 }
 
 // delet
 
 interface IDeletCategoryRequest {
-  type: typeof DELET_CATEGORY_REQUEST;
+    type: typeof DELET_CATEGORY_REQUEST;
 }
 
 interface IDeletCategorySuccess {
-  type: typeof DELET_CATEGORY_SUCCESS;
-  payload: { _id: string; message: string };
+    type: typeof DELET_CATEGORY_SUCCESS;
+    payload: { _id: string; message: string };
 }
 
 interface IDeletCategoryClearMessageSuccess {
-  type: typeof CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS;
+    type: typeof CLEAR_MESSAGE_CATEGORY_DELET_SUCCESS;
 }
 
 interface IDeletCategoryFail {
-  type: typeof DELET_CATEGORY_FAIL;
-  payload: { message: string };
+    type: typeof DELET_CATEGORY_FAIL;
+    payload: { message: string };
 }
 interface IDeletCategoryFailClear {
-  type: typeof CLEAR_MESSAGE_CATEGORY_DELET_FAIL;
+    type: typeof CLEAR_MESSAGE_CATEGORY_DELET_FAIL;
 }
 
 interface IServisePageRequest {
-  type: typeof SERVICE_PAGE_REQUEST;
+    type: typeof SERVICE_PAGE_REQUEST;
 }
 interface IServicePageRequestServicesAndCategoryesSuccess {
-  type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS;
-  payload: { services: IService[]; categories: ICategory[] };
+    type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS;
+    payload: { services: IService[]; categories: ICategory[] };
 }
 interface IServicePageRequestServicesAndCategoryesFail {
-  type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR;
-  payload: { message: string };
+    type: typeof GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR;
+    payload: { message: string };
 }
 
 export type ServiceActionTypes =
-  | IAddServiceRequest
-  | IAddServiceSuccess
-  | IAddServiceClearMessageSuccess
-  | IAddServiceFail
-  | IAddServiceFailClear
-  | IGetServicesRequest
-  | IGetServicesRequestSuccess
-  | IGetServicesRequestFail
-  | IGetServicesRequestFailClear
-  | IEditServiceRequest
-  | IEditServiceSuccess
-  | IEditServiceClearMessageSuccess
-  | IEditServiceFail
-  | IEditServiceFailClear
-  | IDeletServiceRequest
-  | IDeletServiceSuccess
-  | IDeletServiceClearMessageSuccess
-  | IDeletServiceFail
-  | IDeletServiceFailClear
-  | IAddCategoryRequest
-  | IAddCategorySuccess
-  | IAddCategoryClearMessageSuccess
-  | IAddCategoryFail
-  | IAddCategoryFailClear
-  | IGetCategoriesRequest
-  | IGetCategoriesRequestSuccess
-  | IGetCategoriesRequestFail
-  | IGetCategoriesRequestFailClear
-  | IEditCategoryRequest
-  | IEditCategorySuccess
-  | IEditCategoryClearMessageSuccess
-  | IEditCategoryFail
-  | IEditCategoryFailClear
-  | IDeletCategoryRequest
-  | IDeletCategorySuccess
-  | IDeletCategoryClearMessageSuccess
-  | IDeletCategoryFail
-  | IDeletCategoryFailClear
-  | IServisePageRequest
-  | IServicePageRequestServicesAndCategoryesSuccess
-  | IServicePageRequestServicesAndCategoryesFail;
+    | IAddServiceRequest
+    | IAddServiceSuccess
+    | IAddServiceClearMessageSuccess
+    | IAddServiceFail
+    | IAddServiceFailClear
+    | IGetServicesRequest
+    | IGetServicesRequestSuccess
+    | IGetServicesRequestFail
+    | IGetServicesRequestFailClear
+    | IEditServiceRequest
+    | IEditServiceSuccess
+    | IEditServiceClearMessageSuccess
+    | IEditServiceFail
+    | IEditServiceFailClear
+    | IDeletServiceRequest
+    | IDeletServiceSuccess
+    | IDeletServiceClearMessageSuccess
+    | IDeletServiceFail
+    | IDeletServiceFailClear
+    | IAddCategoryRequest
+    | IAddCategorySuccess
+    | IAddCategoryClearMessageSuccess
+    | IAddCategoryFail
+    | IAddCategoryFailClear
+    | IGetCategoriesRequest
+    | IGetCategoriesRequestSuccess
+    | IGetCategoriesRequestFail
+    | IGetCategoriesRequestFailClear
+    | IEditCategoryRequest
+    | IEditCategorySuccess
+    | IEditCategoryClearMessageSuccess
+    | IEditCategoryFail
+    | IEditCategoryFailClear
+    | IDeletCategoryRequest
+    | IDeletCategorySuccess
+    | IDeletCategoryClearMessageSuccess
+    | IDeletCategoryFail
+    | IDeletCategoryFailClear
+    | IServisePageRequest
+    | IServicePageRequestServicesAndCategoryesSuccess
+    | IServicePageRequestServicesAndCategoryesFail;
 
 // export interface IClient {
 //   _id: number;

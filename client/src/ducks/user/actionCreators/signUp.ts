@@ -1,5 +1,4 @@
-import { UserActionsType } from '../contracts/actionTypes'
-
+import { UserActionsType } from "../contracts/actionTypes";
 
 export const runSignUp = (data: { email: string; password: string; confirmPassword: string }) => {
     return {
@@ -18,9 +17,7 @@ export const signUpRequestSuccess = (message: string) => {
     };
 };
 
-export const signUpRequestRequestFail = (e: {
-    response: { data: { message: string } };
-}) => {
+export const signUpRequestRequestFail = (e: { response: { data: { message: string } } }) => {
     return {
         type: UserActionsType.SIGNUP_FAIL,
         payload: { message: e.response.data.message },

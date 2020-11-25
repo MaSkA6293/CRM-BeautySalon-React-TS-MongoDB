@@ -1,7 +1,6 @@
+const { validationResult } = require("express-validator");
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const ServiceModels = require("../models/Service");
-
-const { validationResult } = require("express-validator");
 
 module.exports.add = async (req, res) => {
   try {
@@ -32,9 +31,9 @@ module.exports.add = async (req, res) => {
       },
       message: "Услуга успешно добавлена",
     };
-    res.status(200).json(answer);
-  } catch (e) {
-    res.status(500).json({
+    return res.status(200).json(answer);
+  } catch {
+    return res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
   }
@@ -54,7 +53,7 @@ module.exports.getAllServices = async (req, res) => {
       };
     });
     res.status(200).json(servicesData);
-  } catch (e) {
+  } catch {
     res.status(500).send({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -81,7 +80,7 @@ module.exports.update = async (req, res) => {
       message: "Услуга успешно обновлена",
     };
     res.status(200).json(userData);
-  } catch (e) {
+  } catch {
     res.status(500).send({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -96,7 +95,7 @@ module.exports.delet = async (req, res) => {
     res
       .status(200)
       .json({ _id: req.body._id, message: "Услуга успешно удалена" });
-  } catch (e) {
+  } catch {
     res.status(500).send({
       message: ERROR_MESSAGE_STATUS_500,
     });

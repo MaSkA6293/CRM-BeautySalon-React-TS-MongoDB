@@ -1,8 +1,9 @@
 const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
+const { ExtractJwt } = require("passport-jwt");
 const config = require("config");
 const User = require("../../models/User");
-var opts = {};
+
+const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWTSECRET || config.get("jwtSecret");
 module.exports = (passport) => {
@@ -11,12 +12,12 @@ module.exports = (passport) => {
       try {
         const user = await User.findOne({ _id: payload.userId });
         if (user) {
-          done(null, user);
+          done(undefined, user);
         } else {
-          done(null, false);
+          done(undefined, false);
         }
-      } catch (e) {
-        done(e, false)
+      } catch (error) {
+        done(error, false);
       }
     })
   );

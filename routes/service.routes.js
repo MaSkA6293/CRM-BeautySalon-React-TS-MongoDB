@@ -1,9 +1,11 @@
 const { Router } = require("express");
+
 const router = Router();
-const ServiceController = require("../controllers/ServiceController");
 const passport = require("passport");
 
 const { check } = require("express-validator");
+const ServiceController = require("../controllers/ServiceController");
+
 router.post(
   "/",
   passport.authenticate("jwt", {

@@ -1,0 +1,36 @@
+{
+  "plugins": [
+    "prettier",
+    "unicorn"
+  ],
+  "extends": [
+    "airbnb-base",
+    "plugin:unicorn/recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/unicorn"
+  ],
+  "rules": 
+  {
+    "camelcase": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "unicorn/filename-case": [
+	"error",
+	{
+		"cases": {
+			"camelCase": true,
+			"pascalCase": true
+		}
+	}
+],
+    "unicorn/prevent-abbreviations": "off",
+    "quotes": [
+      "error",
+      "double"
+    ]
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
+}

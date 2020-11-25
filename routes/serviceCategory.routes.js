@@ -1,9 +1,11 @@
 const { Router } = require("express");
+
 const router = Router();
-const CategoryController = require("../controllers/CategoryController");
 const passport = require("passport");
 
 const { check } = require("express-validator");
+const CategoryController = require("../controllers/CategoryController");
+
 router.post(
   "/",
   passport.authenticate("jwt", {

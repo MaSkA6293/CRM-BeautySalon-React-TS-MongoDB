@@ -1,7 +1,8 @@
 const { Router } = require("express");
+
 const router = Router();
-const controller = require("../controllers/ColorController");
 const passport = require("passport");
+const controller = require("../controllers/ColorController");
 
 router.post(
   "/",

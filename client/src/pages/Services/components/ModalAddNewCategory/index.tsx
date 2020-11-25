@@ -5,24 +5,18 @@ import FormAddCategory from "../FormAddCategory";
 import "./styles.scss";
 
 type ModalAddCategoryProps = {
-  open: boolean;
-  handleClose: () => void;
+    open: boolean;
+    handleClose: () => void;
 };
 
 const ModalAddCategory = ({ open, handleClose }: ModalAddCategoryProps) => {
-  return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth="sm"
-      fullWidth={true}
-      className="dialog"
-    >
-      <DialogContent>
-        <FormAddCategory handleClose={handleClose} />
-      </DialogContent>
-    </Dialog>
-  );
+    return (
+        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth={true} className="dialog">
+            <DialogContent>
+                <FormAddCategory handleClose={handleClose} />
+            </DialogContent>
+        </Dialog>
+    );
 };
 
 export default ModalAddCategory;

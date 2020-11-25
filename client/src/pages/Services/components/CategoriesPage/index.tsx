@@ -13,65 +13,58 @@ import CategoryList from "../CategoryList";
 import ModalEditCategory from "../ModalEditCatrgory";
 
 const CategoriesPage = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(runFetchCategoryPageData());
-  }, [dispatch]);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(runFetchCategoryPageData());
+    }, [dispatch]);
 
-  const initialCategory = {
-    _id: "1",
-    name: "test name",
-    color: { _id: "12345", hex: "red" },
-  };
-  const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+    const initialCategory = {
+        _id: "1",
+        name: "test name",
+        color: { _id: "12345", hex: "red" },
+    };
+    const [isOpenAddCategory, setIsOpenAddCategory] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-  const [openEdit, setOpenEdit] = useState(false);
-  const { categoryList, colors } = useSelector(
-    ({ services, colors }: IGlobalStore) => {
-      return {
-        categoryList: services.categoryList.map((item: ICategory) => {
-          return {
-            _id: item._id,
-            name: item.name,
-            color: colors.colorsList.find(
-              (el) => el._id.toString() === item.colorId
-            )!,
-          };
-        }),
-        colors: colors.colorsList,
-      };
-    }
-  );
+    const [openEdit, setOpenEdit] = useState(false);
+    const { categoryList, colors } = useSelector(({ services, colors }: IGlobalStore) => {
+        return {
+            categoryList: services.categoryList.map((item: ICategory) => {
+                return {
+                    _id: item._id,
+                    name: item.name,
+                    color: colors.colorsList.find((el) => el._id.toString() === item.colorId)!,
+                };
+            }),
+            colors: colors.colorsList,
+        };
+    });
 
-  return (
-    <div className="categories">
-      <Header>
-        <CategoryHeader openAddCategory={() => setIsOpenAddCategory(true)} />
-      </Header>
-      {isOpenAddCategory ? (
-        <ModalAddNewCategory
-          open={isOpenAddCategory}
-          handleClose={() => setIsOpenAddCategory(false)}
-        />
-      ) : (
-        ""
-      )}
+    return (
+        <div className="categories">
+            <Header>
+                <CategoryHeader openAddCategory={() => setIsOpenAddCategory(true)} />
+            </Header>
+            {isOpenAddCategory ? (
+                <ModalAddNewCategory open={isOpenAddCategory} handleClose={() => setIsOpenAddCategory(false)} />
+            ) : (
+                ""
+            )}
 
-      {categoryList.length > 0 && colors.length && (
-        <CategoryList
-          categoryList={categoryList}
-          setOpenEdit={setOpenEdit}
-          setSelectedCategory={setSelectedCategory}
-        />
-      )}
-      <ModalEditCategory
-        open={openEdit}
-        handleClose={() => setOpenEdit(false)}
-        selectedCategory={selectedCategory}
-        categoryList={categoryList}
-      />
-    </div>
-  );
+            {categoryList.length > 0 && colors.length && (
+                <CategoryList
+                    categoryList={categoryList}
+                    setOpenEdit={setOpenEdit}
+                    setSelectedCategory={setSelectedCategory}
+                />
+            )}
+            <ModalEditCategory
+                open={openEdit}
+                handleClose={() => setOpenEdit(false)}
+                selectedCategory={selectedCategory}
+                categoryList={categoryList}
+            />
+        </div>
+    );
 };
 export default CategoriesPage;

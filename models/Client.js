@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const ClientShema = new Schema({
   id: Number,
@@ -10,7 +11,7 @@ const ClientShema = new Schema({
   userId: {
     required: true,
     ref: "User",
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
   },
 });
 

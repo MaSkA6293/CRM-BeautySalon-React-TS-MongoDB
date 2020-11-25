@@ -5,13 +5,13 @@ export interface IstateUser {
     userLoginingError: string;
     userData: undefined | User;
     userCreateSuccess: string;
-    statusUser: UserStatus
+    statusUser: UserStatus;
 }
 export interface User {
-    id: string
+    id: string;
 }
 
 export enum UserStatus {
     READY = "READY",
-    NOT_READY = 'NOT_READY'
+    NOT_READY = "NOT_READY",
 }

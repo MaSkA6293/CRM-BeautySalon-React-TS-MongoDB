@@ -1,7 +1,6 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
-const generateMD5 = (value) => {
-    return crypto.createHash('md5').update(value).digest('hex')
-}
+const generateMD5 = (value) =>
+  crypto.createHash("md5").update(value).digest("hex");
 
-module.exports = generateMD5
+module.exports = generateMD5;

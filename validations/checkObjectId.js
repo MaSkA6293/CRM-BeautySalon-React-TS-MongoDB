@@ -1,7 +1,7 @@
-const objectID = require('mongodb').ObjectID
+const objectId = require("mongoose").ObjectID;
 
 const checkId = (id) => {
-    return objectID.isValid(id)
-}
+  return objectId.isValid(id);
+};
 
-module.exports = checkId
+module.exports = checkId;
