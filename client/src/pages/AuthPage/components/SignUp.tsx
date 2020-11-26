@@ -8,7 +8,9 @@ import { useHistory } from "react-router-dom";
 const AddClientSchema = Yup.object().shape({
     email: Yup.string().email("Не корректное значение").required("Обязательное поле"),
     password: Yup.string().min(6, "Минимум 6 символов").required("Обязательное поле"),
-    confirmPassword: Yup.string().oneOf([Yup.ref("password"), ""], "Пароли должны совпадать"),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), ""], "Пароли должны совпадать")
+        .required("Обязательное поле"),
 });
 type AuthFormProps = {
     userIsLoading: boolean;

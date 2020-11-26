@@ -1,5 +1,5 @@
 import axios from "axios";
-//config
+
 import * as config from "../config";
 const getToken = () => {
     const userData = localStorage.getItem("userData");
@@ -59,17 +59,8 @@ const refreshToken = async () => {
                 );
             })
             .catch((err) => {
-                //   check401(err);
                 console.log(err);
                 localStorage.removeItem("userData");
             });
-    }
-};
-
-export const check401 = (err: { response: { status: number } }) => {
-    if (err.response.status === 401) {
-        localStorage.removeItem("userData");
-        document.location.reload();
-        return;
     }
 };

@@ -2,8 +2,6 @@ import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
-import { Interface } from "readline";
-import { boolean, string } from "yup";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -18,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line react/prop-types
 export default function CustomizedSnackbars({ isOpen, status, message }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(isOpen);

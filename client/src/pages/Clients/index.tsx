@@ -23,10 +23,10 @@ const Clients = () => {
     const [addIsOpen, setAddIsOpen] = useState(false);
     const [editIsOpen, setEditIsOpen] = useState(false);
     const [selectedClient, setSelectedClient] = useState(initialSelectedClient);
-
+    const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getClientsRequest());
-    }, []);
+    }, [dispatch]);
 
     const { clients, clientsIsLoading, clientGetIsFail, clientGetError } = useSelector(({ clients }: IGlobalStore) => {
         return {
@@ -36,7 +36,6 @@ const Clients = () => {
             clientGetError: clients.clientGetError,
         };
     });
-    const dispatch = useDispatch();
 
     const handlerEditClient = (_id: number) => {
         const currentEdit = clients.find((client: IClient) => client._id === _id);

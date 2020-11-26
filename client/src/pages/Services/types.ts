@@ -47,11 +47,11 @@ export interface ICategoryValues {
     comment: string;
     color: string;
 }
-type serviceList = {
+export interface serviceList {
     id: number;
     name: string;
     price: number;
-};
+}
 
 export interface IService {
     _id: string;

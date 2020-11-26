@@ -4,17 +4,10 @@ import "./styles.scss";
 
 import ListItem from "@material-ui/core/ListItem";
 import { IColor } from "../../../../types/typesColors";
+
 type ServiceProps = {
     key: number;
-    data: {
-        _id: string;
-        name: string;
-        duration: number[];
-        cost: number;
-        color: IColor;
-        categoryColor: string[];
-        categoriesId: string[];
-    };
+    data: any;
     setOpenEdit: any;
     setSelectedServic: any;
 };
@@ -52,7 +45,7 @@ export default function Servic({ data, setOpenEdit, setSelectedServic }: Service
                     </div>
                 </div>
                 <div className="servic__categories-colors categories-colors">
-                    {data.categoryColor.map((el, index) => {
+                    {data.categoryColor.map((el: any, index: number) => {
                         return (
                             <div className="categories-colors__item" style={{ backgroundColor: el }} key={index}></div>
                         );

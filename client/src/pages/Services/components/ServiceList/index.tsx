@@ -1,16 +1,8 @@
 import React from "react";
 import Servic from "../Servic";
-import { IColor } from "../../../../types/typesColors";
+
 type ServiceListProps = {
-    servicesList: {
-        _id: string;
-        name: string;
-        duration: number[];
-        cost: number;
-        color: IColor;
-        categoryColor: string[];
-        categoriesId: string[];
-    }[];
+    servicesList: any;
     setOpenEdit: any;
     setSelectedServic: any;
 };
