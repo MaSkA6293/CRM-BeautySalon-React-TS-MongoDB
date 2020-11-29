@@ -6,7 +6,8 @@ import { faUsers, faList } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import HomeHeader from "./components/HomeHeader";
-const Home = () => {
+
+const Home: React.FC = (): React.ReactElement => {
     return (
         <div className="home">
             <HomeHeader />

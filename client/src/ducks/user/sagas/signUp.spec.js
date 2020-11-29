@@ -1,19 +1,13 @@
-import {
-    runSignUp,
-    signUp,
-    signUpRequest,
-    signUpRequestSuccess,
-    signUpRequestClearMessage,
-    signUpRequestRequestFail,
-} from "./signUp";
-import { USER_SIGNUP, SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAIL, CLEAR_SIGNUP_MESSAGE } from "../../constants";
+import { runSignUp, signUpRequest, signUpSuccess, signUpFail } from "../actionCreators/signUp";
+import { signUp } from "./signUp";
+import { userClearMessage } from "../actionCreators";
+
+import { UserActionsType } from "../contracts/actionTypes";
 import { call, delay, put } from "redux-saga/effects";
-import { httpRequest } from "../../utils/network";
+import { httpRequest } from "../../../utils/network";
 
 describe("test saga signUp", () => {
-    const action = {
-        payload: { data: { email: "", password: "" } },
-    };
+    const action = runSignUp({ email: "", password: "" });
     const saga = signUp(action);
     let output = null;
     it("should put signUpRequest", () => {
@@ -21,16 +15,16 @@ describe("test saga signUp", () => {
         let expected = put(signUpRequest());
         expect(output).toEqual(expected);
     });
-    it("should call api/auth/register", (done) => {
+    it("should call api/auth/signUp method POST", (done) => {
         output = saga.next().value;
         done();
-        let expected = call(httpRequest, "api/auth/register", "POST", action.payload);
+        let expected = call(httpRequest, "api/auth/signUp", "POST", action.payload);
         expect(output).toEqual(expected);
     });
-    it("test should put signUpRequestSuccess", () => {
+    it("test should put signUpSuccess", () => {
         const response = { data: [], message: "success" };
         output = saga.next(response).value;
-        let expected = put(signUpRequestSuccess(response.data.message));
+        let expected = put(signUpSuccess(response.data.message));
         expect(output).toEqual(expected);
     });
     it("should delay 3000", () => {
@@ -38,9 +32,9 @@ describe("test saga signUp", () => {
         let expected = delay(3000);
         expect(output).toEqual(expected);
     });
-    it("should put signUpRequestClearMessage ", () => {
+    it("should put userClearMessage ", () => {
         output = saga.next().value;
-        let expected = put(signUpRequestClearMessage());
+        let expected = put(userClearMessage());
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -51,9 +45,7 @@ describe("test saga signUp", () => {
 });
 
 describe("test signUp Error", () => {
-    const action = {
-        payload: { data: { email: "", password: "" } },
-    };
+    const action = runSignUp({ email: "", password: "" });
     const sagaError = signUp(action);
     let output = null;
     it("test error", () => {
@@ -63,7 +55,7 @@ describe("test signUp Error", () => {
         sagaError.next();
         sagaError.next();
         output = sagaError.throw(error).value;
-        let expected = put(signUpRequestRequestFail(error));
+        let expected = put(signUpFail(error));
         expect(output).toEqual(expected);
     });
     it("should delay 2000", () => {
@@ -73,7 +65,7 @@ describe("test signUp Error", () => {
     });
     it("should clear error", () => {
         output = sagaError.next().value;
-        let expected = put(signUpRequestClearMessage());
+        let expected = put(userClearMessage());
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -88,7 +80,7 @@ describe("test signUp actions", () => {
         const data = { email: "", password: "" };
         const actions = runSignUp(data);
         const expectActions = {
-            type: USER_SIGNUP,
+            type: UserActionsType.USER_SIGNUP,
             payload: data,
         };
         expect(actions).toEqual(expectActions);
@@ -96,15 +88,15 @@ describe("test signUp actions", () => {
     it("signUpRequest", () => {
         const actions = signUpRequest();
         const expectActions = {
-            type: SIGNUP_REQUEST,
+            type: UserActionsType.SIGNUP_REQUEST,
         };
         expect(actions).toEqual(expectActions);
     });
     it("signUpRequestSuccess", () => {
         const message = "success";
-        const actions = signUpRequestSuccess(message);
+        const actions = signUpSuccess(message);
         const expectActions = {
-            type: SIGNUP_SUCCESS,
+            type: UserActionsType.SIGNUP_SUCCESS,
             payload: { message },
         };
         expect(actions).toEqual(expectActions);
@@ -112,20 +104,15 @@ describe("test signUp actions", () => {
 
     it("signUpRequestRequestFail", () => {
         const error = { response: { data: { message: "some error" } } };
-        const actions = signUpRequestRequestFail(error);
+        const actions = signUpFail(error);
         const expectActions = {
-            type: SIGNUP_FAIL,
+            type: UserActionsType.SIGNUP_FAIL,
             payload: {
                 message: error.response.data.message
                     ? error.response.data.message
                     : "Что-то пошло не так, попробуйте снова",
             },
         };
-        expect(actions).toEqual(expectActions);
-    });
-    it("signUpRequestClearMessage", () => {
-        const actions = signUpRequestClearMessage();
-        const expectActions = { type: CLEAR_SIGNUP_MESSAGE };
         expect(actions).toEqual(expectActions);
     });
 });

@@ -1,11 +1,11 @@
 export interface IstateUser {
     userIsLoading: boolean;
-    userCreateError: string;
+    userMessageSuccess: string;
+    userMessageError: string;
     userIsLogining: boolean;
-    userLoginingError: string;
     userData: undefined | User;
-    userCreateSuccess: string;
     statusUser: UserStatus;
+    userCreateSuccess: boolean;
 }
 export interface User {
     id: string;

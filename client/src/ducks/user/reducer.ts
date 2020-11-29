@@ -3,14 +3,12 @@ import { IstateUser } from "./contracts/state";
 import { UserStatus } from "./contracts/state";
 export const initialState: IstateUser = {
     userIsLoading: false,
-    userCreateSuccess: "",
-    userCreateError: "",
-
+    userMessageSuccess: "",
+    userMessageError: "",
     userIsLogining: false,
-    userLoginingError: "",
-
     userData: undefined,
     statusUser: UserStatus.NOT_READY,
+    userCreateSuccess: false,
 };
 
 export const UserReducer = (state: IstateUser = initialState, action: UserActions) => {
@@ -19,26 +17,25 @@ export const UserReducer = (state: IstateUser = initialState, action: UserAction
             return {
                 ...state,
                 userIsLoading: true,
-                userCreateSuccess: "",
             };
         case UserActionsType.SIGNUP_SUCCESS:
             return {
                 ...state,
                 userIsLoading: false,
-                userCreateSuccess: action.payload.message,
+                userMessageSuccess: action.payload.message,
             };
         case UserActionsType.SIGNUP_FAIL:
             return {
                 ...state,
                 userIsLoading: false,
-                userCreateError: action.payload.message,
+                userMessageError: action.payload.message,
             };
 
-        case UserActionsType.CLEAR_SIGNUP_MESSAGE:
+        case UserActionsType.CLEAR_USER_MESSAGE:
             return {
                 ...state,
-                userCreateError: "",
-                userCreateSuccess: "",
+                userMessageError: "",
+                userMessageSuccess: "",
             };
 
         case UserActionsType.SIGNIN_REQUEST:
@@ -59,11 +56,6 @@ export const UserReducer = (state: IstateUser = initialState, action: UserAction
                 userLoginingError: action.payload.message,
             };
 
-        case UserActionsType.CLEAR_SIGNIN_MESSAGE:
-            return {
-                ...state,
-                userLoginingError: "",
-            };
         case UserActionsType.SIGN_OUT:
             return {
                 ...state,

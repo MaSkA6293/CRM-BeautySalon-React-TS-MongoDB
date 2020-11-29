@@ -1,28 +1,12 @@
-import {
-    userReady,
-    runSignIn,
-    signIn,
-    signInRequest,
-    signInSuccess,
-    signInFail,
-    setUser,
-    signInClearMessage,
-} from "./signIn";
-import {
-    USER_SIGNIN,
-    SIGNIN_REQUEST,
-    USER_READY,
-    SIGNIN_SUCCESS,
-    SIGNIN_FAIL,
-    CLEAR_SIGNIN_MESSAGE,
-} from "../../../constants";
+import { signIn } from "./signIn";
+import { signInRequest, signInSuccess, setUser, signInFail, runSignIn } from "../actionCreators/signIn";
+import { userClearMessage } from "../actionCreators";
+import { UserActionsType } from "../contracts/actionTypes";
 import { call, delay, put } from "redux-saga/effects";
 import { httpRequest } from "../../../utils/network";
 
 describe("test saga signIn", () => {
-    const action = {
-        payload: { data: { email: "", password: "" } },
-    };
+    const action = runSignIn({ email: "", password: "" });
     const saga = signIn(action);
     let output = null;
     it("should put signInRequest", () => {
@@ -30,47 +14,38 @@ describe("test saga signIn", () => {
         let expected = put(signInRequest());
         expect(output).toEqual(expected);
     });
-    it("should call api/auth/login", (done) => {
+    it("should call api/auth/signIn method POST", (done) => {
         output = saga.next().value;
         done();
-        let expected = call(httpRequest, "api/auth/login", "POST", action.payload);
+        let expected = call(httpRequest, "api/auth/signIn", "POST", action.payload);
         expect(output).toEqual(expected);
     });
-    it("test should put signUpRequestSuccess", () => {
+    it("test should put signInSuccess", () => {
         const token = "";
         const refresh_token = "";
-        const userId = "";
-        const response = { data: { token, refresh_token, userId } };
+        const user = {};
+        const response = { data: { token, refresh_token, user } };
         output = saga.next(response).value;
-        let expected = put(signInSuccess(token, refresh_token, userId));
+        let expected = put(signInSuccess(user));
         expect(output).toEqual(expected);
     });
-
-    it("test should put userReady", () => {
-        output = saga.next(true).value;
-        let expected = put(userReady(true));
-        expect(output).toEqual(expected);
-    });
-
-    it("should call setUser", (done) => {
+    it("test should call setUser", (done) => {
         const token = "";
         const refresh_token = "";
-        const userId = "";
-        output = saga.next().value;
+        output = saga.next(token, refresh_token).value;
         done();
-        let expected = call(setUser, token, refresh_token, userId);
+        let expected = call(setUser, token, refresh_token);
         expect(output).toEqual(expected);
     });
-
     it("should delay 3000", () => {
         output = saga.next().value;
         let expected = delay(3000);
         expect(output).toEqual(expected);
     });
 
-    it("should put signInClearMessage ", () => {
+    it("should put userClearMessage ", () => {
         output = saga.next().value;
-        let expected = put(signInClearMessage());
+        let expected = put(userClearMessage());
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -81,9 +56,7 @@ describe("test saga signIn", () => {
 });
 
 describe("test signIn Error", () => {
-    const action = {
-        payload: { data: { email: "", password: "" } },
-    };
+    const action = runSignIn({ email: "", password: "" });
     const sagaError = signIn(action);
     let output = null;
     it("test error", () => {
@@ -103,7 +76,7 @@ describe("test signIn Error", () => {
     });
     it("should clear error", () => {
         output = sagaError.next().value;
-        let expected = put(signInClearMessage());
+        let expected = put(userClearMessage());
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -114,11 +87,11 @@ describe("test signIn Error", () => {
 });
 
 describe("test signIp actions", () => {
-    it("runSignIp", () => {
+    it("runSignIn", () => {
         const data = { email: "", password: "" };
         const actions = runSignIn(data);
         const expectActions = {
-            type: USER_SIGNIN,
+            type: UserActionsType.USER_SIGNIN,
             payload: data,
         };
         expect(actions).toEqual(expectActions);
@@ -127,18 +100,16 @@ describe("test signIp actions", () => {
     it("signInRequest", () => {
         const actions = signInRequest();
         const expectActions = {
-            type: SIGNIN_REQUEST,
+            type: UserActionsType.SIGNIN_REQUEST,
         };
         expect(actions).toEqual(expectActions);
     });
     it("signInSuccess", () => {
-        const token = "";
-        const refresh_token = "";
-        const userId = "";
-        const actions = signInSuccess(token, refresh_token, userId);
+        const user = {};
+        const actions = signInSuccess(user);
         const expectActions = {
-            type: SIGNIN_SUCCESS,
-            payload: { token, refresh_token, userId },
+            type: UserActionsType.SIGNIN_SUCCESS,
+            payload: user,
         };
         expect(actions).toEqual(expectActions);
     });
@@ -147,7 +118,7 @@ describe("test signIp actions", () => {
         const error = { response: { data: { message: "some error" } } };
         const actions = signInFail(error);
         const expectActions = {
-            type: SIGNIN_FAIL,
+            type: UserActionsType.SIGNIN_FAIL,
             payload: {
                 message: error.response.data.message
                     ? error.response.data.message
@@ -156,9 +127,9 @@ describe("test signIp actions", () => {
         };
         expect(actions).toEqual(expectActions);
     });
-    it("signInClearMessage", () => {
-        const actions = signInClearMessage();
-        const expectActions = { type: CLEAR_SIGNIN_MESSAGE };
+    it("userClearMessage", () => {
+        const actions = userClearMessage();
+        const expectActions = { type: UserActionsType.CLEAR_USER_MESSAGE };
         expect(actions).toEqual(expectActions);
     });
 });

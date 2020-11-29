@@ -10,9 +10,9 @@ import SignUp from "./components/SignUp";
 import Message from "../../components/Message";
 import {
     selectuserIsLoading,
-    selectuserCreateError,
     selectuserIsLogining,
-    selectuserLoginingError,
+    selectuserMessageSuccess,
+    selectuseruserMessageError,
     selectuserCreateSuccess,
 } from "../../ducks/user/selector";
 interface AuthPageProps {
@@ -23,11 +23,10 @@ interface AuthPageProps {
 
 export const AuthPage: React.FC<AuthPageProps> = ({ signIn, signUp, variant }: AuthPageProps): React.ReactElement => {
     const userIsLoading = useSelector(selectuserIsLoading);
-    const userCreateError = useSelector(selectuserCreateError);
     const userIsLogining = useSelector(selectuserIsLogining);
-    const userLoginingError = useSelector(selectuserLoginingError);
+    const messageSuccess = useSelector(selectuserMessageSuccess);
+    const messageError = useSelector(selectuseruserMessageError);
     const userCreateSuccess = useSelector(selectuserCreateSuccess);
-
     const dispatch = useDispatch();
 
     const signUpHandler = (values: { email: string; password: string; confirmPassword: string }) => {
@@ -47,9 +46,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ signIn, signUp, variant }: A
 
     return (
         <>
-            {userCreateSuccess && <Message isOpen status={"success"} message={userCreateSuccess} />}
-            {userCreateError && <Message isOpen status={"error"} message={userCreateError} />}
-            {userLoginingError && <Message isOpen status={"error"} message={userLoginingError} />}
+            {messageSuccess && <Message isOpen status={"success"} message={messageSuccess} />}
+            {messageError && <Message isOpen status={"error"} message={messageError} />}
 
             <div className="contaner">
                 <div className="auth">

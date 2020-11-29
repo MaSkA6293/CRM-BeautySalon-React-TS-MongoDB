@@ -7,7 +7,7 @@ export const selectIsAuth = (state: IGlobalStore): boolean => !!selectUserState(
 export const selectIsLogining = (state: IGlobalStore): boolean => selectUserState(state).userIsLogining;
 export const selectuserIsLoading = (state: IGlobalStore): boolean => selectUserState(state).userIsLoading;
 
-export const selectuserCreateError = (state: IGlobalStore): string => selectUserState(state).userCreateError;
 export const selectuserIsLogining = (state: IGlobalStore): boolean => selectUserState(state).userIsLogining;
-export const selectuserLoginingError = (state: IGlobalStore): string => selectUserState(state).userLoginingError;
-export const selectuserCreateSuccess = (state: IGlobalStore): string => selectUserState(state).userCreateSuccess;
+export const selectuserCreateSuccess = (state: IGlobalStore): boolean => selectUserState(state).userCreateSuccess;
+export const selectuseruserMessageError = (state: IGlobalStore): string => selectUserState(state).userMessageError;
+export const selectuserMessageSuccess = (state: IGlobalStore): string => selectUserState(state).userMessageSuccess;

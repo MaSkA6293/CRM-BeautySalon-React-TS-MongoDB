@@ -10,20 +10,16 @@ export const signUpRequest = () => {
     return { type: UserActionsType.SIGNUP_REQUEST };
 };
 
-export const signUpRequestSuccess = (message: string) => {
+export const signUpSuccess = (message: string) => {
     return {
         type: UserActionsType.SIGNUP_SUCCESS,
         payload: { message },
     };
 };
 
-export const signUpRequestRequestFail = (e: { response: { data: { message: string } } }) => {
+export const signUpFail = (e: { response: { data: { message: string } } }) => {
     return {
         type: UserActionsType.SIGNUP_FAIL,
         payload: { message: e.response.data.message },
     };
-};
-
-export const signUpRequestClearMessage = () => {
-    return { type: UserActionsType.CLEAR_SIGNUP_MESSAGE };
 };
