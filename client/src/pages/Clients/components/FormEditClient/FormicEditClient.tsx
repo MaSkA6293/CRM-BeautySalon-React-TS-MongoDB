@@ -10,8 +10,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
 
-import AreYouSure from "../../../../components/AreYouSure";
-import { IClientValues } from "../../../../types/typesClients";
+import { AreYouSure } from "../../../../components/AreYouSure";
+import { IClientValues, IClient } from "../../../../ducks/clients/contracts/state";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
@@ -32,28 +32,23 @@ const EditClientSchema = Yup.object().shape({
     }),
 });
 
-type FormicEditClientProps = {
-    editClient: (values: IClientValues, id: number) => void;
+interface IFormicEditClient {
+    editClient: (values: IClient) => void;
     deletClient: (id: number) => void;
-    currentClient: any;
-    clientDeleted: boolean;
+    currentClient: IClient;
     clientIsDeleting: boolean;
-    clientEdited: boolean;
     clientIsEditing: boolean;
-    clientEditIsFail: boolean;
-    clientDeletIsFail: boolean;
     closeModal: () => void;
-};
+}
 
-const FormicEditClient = ({
+const FormicEditClient: React.FC<IFormicEditClient> = ({
     editClient,
     deletClient,
     currentClient,
     clientIsDeleting,
     clientIsEditing,
-    clientDeletIsFail,
     closeModal,
-}: FormicEditClientProps) => {
+}: IFormicEditClient): React.ReactElement => {
     const initialValues: IClientValues = {
         name: currentClient.name,
         surname: currentClient.surname,
@@ -62,9 +57,11 @@ const FormicEditClient = ({
     const [open, setOpen] = useState(false);
 
     const handlerDelet = () => {
-        //dispatch(rundDeletService(selectedServic._id, handleClose));
+        deletClient(currentClient._id);
     };
-
+    const handlerSubmit = (values: IClientValues) => {
+        editClient({ ...currentClient, name: values.name, surname: values.surname, phone: values.phone });
+    };
     return (
         <>
             <AreYouSure
@@ -76,12 +73,7 @@ const FormicEditClient = ({
             <Formik
                 initialValues={initialValues}
                 validationSchema={EditClientSchema}
-                onSubmit={(values) => {
-                    console.log(values);
-                    // isDelet
-                    //   ? deletClient(currentClient._id)
-                    //   : editClient(values, currentClient._id);
-                }}
+                onSubmit={(values: IClientValues) => handlerSubmit(values)}
             >
                 {({ dirty, isValid, errors }) => (
                     <Form className="form">
@@ -176,7 +168,7 @@ const FormicEditClient = ({
                                 color="primary"
                                 name="delet"
                                 type="button"
-                                disabled={!isValid || clientIsDeleting || clientIsEditing || clientDeletIsFail}
+                                disabled={!isValid || clientIsDeleting || clientIsEditing}
                             >
                                 Отмена
                             </Button>

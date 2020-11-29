@@ -2,11 +2,11 @@
 
 exports[`all tests HomePage HomePage component should render HomePage component 1`] = `
 <div
-  className="Home"
+  className="home"
 >
   <HomeHeader />
   <div
-    className="Home__menu"
+    className="home__menu"
   >
     <Link
       to="/clients"
@@ -17,7 +17,7 @@ exports[`all tests HomePage HomePage component should render HomePage component 
         <NavItem
           addClass={
             Array [
-              "Home__NavItem",
+              "home__nav-item",
             ]
           }
           icon={
@@ -46,7 +46,7 @@ exports[`all tests HomePage HomePage component should render HomePage component 
         <NavItem
           addClass={
             Array [
-              "Home__NavItem",
+              "home__nav-item",
             ]
           }
           icon={

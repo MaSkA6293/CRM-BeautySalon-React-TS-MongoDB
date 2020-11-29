@@ -3,7 +3,7 @@ const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const ClientModel = require("../models/Client");
 const ColorsModels = require("../models/Color");
 const checkId = require("../validations/checkObjectId");
-const { getRandomInt } = require("../utils/getRandom");
+const getRandomInt = require("../utils/getRandom");
 
 module.exports.allClients = async (req, res) => {
   try {
@@ -47,7 +47,8 @@ module.exports.add = async (req, res) => {
     return res
       .status(200)
       .json({ client: result, message: "Клиент успешно добавлен" });
-  } catch {
+  } catch (error) {
+    console.log(error.message);
     return res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -65,10 +66,11 @@ module.exports.delet = async (req, res) => {
       client.remove();
       return res
         .status(200)
-        .json({ id: req.params.id, message: "Клиент успешно удален" });
+        .json({ _id: req.params.id, message: "Клиент успешно удален" });
     }
     return res.status(400).json({ message: "Ошибка удаления клиента" });
-  } catch {
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: ERROR_MESSAGE_STATUS_500,
     });
@@ -90,7 +92,9 @@ module.exports.update = async (req, res) => {
       phone: newWrite.phone,
       color: newWrite.color,
     };
-    res.status(200).json(userData);
+    res
+      .status(200)
+      .json({ userData, message: "Данные клиента успешно изменены" });
   } catch {
     res.send({ error: ERROR_MESSAGE_STATUS_500 });
   }

@@ -4,13 +4,18 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-type AlertDialogProps = {
+interface IAlertDialog {
     open: boolean;
     setOpen: (data: boolean) => void;
     handlerDelet: () => void;
     text: string;
-};
-export default function AlertDialog({ open, setOpen, handlerDelet, text }: AlertDialogProps): React.ReactElement {
+}
+export const AreYouSure: React.FC<IAlertDialog> = ({
+    open,
+    setOpen,
+    handlerDelet,
+    text,
+}: IAlertDialog): React.ReactElement => {
     const handleClose = () => {
         setOpen(false);
     };
@@ -35,4 +40,4 @@ export default function AlertDialog({ open, setOpen, handlerDelet, text }: Alert
             </Dialog>
         </div>
     );
-}
+};

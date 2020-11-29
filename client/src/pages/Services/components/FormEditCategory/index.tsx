@@ -19,7 +19,7 @@ import { runEditCategory } from "../../../../sagas/pageCategories/editCategory";
 import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
-import AreYouSure from "../../../../components/AreYouSure";
+import { AreYouSure } from "../../../../components/AreYouSure";
 import { IColor } from "../../../../types/typesColors";
 
 const EditCategorySchema = Yup.object().shape({

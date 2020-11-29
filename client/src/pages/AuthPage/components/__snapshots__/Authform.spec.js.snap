@@ -75,7 +75,6 @@ exports[`all tests AuthForm AuthForm component should render AuthForm component 
           "_conditions": Array [],
           "_deps": Array [],
           "_exclusive": Object {
-            "min": true,
             "required": true,
           },
           "_mutate": undefined,
@@ -90,7 +89,6 @@ exports[`all tests AuthForm AuthForm component should render AuthForm component 
             "refs": Map {},
           },
           "tests": Array [
-            [Function],
             [Function],
           ],
           "transforms": Array [

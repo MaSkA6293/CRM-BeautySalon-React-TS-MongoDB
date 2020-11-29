@@ -1,33 +1,21 @@
 import React from "react";
-import MenuItemClient from "../../components/MenuItemClient";
+import { MenuItemClient } from "../../components";
 import "react-dropdown/style.css";
 import "./styles.scss";
-import { IClient } from "../../../../types/typesClients";
+import { IClient } from "../../../../ducks/clients/contracts/state";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
-type ClientsListProps = {
+interface IClientsList {
     clients: IClient[];
     edit: (id: number) => void;
-};
+}
 
-export const ClientsList = ({ clients, edit }: ClientsListProps) => {
+export const ClientsList: React.FC<IClientsList> = ({ clients, edit }: IClientsList): React.ReactElement => {
     const options = [
-        {
-            label: "Отправить всем SMS",
-            function: (id: number, cb: () => void) => {
-                cb();
-            },
-        },
-        {
-            label: "Отправить всем email",
-            function: (id: number, cb: () => void) => {
-                cb();
-            },
-        },
         {
             label: "Редактировать клиента",
             function: (id: number, cb: () => void) => {
@@ -39,9 +27,14 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
     return (
         <div className="clients-list">
             <List component="nav" aria-label="main mailbox folders">
-                {clients.map((client: any) => {
+                {clients.map((client: IClient) => {
                     return (
-                        <ListItem key={client._id} alignItems="center" button className="clients-list__item">
+                        <ListItem
+                            key={client._id}
+                            alignItems="center"
+                            button
+                            style={{ borderBottom: "2px solid #c5c5c5" }}
+                        >
                             <Avatar
                                 style={{
                                     backgroundColor: client.color ? client.color : "#9e51b0",
@@ -60,7 +53,7 @@ export const ClientsList = ({ clients, edit }: ClientsListProps) => {
                                     {` ${client.phone}`}
                                 </div>
                             </div>{" "}
-                            <MenuItemClient options={options} id={client._id} addClass={"clients-list__icon"} />
+                            <MenuItemClient options={options} id={client._id} />
                         </ListItem>
                     );
                 })}

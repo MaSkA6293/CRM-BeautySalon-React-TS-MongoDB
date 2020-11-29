@@ -5,7 +5,7 @@ import { TextField } from "@material-ui/core";
 import PhoneInput from "./PhoneInput";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import { IClientValues } from "../../../../types/typesClients";
+import { IClientValues } from "../../../../ducks/clients/contracts/state";
 
 import DialogActions from "@material-ui/core/DialogActions";
 import PermPhoneMsgIcon from "@material-ui/icons/PermPhoneMsg";
@@ -32,13 +32,17 @@ const AddClientSchema = Yup.object().shape({
     }),
 });
 
-type FormicAddClientProps = {
+interface IFormicAddClient {
     handlerAddClient: (values: IClientValues) => void;
     clientIsAdded: boolean;
     closeModal: () => void;
-};
+}
 
-const FormicAddClient = ({ handlerAddClient, clientIsAdded, closeModal }: FormicAddClientProps) => {
+const FormicAddClient: React.FC<IFormicAddClient> = ({
+    handlerAddClient,
+    clientIsAdded,
+    closeModal,
+}: IFormicAddClient): React.ReactElement => {
     return (
         <>
             <Formik initialValues={initialValues} validationSchema={AddClientSchema} onSubmit={handlerAddClient}>

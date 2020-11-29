@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./styles.scss";
 import Header from "../../../../components/Header";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import CustomIcon from "../../../../components/CustomIcon";
+
 import SettingsIcon from "@material-ui/icons/Settings";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +13,7 @@ import Button from "@material-ui/core/Button";
 import AddNewService from "../AddNewService";
 import ModalAddService from "../ModalAddNewService";
 import { ICategory } from "../../types";
-
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const useStyles = makeStyles({
     root: {
         color: "#fff",
@@ -22,11 +21,9 @@ const useStyles = makeStyles({
         width: "90%",
         margin: "0 5%",
     },
-    button: {
-        color: "#fff",
-    },
     icon: {
         fontSize: "1.8rem",
+        color: "white",
     },
     input: {
         borderBlockColor: "#fff",
@@ -44,9 +41,7 @@ const ServicesHeader = ({ categoryList, setFilter, filter }: ServicesHeaderProps
 
     const classes = useStyles();
     const history = useHistory();
-    const handlerClickGoHome = () => {
-        history.push("/");
-    };
+
     const handlerClickGoCategiry = () => {
         history.push("services/categories");
     };
@@ -58,9 +53,10 @@ const ServicesHeader = ({ categoryList, setFilter, filter }: ServicesHeaderProps
     return (
         <Header>
             <div className="services-header">
-                <Button className={classes.button} onClick={() => handlerClickGoHome()}>
-                    <CustomIcon addClass={["services-header__arrow-back"]} icon={faArrowLeft} />
+                <Button color="secondary" onClick={history.goBack}>
+                    <ArrowBackIcon style={{ color: "white" }} />
                 </Button>
+
                 <div className="services-header__filter">
                     <Select
                         labelId="demo-simple-select-label"
@@ -73,7 +69,7 @@ const ServicesHeader = ({ categoryList, setFilter, filter }: ServicesHeaderProps
                             Все услуги
                         </MenuItem>
                         {categoryList &&
-                            categoryList.map((item: any, index: number) => {
+                            categoryList.map((item: ICategory, index: number) => {
                                 return (
                                     <MenuItem key={index} value={item._id}>
                                         {" "}
@@ -85,7 +81,7 @@ const ServicesHeader = ({ categoryList, setFilter, filter }: ServicesHeaderProps
                 </div>
                 <AddNewService setIsOpen={setIsOpenAddService} />
                 <div className="services-header__category" onClick={() => handlerClickGoCategiry()}>
-                    <Button className={classes.button}>
+                    <Button>
                         <SettingsIcon className={classes.icon} />
                     </Button>
                 </div>

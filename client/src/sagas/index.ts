@@ -27,10 +27,24 @@ import { signInSaga } from "../ducks/user/sagas/signIn";
 import { signUpSaga } from "../ducks/user/sagas/signUp";
 import { getUserSaga } from "../ducks/user/sagas/getUser";
 import { signOutSaga } from "../ducks/user/sagas/signOut";
+import { fetchClientsSaga } from "../ducks/clients/sagas/fetchClients";
+import { addClientSaga } from "../ducks/clients/sagas/addClient";
+import { editClientSaga } from "../ducks/clients/sagas/editClient";
+import { deletClientSaga } from "../ducks/clients/sagas/deletClient";
+
 // import { addClient } from "./pageClients/addClient";
 
 export default function* rootSaga() {
-    yield all([signInSaga(), signUpSaga(), getUserSaga(), signOutSaga()]);
+    yield all([
+        signInSaga(),
+        signUpSaga(),
+        getUserSaga(),
+        signOutSaga(),
+        fetchClientsSaga(),
+        addClientSaga(),
+        editClientSaga(),
+        deletClientSaga(),
+    ]);
     // //page clients
     // yield takeEvery(CLIENTS_REQUEST, fetchClients);
     // yield takeEvery(ADD_CLIENT, addClient)

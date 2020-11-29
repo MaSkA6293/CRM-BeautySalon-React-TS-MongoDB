@@ -9,7 +9,7 @@ import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Marker from "../Marker/Marker";
 import { IRecord } from "../../../types";
 import { IColor } from "../../../types/typesColors";
-import { IClient } from "../../../types/typesClients";
+import { IClient } from "../../../ducks/clients/contracts/state";
 import { formatDateToSave } from "../../../functions";
 
 const customStyles = {

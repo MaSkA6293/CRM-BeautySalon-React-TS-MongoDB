@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { IstateRecords, IstateApp } from "../types";
 import { IstateService } from "../pages/Services/types";
-import { IstateClients } from "../types/typesClients";
+import { IstateClients } from "../ducks/clients/contracts/state";
 import { IstateColors } from "../types/typesColors";
 import { IstateUser } from "../ducks/user/contracts/state";
 import app from "./app";
-import clients from "./clients";
+import clients from "../ducks/clients/reducer";
 import records from "./records";
 import colors from "./colors";
 import services from "./services";

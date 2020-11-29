@@ -2,27 +2,33 @@
 
 exports[`all tests Navitem Navitem component should render Navitem component 1`] = `
 <div
-  className="NavItem"
+  className="nav-item"
 >
-  <FontAwesomeIcon
-    border={false}
-    className=""
-    fixedWidth={false}
-    flip={null}
-    icon={null}
-    inverse={false}
-    listItem={false}
-    mask={null}
-    pull={null}
-    pulse={false}
-    rotation={null}
-    size={null}
-    spin={false}
-    swapOpacity={false}
-    symbol={false}
-    title=""
-    transform={null}
+  <div
+    className="nav-item__icon"
+  >
+    <FontAwesomeIcon
+      border={false}
+      className=""
+      fixedWidth={false}
+      flip={null}
+      icon={null}
+      inverse={false}
+      listItem={false}
+      mask={null}
+      pull={null}
+      pulse={false}
+      rotation={null}
+      size={null}
+      spin={false}
+      swapOpacity={false}
+      symbol={false}
+      title=""
+      transform={null}
+    />
+  </div>
+  <span
+    className="nav-item__title"
   />
-  <h2 />
 </div>
 `;

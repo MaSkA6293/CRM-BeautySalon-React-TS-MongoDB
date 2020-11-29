@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
-
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,13 +9,12 @@ type itemMenu = {
     label: string;
     function: (id: number, cb: () => void) => void;
 };
-type MenuProps = {
+interface IMenu {
     options: itemMenu[];
     id: number;
-    addClass?: string;
-};
+}
 
-const MenuItemClient = ({ options, id, addClass }: MenuProps) => {
+export const MenuItemClient: React.FC<IMenu> = ({ options, id }: IMenu): React.ReactElement => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,14 +26,8 @@ const MenuItemClient = ({ options, id, addClass }: MenuProps) => {
 
     return (
         <>
-            <Button
-                aria-controls="simple-menu"
-                aria-haspopup="true"
-                onClick={handleClick}
-                style={{ height: "100" }}
-                className={addClass}
-            >
-                <FontAwesomeIcon icon={faEllipsisV} style={{ fontSize: "1.5rem" }} />
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <MoreVertIcon />
             </Button>
 
             <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
@@ -52,5 +43,3 @@ const MenuItemClient = ({ options, id, addClass }: MenuProps) => {
         </>
     );
 };
-
-export default MenuItemClient;

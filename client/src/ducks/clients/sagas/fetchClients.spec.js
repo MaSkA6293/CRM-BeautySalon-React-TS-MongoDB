@@ -1,7 +1,11 @@
-import { fetchClients, clientsRequestSuccess, clientsRequestFail, clientsRequestClearFail } from "./fetchClients";
+import { clientsRequestSuccess, clientsRequestFail } from "../actionCreators/fetchClients";
+import { fetchClients } from "./fetchClients";
+
+import { ClientsActionsType } from "../contracts/actionTypes";
 import { call, put, delay } from "redux-saga/effects";
-import { httpRequest } from "../../utils/network";
-import { CLIENTS_REQUEST_SUCCESS, CLIENTS_REQUEST_FAIL, CLEAR_ERROR_REQUEST_FAIL } from "../../constants";
+import { httpRequest } from "../../../utils/network";
+
+import { clientsClearMessage } from "../actionCreators";
 
 describe("FetchClients Saga", () => {
     const saga = fetchClients();
@@ -14,7 +18,7 @@ describe("FetchClients Saga", () => {
         done();
         expect(output).toEqual(expected);
     });
-    it("should put clients request success", () => {
+    it("should put clientsRequestSuccess", () => {
         const response = {
             data: [],
         };
@@ -44,7 +48,7 @@ describe("Saga fetchClients test err, message exists", () => {
     });
     it("should put clientsRequestClearFail", () => {
         outputError = sagaError.next().value;
-        let expected = put(clientsRequestClearFail());
+        let expected = put(clientsClearMessage());
         expect(outputError).toEqual(expected);
     });
     it("should return done=true", function () {
@@ -70,7 +74,7 @@ describe("Saga fetchClients test err, message not exists", () => {
     });
     it("should clear message", () => {
         const output = sagaError.next().value;
-        let expected = put(clientsRequestClearFail());
+        let expected = put(clientsClearMessage());
         expect(output).toEqual(expected);
     });
     it("should return done=true", () => {
@@ -86,7 +90,7 @@ describe("tests actions fetchClients", () => {
         let response = { data: [] };
         output = clientsRequestSuccess(response);
         let expected = {
-            type: CLIENTS_REQUEST_SUCCESS,
+            type: ClientsActionsType.CLIENTS_REQUEST_SUCCESS,
             payload: response.data,
         };
         expect(output).toEqual(expected);
@@ -95,14 +99,9 @@ describe("tests actions fetchClients", () => {
         let err = { response: { data: { message: "err" } } };
         output = clientsRequestFail(err);
         let expected = {
-            type: CLIENTS_REQUEST_FAIL,
+            type: ClientsActionsType.CLIENTS_REQUEST_FAIL,
             payload: err.response.data.message ? err.response.data.message : "Что-то пошло не так, попробуйте снова",
         };
-        expect(output).toEqual(expected);
-    });
-    it("clientsRequestClearFail", () => {
-        output = clientsRequestClearFail();
-        let expected = { type: CLEAR_ERROR_REQUEST_FAIL };
         expect(output).toEqual(expected);
     });
 });

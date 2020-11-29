@@ -2,36 +2,27 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./styles.scss";
 import Header from "../../../../components/Header";
-import { faUserPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import CustomIcon from "../../../../components/CustomIcon";
 
-type ClientHeaderProps = {
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Button from "@material-ui/core/Button";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+interface ClientHeaderProps {
     setAddIsOpen: (value: boolean) => void;
-};
+}
 
-const ClientsHeader = ({ setAddIsOpen }: ClientHeaderProps) => {
+export const ClientsHeader: React.FC<ClientHeaderProps> = ({ setAddIsOpen }: ClientHeaderProps): React.ReactElement => {
     const history = useHistory();
-    const handlerClickGoHome = () => {
-        history.push("/");
-    };
-
     return (
         <Header>
             <div className="clients-header">
-                <CustomIcon
-                    addClass={["clients-header__arrow-back"]}
-                    click={() => handlerClickGoHome()}
-                    icon={faArrowLeft}
-                />
+                <Button color="secondary" onClick={history.goBack}>
+                    <ArrowBackIcon style={{ color: "white" }} />
+                </Button>
                 <span className="clients-header__title">Клиенты</span>
-                <CustomIcon
-                    addClass={["clients-header__add-user"]}
-                    click={() => setAddIsOpen(true)}
-                    icon={faUserPlus}
-                />
+                <Button color="secondary" onClick={() => setAddIsOpen(true)}>
+                    <PersonAddIcon style={{ color: "white" }} />
+                </Button>
             </div>
         </Header>
     );
 };
-
-export default ClientsHeader;

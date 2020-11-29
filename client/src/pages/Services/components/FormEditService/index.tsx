@@ -30,7 +30,7 @@ import { rundDeletService } from "../../../../sagas/pageServices/deletService";
 import { runEditServic } from "../../../../sagas/pageServices/editService";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
-import AreYouSure from "../../../../components/AreYouSure";
+import { AreYouSure } from "../../../../components/AreYouSure";
 import { ICategory } from "../../types";
 
 export const getTimeFromArray = (time: number[]) => {

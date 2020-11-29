@@ -6,7 +6,7 @@
   flex: 100%;
   margin: auto;
   &__label {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     flex: 1;
     justify-content: center;
     display: flex;
@@ -15,7 +15,7 @@
     padding-right: 20px;
   }
   &__icon-menu {
-    font-size: 1.6rem;
+    font-size: 1.9rem;
     display: flex;
     color: #fafafa;
   }
@@ -24,30 +24,30 @@
 @media screen and (min-width: 425px) {
   .home-header {
     &__label {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
     }
     &__icon-menu {
-      font-size: 1.7rem;
+      font-size: 2rem;
     }
   }
 }
 @media screen and (min-width: 500px) {
   .home-header {
     &__label {
-      font-size: 1.7rem;
+      font-size: 1.5rem;
     }
     &__icon-menu {
-      font-size: 1.8rem;
+      font-size: 2.1rem;
     }
   }
 }
 @media screen and (min-width: 625px) {
   .home-header {
     &__label {
-      font-size: 1.9rem;
+      font-size: 1.6rem;
     }
     &__icon-menu {
-      font-size: 1.9rem;
+      font-size: 2.2rem;
     }
   }
 }

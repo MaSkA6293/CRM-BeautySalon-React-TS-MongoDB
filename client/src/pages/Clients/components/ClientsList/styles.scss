@@ -4,9 +4,7 @@
   color: $p-text-dark;
   font-size: 1.2rem;
   min-width: 320px;
-  &__item {
-    border-bottom: 2px solid #c5c5c5 !important;
-  }
+ 
   &__client {
     flex-grow: 1;
     padding: 1% 0 1% 5%;
@@ -19,11 +17,10 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    padding: 0 2%;
+    padding: 0 0 5px;
     font-weight: 500;
   }
   &__phone {
-    padding: 0 2%;
     font-size: 0.9rem;
   }
 

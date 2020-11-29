@@ -1,33 +1,25 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import "./styles.scss";
-import { IGlobalStore } from "../../../../reducers/rootReducer";
 import Spiner from "../../../../components/Spiner";
-import { runAddClient } from "../../../../sagas/pageClients/addClient";
-import { IClientValues } from "../../../../types/typesClients";
+import { runAddClient } from "../../../../ducks/clients/actionCreators/addClient";
+import { IClientValues } from "../../../../ducks/clients/contracts/state";
 import FormicAddClient from "./FormicAddClient";
-import cogoToast from "cogo-toast";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
-type ModalAddClientProps = {
+interface IModalAddClient {
     modalIsOpen: boolean;
     closeModal: () => void;
-};
+    clientIsAdding: boolean;
+}
 
-export const ModalAddClient = ({ modalIsOpen, closeModal }: ModalAddClientProps) => {
+export const ModalAddClient: React.FC<IModalAddClient> = ({
+    modalIsOpen,
+    closeModal,
+    clientIsAdding,
+}: IModalAddClient): React.ReactElement => {
     const dispatch = useDispatch();
-    const { clientMessageSuccess, clientMessageError, clientIsAdded } = useSelector(({ clients }: IGlobalStore) => {
-        return {
-            clientMessageSuccess: clients.clientMessageSuccess,
-            clientMessageError: clients.clientMessageError,
-            clientIsAdded: clients.clientIsAdded,
-            clientAdded: clients.clientAdded,
-            clientAddIsFail: clients.clientAddIsFail,
-            clientAddError: clients.clientAddError,
-        };
-    });
-
     const handlerAddClient = (values: IClientValues) => {
         dispatch(
             runAddClient(
@@ -41,24 +33,16 @@ export const ModalAddClient = ({ modalIsOpen, closeModal }: ModalAddClientProps)
         );
     };
 
-    useEffect(() => {
-        clientMessageSuccess && cogoToast.success(<div className="message">{clientMessageSuccess}</div>);
-    }, [clientMessageSuccess]);
-
-    useEffect(() => {
-        clientMessageError && cogoToast.error(<div className="message">{clientMessageError}</div>);
-    }, [clientMessageError]);
-
     return (
         <div>
             <Dialog open={modalIsOpen} onClose={closeModal} maxWidth="sm" fullWidth={true} className="dialog">
                 <DialogContent style={{ minWidth: "200px", overflow: "hidden" }}>
                     <FormicAddClient
                         handlerAddClient={handlerAddClient}
-                        clientIsAdded={clientIsAdded}
+                        clientIsAdded={clientIsAdding}
                         closeModal={closeModal}
                     />
-                    {clientIsAdded ? <Spiner /> : ""}
+                    {clientIsAdding ? <Spiner /> : ""}
                 </DialogContent>
             </Dialog>
         </div>

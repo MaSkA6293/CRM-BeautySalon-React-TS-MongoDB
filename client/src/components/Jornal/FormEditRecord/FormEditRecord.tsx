@@ -10,7 +10,7 @@ import { IRecord } from "../../../types";
 
 import { IColor } from "../../../types/typesColors";
 
-import { IClient } from "../../../types/typesClients";
+import { IClient } from "../../../ducks/clients/contracts/state";
 
 const customStyles = {
     content: {

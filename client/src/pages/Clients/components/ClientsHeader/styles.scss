@@ -10,47 +10,21 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    font-size: 1.5rem;
-  }
-  &__add-user {
-    font-size: 1.4rem;
-    display: flex;
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-  }
-  &__arrow-back {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    cursor: pointer;
+    font-size: 1.3rem;
   }
 }
 
 @media screen and (min-width: 425px) {
   .clients-header {
     &__title {
-      font-size: 1.6rem;
-    }
-    &__add-user {
-      font-size: 1.3rem;
-      display: flex;
-      cursor: pointer;
-    }
-    &__arrow-back {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
   }
 }
 @media screen and (min-width: 500px) {
   .clients-header {
     &__title {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
     }
   }
 }
