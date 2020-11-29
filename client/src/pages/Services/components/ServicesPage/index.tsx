@@ -5,15 +5,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import Spiner from "../../../../components/Spiner";
 import ServicesHeader from "../ServicesHeader";
-import { servicPageRequest } from "../../../../sagas/pageServices/fetchServicePageData";
+import { runFetchServices } from "../../../../ducks/services/actionCreators/fetchServices";
 import ServicList from "../ServiceList";
-import { IService } from "../../types";
+import { IService } from "../../../../ducks/services/contracts/state";
 import ModalEditService from "../ModalEditServic";
-const ServicesPage = () => {
+
+const ServicesPage: React.FC = (): React.ReactElement => {
     const dispatch = useDispatch();
+
     useEffect(() => {
-        dispatch(servicPageRequest());
+        dispatch(runFetchServices());
     }, [dispatch]);
+
     const initialSelectedServic = {
         _id: "1",
         name: "default",
@@ -26,11 +29,11 @@ const ServicesPage = () => {
     const [openEdit, setOpenEdit] = useState(false);
     const [selectedServic, setSelectedServic] = useState(initialSelectedServic);
     const [filter, setFilter] = useState("all");
-    const { servicesList, colors, categoryList, servicePageRequest, serviceMessageFail } = useSelector(
+    const { servicesList, colors, categoryList, servicesIsFetching, messageError } = useSelector(
         ({ services, colors }: IGlobalStore) => {
             return {
-                serviceMessageFail: services.serviceMessageFail,
-                servicePageRequest: services.servicePageRequest,
+                messageError: services.servicesMessageError,
+                servicesIsFetching: services.servicesIsFetching,
                 servicesList: services.servicesList
                     .filter((el: any) => {
                         if (filter === "all") {
@@ -61,13 +64,13 @@ const ServicesPage = () => {
         },
     );
     useEffect(() => {
-        serviceMessageFail && cogoToast.error(<div className="message">{serviceMessageFail}</div>);
-    }, [serviceMessageFail]);
+        messageError && cogoToast.error(<div className="message">{messageError}</div>);
+    }, [messageError]);
 
     return (
         <div className="services">
             <ServicesHeader categoryList={categoryList} filter={filter} setFilter={setFilter} />
-            {servicePageRequest ? <Spiner /> : ""}
+            {servicesIsFetching ? <Spiner /> : ""}
             {servicesList.length > 0 && colors.length && (
                 <ServicList
                     servicesList={servicesList}

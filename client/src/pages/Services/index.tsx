@@ -1,9 +1,9 @@
 import React from "react";
-
 import { Route, Switch } from "react-router-dom";
 import ServicesPage from "./components/ServicesPage";
 import CategoriesPage from "./components/CategoriesPage";
-const Services = () => {
+
+const Services: React.FC = (): React.ReactElement => {
     return (
         <Switch>
             <Route exact path="/services">

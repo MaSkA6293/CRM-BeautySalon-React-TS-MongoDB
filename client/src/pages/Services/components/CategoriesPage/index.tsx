@@ -5,17 +5,17 @@ import Header from "../../../../components/Header";
 import CategoryHeader from "../CategoryHeader";
 import ModalAddNewCategory from "../ModalAddNewCategory";
 
-import { runFetchCategoryPageData } from "../../../../sagas/pageCategories/fetchCategoryPageData";
+import { runFetchCategories } from "../../../../ducks/categories/actionCreators/fetchCategories";
 
 import { ICategory } from "../../types";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import CategoryList from "../CategoryList";
 import ModalEditCategory from "../ModalEditCatrgory";
 
-const CategoriesPage = () => {
+const CategoriesPage: React.FC = (): React.ReactElement => {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(runFetchCategoryPageData());
+        dispatch(runFetchCategories());
     }, [dispatch]);
 
     const initialCategory = {

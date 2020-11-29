@@ -31,7 +31,7 @@ import { fetchClientsSaga } from "../ducks/clients/sagas/fetchClients";
 import { addClientSaga } from "../ducks/clients/sagas/addClient";
 import { editClientSaga } from "../ducks/clients/sagas/editClient";
 import { deletClientSaga } from "../ducks/clients/sagas/deletClient";
-
+import { fetchServicesSaga } from "../ducks/services/sagas/fetchServices";
 // import { addClient } from "./pageClients/addClient";
 
 export default function* rootSaga() {
@@ -44,6 +44,7 @@ export default function* rootSaga() {
         addClientSaga(),
         editClientSaga(),
         deletClientSaga(),
+        fetchServicesSaga(),
     ]);
     // //page clients
     // yield takeEvery(CLIENTS_REQUEST, fetchClients);

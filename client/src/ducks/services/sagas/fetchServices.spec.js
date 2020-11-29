@@ -5,16 +5,16 @@ import {
     servicesAndCategoriesSuccess,
     requestError,
     clearErrorRequest,
-} from "./fetchServicePageData";
+} from "./fetchServices";
 import { call, put, all, delay } from "redux-saga/effects";
-import { httpRequest } from "../../utils/network";
+import { httpRequest } from "../../../utils/network";
 import {
     COLORS_REQUEST_SUCCESS,
     GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
     GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
     SERVICE_PAGE_REQUEST,
     CLEAR_ERROR_REQUEST_FAIL,
-} from "../../constants";
+} from "../../../constants";
 
 describe("FetchClients Saga", () => {
     const saga = fetchServicePageData();

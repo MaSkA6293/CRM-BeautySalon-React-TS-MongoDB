@@ -17,7 +17,7 @@ import {
     getColorsRequestSuccess,
     runFetchCategoryPageData,
     fetchCategoryPageData,
-} from "./fetchCategoryPageData";
+} from "./fetchCategories";
 
 describe("fetchCategoryPageData Saga", () => {
     const saga = fetchCategoryPageData();
