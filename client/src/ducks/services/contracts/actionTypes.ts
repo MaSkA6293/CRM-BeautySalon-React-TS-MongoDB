@@ -5,11 +5,16 @@ export enum ServicesActionsType {
     FETCH_SERVICES_REQUEST = "services/FETCH_SERVICES_REQUEST",
     FETCH_SERVICES_SUCCESS = "services/FETCH_SERVICES_SUCCESS",
     FETCH_SERVICES_ERROR = "services/FETCH_SERVICES_ERROR",
+    FETCH_SERVICES_PAGE = "services/FETCH_SERVICES_PAGE",
 }
 
 export interface IRunFetchservices {
     type: typeof ServicesActionsType.FETCH_SERVICES;
 }
+export interface IRunFetchservicesPage {
+    type: typeof ServicesActionsType.FETCH_SERVICES_PAGE;
+}
+
 export interface IFetchServicesErrorProps {
     response: { data: { message: string } };
 }

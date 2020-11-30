@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import "./FormAddRecord.scss";
 import Modal from "react-modal";
-import classNames from "classnames";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
-import Marker from "../Marker/Marker";
 import { IRecord } from "../../../types";
-import { IColor } from "../../../types/typesColors";
+import { IColor } from "../../../ducks/colors/contracts/state";
 import { IClient } from "../../../ducks/clients/contracts/state";
 import { formatDateToSave } from "../../../functions";
 

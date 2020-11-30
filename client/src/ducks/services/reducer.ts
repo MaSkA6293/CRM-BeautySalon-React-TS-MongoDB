@@ -31,7 +31,7 @@ const stateServices = (state: IstateService = initialState, action: ServicesActi
             return { ...state, servicesIsFetching: true };
 
         case ServicesActionsType.FETCH_SERVICES_SUCCESS:
-            return { ...state, servicesList: action.payload };
+            return { ...state, servicesList: action.payload, servicesIsFetching: false };
 
         case ServicesActionsType.FETCH_SERVICES_ERROR:
             return { ...state, servicesMessageError: action.payload.message };

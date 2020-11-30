@@ -32,16 +32,13 @@ type FormAddCategoryProps = {
 };
 
 const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
-    const { colors, serviceMessageFail, serviceMessageSuccess, categoryIsAdded } = useSelector(
-        ({ colors, services }: IGlobalStore) => {
-            return {
-                colors: colors.colorsList,
-                serviceMessageFail: services.serviceMessageFail,
-                serviceMessageSuccess: services.serviceMessageSuccess,
-                categoryIsAdded: services.categoryIsAdded,
-            };
-        },
-    );
+    const { colors, messageError, messageSuccess } = useSelector(({ colors, categories }: IGlobalStore) => {
+        return {
+            colors: colors.colorsList,
+            messageError: categories.categoryesMessageError,
+            messageSuccess: categories.categoryesMessageSuccess,
+        };
+    });
     const dispatch = useDispatch();
 
     const [selectedColor, setSelectedColor] = useState<string>("");
@@ -53,12 +50,12 @@ const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
     }, [colors]);
 
     useEffect(() => {
-        serviceMessageFail && cogoToast.error(<div className="message">{serviceMessageFail}</div>);
-    }, [serviceMessageFail]);
+        messageError && cogoToast.error(<div className="message">{messageError}</div>);
+    }, [messageError]);
 
     useEffect(() => {
-        serviceMessageSuccess && cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
-    }, [serviceMessageSuccess]);
+        messageSuccess && cogoToast.success(<div className="message">{messageSuccess}</div>);
+    }, [messageSuccess]);
 
     interface AddServise {
         name: string;
@@ -112,7 +109,7 @@ const FormAddCategory = ({ handleClose }: FormAddCategoryProps) => {
                                 <SelectColor
                                     setSelectedColor={setSelectedColor}
                                     colors={colors}
-                                    disabled={categoryIsAdded}
+                                    disabled={true}
                                     title={"Цвет категории"}
                                 />
                             </div>

@@ -1,7 +1,7 @@
-import { IStateCategories } from "./contracts/state";
-import { CategoriesActionsType } from "./contracts/actionTypes";
+import { IstateCategories } from "./contracts/state";
+import { CategoriesActionsType, CategoriesAction } from "./contracts/actionTypes";
 
-export const initialState: IStateCategories = {
+export const initialState: IstateCategories = {
     categoryesIsFetching: false,
     categoryesList: [],
     categoryesMessageError: "",

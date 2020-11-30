@@ -47,12 +47,12 @@ type FormAddServiceProps = {
 };
 
 const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
-    const { colors, serviceMessageFail, serviceMessageSuccess, serviceIsAdded } = useSelector(
+    const { colors, messageFail, messageSuccess, serviceIsAdded } = useSelector(
         ({ colors, services }: IGlobalStore) => {
             return {
                 colors: colors.colorsList,
-                serviceMessageFail: services.serviceMessageFail,
-                serviceMessageSuccess: services.serviceMessageSuccess,
+                messageFail: services.servicesMessageError,
+                messageSuccess: services.servicesMessageSuccess,
                 serviceIsAdded: services.serviceIsAdded,
             };
         },
@@ -68,12 +68,12 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
     }, [colors]);
 
     useEffect(() => {
-        serviceMessageFail && cogoToast.error(<div className="message">{serviceMessageFail}</div>);
-    }, [serviceMessageFail]);
+        messageFail && cogoToast.error(<div className="message">{messageFail}</div>);
+    }, [messageFail]);
 
     useEffect(() => {
-        serviceMessageSuccess && cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
-    }, [serviceMessageSuccess]);
+        messageSuccess && cogoToast.success(<div className="message">{messageSuccess}</div>);
+    }, [messageSuccess]);
 
     interface AddServise {
         name: string;

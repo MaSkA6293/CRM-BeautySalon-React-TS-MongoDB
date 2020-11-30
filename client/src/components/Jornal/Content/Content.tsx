@@ -11,7 +11,6 @@ import avatarDefault from "../../../assets/avatar/default-avatar.png";
 import { formatDateToSave } from "../../../functions";
 
 import { IRecord } from "../../../types";
-import { IColor } from "../../../types/typesColors";
 import { IClient } from "../../../ducks/clients/contracts/state";
 import { createNewRecord, editRecord, deletRecord } from "../../../actions/actionCreator";
 

@@ -7,7 +7,7 @@ import ModalAddNewCategory from "../ModalAddNewCategory";
 
 import { runFetchCategories } from "../../../../ducks/categories/actionCreators/fetchCategories";
 
-import { ICategory } from "../../types";
+import { ICategory } from "../../../../ducks/categories/contracts/state";
 import { IGlobalStore } from "../../../../reducers/rootReducer";
 import CategoryList from "../CategoryList";
 import ModalEditCategory from "../ModalEditCatrgory";
@@ -27,9 +27,9 @@ const CategoriesPage: React.FC = (): React.ReactElement => {
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
     const [openEdit, setOpenEdit] = useState(false);
-    const { categoryList, colors } = useSelector(({ services, colors }: IGlobalStore) => {
+    const { colors, categoryesList } = useSelector(({ colors, categories }: IGlobalStore) => {
         return {
-            categoryList: services.categoryList.map((item: ICategory) => {
+            categoryesList: categories.categoryesList.map((item: ICategory) => {
                 return {
                     _id: item._id,
                     name: item.name,
@@ -51,9 +51,9 @@ const CategoriesPage: React.FC = (): React.ReactElement => {
                 ""
             )}
 
-            {categoryList.length > 0 && colors.length && (
+            {categoryesList.length > 0 && colors.length && (
                 <CategoryList
-                    categoryList={categoryList}
+                    categoryList={categoryesList}
                     setOpenEdit={setOpenEdit}
                     setSelectedCategory={setSelectedCategory}
                 />
@@ -62,7 +62,7 @@ const CategoriesPage: React.FC = (): React.ReactElement => {
                 open={openEdit}
                 handleClose={() => setOpenEdit(false)}
                 selectedCategory={selectedCategory}
-                categoryList={categoryList}
+                categoryList={categoryesList}
             />
         </div>
     );

@@ -3,7 +3,7 @@ import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import "./styles.scss";
 
 import ListItem from "@material-ui/core/ListItem";
-import { IColor } from "../../../../types/typesColors";
+import { IColor } from "../../../../ducks/colors/contracts/state";
 
 type ServiceProps = {
     key: number;

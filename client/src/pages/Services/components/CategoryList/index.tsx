@@ -1,5 +1,5 @@
 import React from "react";
-import { IColor } from "../../../../types/typesColors";
+import { IColor } from "../../../../ducks/colors/contracts/state";
 import Category from "../Category";
 type CategoryListProps = {
     categoryList: {

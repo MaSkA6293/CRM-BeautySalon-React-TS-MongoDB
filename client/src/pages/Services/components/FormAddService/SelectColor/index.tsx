@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import { IColor } from "../../../../../types/typesColors";
+import { IColor } from "../../../../../ducks/colors/contracts/state";
 import "./styles.scss";
 
 type SimpleDialogProps = {

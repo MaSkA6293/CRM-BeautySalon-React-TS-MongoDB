@@ -3,7 +3,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import FormEditCategory from "../FormEditCategory";
 import "./styles.scss";
-import { IColor } from "../../../../types/typesColors";
+import { IColor } from "../../../../ducks/colors/contracts/state";
 type ModalEditCategoryProps = {
     open: boolean;
     handleClose: () => void;

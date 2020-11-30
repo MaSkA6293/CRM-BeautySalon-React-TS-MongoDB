@@ -6,7 +6,5 @@ export interface IColor {
 export interface IstateColors {
     readonly colorsLoaded: boolean;
     readonly colorsIsLoading: boolean;
-    readonly colorsGetIsFail: boolean;
-    readonly colorsGetError: "";
     readonly colorsList: IColor[];
 }

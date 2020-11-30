@@ -65,12 +65,12 @@ type FormEditServiceProps = {
 };
 
 const FormEditService = ({ handleClose, selectedServic, categoryList }: FormEditServiceProps) => {
-    const { colors, serviceMessageFail, serviceMessageSuccess, serviceIsEdited } = useSelector(
+    const { colors, messageFail, messageSuccess, serviceIsEdited } = useSelector(
         ({ colors, services }: IGlobalStore) => {
             return {
                 colors: colors.colorsList,
-                serviceMessageFail: services.serviceMessageFail,
-                serviceMessageSuccess: services.serviceMessageSuccess,
+                messageFail: services.servicesMessageError,
+                messageSuccess: services.servicesMessageSuccess,
                 serviceIsEdited: services.serviceIsEdited,
             };
         },
@@ -87,12 +87,12 @@ const FormEditService = ({ handleClose, selectedServic, categoryList }: FormEdit
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        serviceMessageFail && cogoToast.error(<div className="message">{serviceMessageFail}</div>);
-    }, [serviceMessageFail]);
+        messageFail && cogoToast.error(<div className="message">{messageFail}</div>);
+    }, [messageFail]);
 
     useEffect(() => {
-        serviceMessageSuccess && cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
-    }, [serviceMessageSuccess]);
+        messageSuccess && cogoToast.success(<div className="message">{messageSuccess}</div>);
+    }, [messageSuccess]);
 
     interface EditServise {
         name: string;

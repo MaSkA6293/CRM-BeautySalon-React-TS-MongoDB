@@ -20,7 +20,7 @@ import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategor
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import { AreYouSure } from "../../../../components/AreYouSure";
-import { IColor } from "../../../../types/typesColors";
+import { IColor } from "../../../../ducks/colors/contracts/state";
 
 const EditCategorySchema = Yup.object().shape({
     name: Yup.string().required("Обязательное поле"),
@@ -37,12 +37,12 @@ type FormEditCategoryProps = {
 };
 
 const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormEditCategoryProps) => {
-    const { colors, serviceMessageFail, serviceMessageSuccess, serviceIsEdited } = useSelector(
+    const { colors, messageFail, messageSuccess, serviceIsEdited } = useSelector(
         ({ colors, services }: IGlobalStore) => {
             return {
                 colors: colors.colorsList,
-                serviceMessageFail: services.serviceMessageFail,
-                serviceMessageSuccess: services.serviceMessageSuccess,
+                messageFail: services.servicesMessageError,
+                messageSuccess: services.servicesMessageSuccess,
                 serviceIsEdited: services.serviceIsEdited,
             };
         },
@@ -56,12 +56,12 @@ const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormE
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        serviceMessageFail && cogoToast.error(<div className="message">{serviceMessageFail}</div>);
-    }, [serviceMessageFail]);
+        messageFail && cogoToast.error(<div className="message">{messageFail}</div>);
+    }, [messageFail]);
 
     useEffect(() => {
-        serviceMessageSuccess && cogoToast.success(<div className="message">{serviceMessageSuccess}</div>);
-    }, [serviceMessageSuccess]);
+        messageSuccess && cogoToast.success(<div className="message">{messageSuccess}</div>);
+    }, [messageSuccess]);
 
     interface EditCategory {
         name: string;

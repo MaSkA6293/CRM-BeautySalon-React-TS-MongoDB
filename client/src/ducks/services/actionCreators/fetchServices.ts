@@ -16,8 +16,8 @@ export const fetchServicesRequest = (): IFetchServicesRequest => {
     return { type: ServicesActionsType.FETCH_SERVICES_REQUEST };
 };
 
-export const fetchServicesSuccess = (data: IService[]): IFetchServicesSuccess => {
-    return { type: ServicesActionsType.FETCH_SERVICES_SUCCESS, payload: data };
+export const fetchServicesSuccess = (response: { data: IService[] }): IFetchServicesSuccess => {
+    return { type: ServicesActionsType.FETCH_SERVICES_SUCCESS, payload: response.data };
 };
 
 export const fetchServicesError = (e: IFetchServicesErrorProps): IFetchServicesError => {
