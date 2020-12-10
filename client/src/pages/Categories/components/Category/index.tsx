@@ -1,22 +1,18 @@
 import React from "react";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import "./styles.scss";
-
+import { itemCategoriesListPlusColor } from "../../../../ducks/categories/selector";
 import ListItem from "@material-ui/core/ListItem";
-import { IColor } from "../../../../ducks/colors/contracts/state";
+
 type ServiceProps = {
     key: number;
-    data: {
-        _id: string;
-        name: string;
-        color: IColor;
-    };
+    data: itemCategoriesListPlusColor;
     setOpenEdit: (value: boolean) => void;
-    setSelectedCategory: (data: { _id: string; name: string; color: IColor }) => void;
+    setSelectedCategory: (data: itemCategoriesListPlusColor) => void;
 };
 
 export default function Category({ data, setOpenEdit, setSelectedCategory }: ServiceProps) {
-    const handlerClick = (data: { _id: string; name: string; color: IColor }) => {
+    const handlerClick = (data: itemCategoriesListPlusColor) => {
         setOpenEdit(true);
         setSelectedCategory(data);
     };
@@ -29,7 +25,10 @@ export default function Category({ data, setOpenEdit, setSelectedCategory }: Ser
                     </div>
                     <div className="category__main">
                         <div className="category__title">
-                            <div className="category__color" style={{ backgroundColor: data.color.hex }}></div>
+                            <div
+                                className="category__color"
+                                style={{ backgroundColor: data.color?.hex ? data.color.hex : "black" }}
+                            ></div>
                             <div className="category__name">{data.name}</div>
                         </div>
                     </div>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import { IColor } from "../../../../ducks/colors/contracts/state";
+import { IColor } from "../../ducks/colors/contracts/state";
 import "./styles.scss";
 
 type SimpleDialogProps = {
     open: boolean;
     onClose: () => void;
-    handleSelectColor: (color: string) => void;
+    handleSelectColor: (color: IColor) => void;
     colors: IColor[];
 };
 
@@ -21,7 +21,7 @@ function SimpleDialog({ onClose, open, colors, handleSelectColor }: SimpleDialog
                             <div
                                 className="select-color__item"
                                 style={{ backgroundColor: color.hex }}
-                                onClick={() => handleSelectColor(color._id.toString())}
+                                onClick={() => handleSelectColor(color)}
                             ></div>
                         </div>
                     );
@@ -32,7 +32,7 @@ function SimpleDialog({ onClose, open, colors, handleSelectColor }: SimpleDialog
 }
 
 type SelectColorProps = {
-    setSelectedColor: any;
+    setSelectedColor: (data: IColor) => void;
     colors: IColor[];
     disabled: boolean;
     title: string;
@@ -41,8 +41,8 @@ type SelectColorProps = {
 export default function SelectColor({ setSelectedColor, colors, disabled, title }: SelectColorProps) {
     const [open, setOpen] = useState(false);
 
-    const handleSelectColor = (_id: string) => {
-        setSelectedColor(_id);
+    const handleSelectColor = (color: IColor) => {
+        setSelectedColor(color);
         setOpen(false);
     };
 
@@ -54,7 +54,7 @@ export default function SelectColor({ setSelectedColor, colors, disabled, title 
             <SimpleDialog
                 open={open}
                 onClose={() => setOpen(false)}
-                handleSelectColor={(_id: string) => handleSelectColor(_id)}
+                handleSelectColor={(color: IColor) => handleSelectColor(color)}
                 colors={colors}
             />
         </>

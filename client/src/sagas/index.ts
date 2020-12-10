@@ -33,8 +33,11 @@ import { editClientSaga } from "../ducks/clients/sagas/editClient";
 import { deletClientSaga } from "../ducks/clients/sagas/deletClient";
 import { fetchServicesSaga } from "../ducks/services/sagas/fetchServices";
 import { fetchServicesPageSaga } from "../ducks/services/sagas/servicesPageFetch";
+import { fetchCategoriesPageSaga } from "../ducks/categories/sagas/categoriesPageFetch";
+import { addCategorySaga } from "../ducks/categories/sagas/addCategory";
+import { editCategorySaga } from "../ducks/categories/sagas/editCategory";
 
-// import { addClient } from "./pageClients/addClient";
+import { deletCategorySaga } from "../ducks/categories/sagas/deletCategory";
 
 export default function* rootSaga() {
     yield all([
@@ -48,22 +51,9 @@ export default function* rootSaga() {
         deletClientSaga(),
         fetchServicesSaga(),
         fetchServicesPageSaga(),
+        fetchCategoriesPageSaga(),
+        addCategorySaga(),
+        editCategorySaga(),
+        deletCategorySaga(),
     ]);
-    // //page clients
-    // yield takeEvery(CLIENTS_REQUEST, fetchClients);
-    // yield takeEvery(ADD_CLIENT, addClient)
-    // //page services
-    // yield takeEvery(SERVICE_PAGE_REQUEST, fetchServicePageData);
-    // yield takeEvery(EDIT_SERVIC, editService);
-    // yield takeEvery(DELET_SERVICE, deletServic);
-    // yield takeEvery(ADD_SERVIC, addService);
-    // //page categories
-    // yield takeEvery(CATEGORY_PAGE_REQUEST, fetchCategoryPageData);
-    // yield takeEvery(ADD_CATEGORY, addCategory);
-    // yield takeEvery(DELET_CATEGORY, deletCategory);
-    // yield takeEvery(EDIT_CATEGORY, editCategory);
-    // //page Auth
-    // yield takeEvery(UserActionsType.USER_SIGNUP, signUp);
-
-    // yield takeEvery(UserActionsType.USER_SIGNOUT, signOut);
 }

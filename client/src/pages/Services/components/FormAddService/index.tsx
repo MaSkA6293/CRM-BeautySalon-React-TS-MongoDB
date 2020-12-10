@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
-import SelectColor from "../SelectColor";
+import SelectColor from "../../../../components/SelectColor";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -26,7 +26,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { runAddService } from "../../../../sagas/pageServices/addService";
 import { ICategory } from "../../types";
-
+import { IColor } from "../../../../ducks/colors/contracts/state";
 export const getTime = (time: string) => {
     return time.split(":").map((el) => parseInt(el.replace(/^0(\d)/, "$1")));
 };
@@ -59,13 +59,8 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
     );
     const dispatch = useDispatch();
 
-    const [selectedColor, setSelectedColor] = useState<string>("");
+    const [selectedColor, setSelectedColor] = useState<IColor>(colors[0]);
     const [category, setCategory] = useState<string[]>([]);
-    useEffect(() => {
-        if (colors.length > 0) {
-            setSelectedColor(colors[0]._id.toString());
-        }
-    }, [colors]);
 
     useEffect(() => {
         messageFail && cogoToast.error(<div className="message">{messageFail}</div>);
@@ -85,7 +80,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
             name: values.name,
             duration: getTime(values.time),
             cost: parseInt(values.price),
-            colorId: selectedColor,
+            colorId: selectedColor._id,
             categoriesId: category,
         };
         dispatch(runAddService(data, handleClose));
@@ -215,9 +210,7 @@ const FormAddService = ({ handleClose, categoryList }: FormAddServiceProps) => {
                             <div
                                 className="select-color__selected select-color__selected-margin-right"
                                 style={{
-                                    backgroundColor: selectedColor
-                                        ? colors.find((c) => c._id.toString() === selectedColor)?.hex
-                                        : "#4791db",
+                                    backgroundColor: selectedColor.hex,
                                 }}
                             ></div>
                             <div className="select-color__button">

@@ -1,19 +1,20 @@
 import React from "react";
-import { IColor } from "../../../../ducks/colors/contracts/state";
+import { itemCategoriesListPlusColor } from "../../../../ducks/categories/selector";
 import Category from "../Category";
-type CategoryListProps = {
-    categoryList: {
-        _id: string;
-        name: string;
-        color: IColor;
-    }[];
-    setOpenEdit: any;
-    setSelectedCategory: any;
-};
-export default function ServiceList({ categoryList, setOpenEdit, setSelectedCategory }: CategoryListProps) {
+interface ICategoryList {
+    categoryList: itemCategoriesListPlusColor[];
+    setOpenEdit: (value: boolean) => void;
+    setSelectedCategory: (data: itemCategoriesListPlusColor) => void;
+}
+
+export default function CategoriesList({
+    categoryList,
+    setOpenEdit,
+    setSelectedCategory,
+}: ICategoryList): React.ReactElement {
     return (
         <div className="categories-list">
-            {categoryList.map((item: any, index: number) => {
+            {categoryList.map((item: itemCategoriesListPlusColor, index: number) => {
                 return (
                     <Category
                         key={index}

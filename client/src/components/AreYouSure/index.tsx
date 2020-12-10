@@ -16,24 +16,28 @@ export const AreYouSure: React.FC<IAlertDialog> = ({
     handlerDelet,
     text,
 }: IAlertDialog): React.ReactElement => {
-    const handleClose = () => {
+    const handleDisagree = () => {
         setOpen(false);
+    };
+    const handlerAgree = () => {
+        setOpen(false);
+        handlerDelet();
     };
 
     return (
         <div>
             <Dialog
                 open={open}
-                onClose={handleClose}
+                onClose={handleDisagree}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">{text}</DialogTitle>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleDisagree} color="primary">
                         Нет
                     </Button>
-                    <Button onClick={handlerDelet} color="primary" autoFocus>
+                    <Button onClick={handlerAgree} color="primary" autoFocus>
                         Да
                     </Button>
                 </DialogActions>

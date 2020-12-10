@@ -19,7 +19,7 @@ import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import MenuItem from "@material-ui/core/MenuItem";
 //import SelectColor from "./SelectColor";
-import SelectColor from "../SelectColor";
+import SelectColor from "../../../../components/SelectColor";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Checkbox from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";

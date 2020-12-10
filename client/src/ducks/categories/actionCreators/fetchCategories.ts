@@ -1,12 +1,7 @@
 import { ICategory } from "../contracts/state";
 import { CategoriesActionsType } from "../contracts/actionTypes";
-import {
-    IRunFetchCategories,
-    IFetchCategoriesRequest,
-    IFetchCategoriesSuccess,
-    IFetchCategoriesErrorProps,
-    IFetchCategoriesError,
-} from "../contracts/actionTypes";
+import { IFetchCategoriesRequest, IFetchCategoriesSuccess, IFetchCategoriesError } from "../contracts/actionTypes";
+import { IRunFetchCategories, IFetchCategoriesErrorProps } from "../contracts/types";
 
 export const runFetchCategories = (): IRunFetchCategories => {
     return { type: CategoriesActionsType.FETCH_CATEGORIES };
@@ -16,8 +11,8 @@ export const fetchCategoriesRequest = (): IFetchCategoriesRequest => {
     return { type: CategoriesActionsType.FETCH_CATEGORIES_REQUEST };
 };
 
-export const fetchCategoriesSuccess = (data: ICategory[]): IFetchCategoriesSuccess => {
-    return { type: CategoriesActionsType.FETCH_CATEGORIES_SUCCESS, payload: data };
+export const fetchCategoriesSuccess = (response: { data: ICategory[] }): IFetchCategoriesSuccess => {
+    return { type: CategoriesActionsType.FETCH_CATEGORIES_SUCCESS, payload: response.data };
 };
 
 export const fetchCategoriesError = (e: IFetchCategoriesErrorProps): IFetchCategoriesError => {

@@ -14,7 +14,7 @@ import {
     selectServicesList,
 } from "../../../../ducks/services/selector";
 import { selectColorsList } from "../../../../ducks/colors/selector";
-import { selectCategoryesList } from "../../../../ducks/categories/selector";
+import { selectCategoriesList } from "../../../../ducks/categories/selector";
 
 const ServicesPage: React.FC = (): React.ReactElement => {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const ServicesPage: React.FC = (): React.ReactElement => {
 
     const messageError = useSelector(selectServicesMessageError);
     const colors = useSelector(selectColorsList);
-    const categories = useSelector(selectCategoryesList);
+    const categories = useSelector(selectCategoriesList);
     const servicesIsFetching = useSelector(selectServicesIsFetching);
     const services = useSelector(selectServicesList).filter((el: any) => {
         if (filter === "all") {

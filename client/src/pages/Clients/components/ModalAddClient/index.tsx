@@ -39,7 +39,7 @@ export const ModalAddClient: React.FC<IModalAddClient> = ({
                 <DialogContent style={{ minWidth: "200px", overflow: "hidden" }}>
                     <FormicAddClient
                         handlerAddClient={handlerAddClient}
-                        clientIsAdded={clientIsAdding}
+                        clientIsAdding={clientIsAdding}
                         closeModal={closeModal}
                     />
                     {clientIsAdding ? <Spiner /> : ""}

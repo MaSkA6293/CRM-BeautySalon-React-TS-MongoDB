@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import "./styles.scss";
@@ -7,76 +7,58 @@ import { Formik, Form, Field } from "formik";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 
-import cogoToast from "cogo-toast";
-
 import DialogActions from "@material-ui/core/DialogActions";
-import { IGlobalStore } from "../../../../reducers/rootReducer";
-import { useSelector, useDispatch } from "react-redux";
-
-//import SelectColor from "./SelectColor";
-import SelectColor from "../SelectColor";
-import { runEditCategory } from "../../../../sagas/pageCategories/editCategory";
-import { rundDeletCategory } from "../../../../sagas/pageCategories/deletCategory";
+import { useDispatch } from "react-redux";
+import { IColor } from "../../../../ducks/colors/contracts/state";
+import SelectColor from "../../../../components/SelectColor";
+import { runEditCategory } from "../../../../ducks/categories/actionCreators/editCategory";
+import { runDeletCategory } from "../../../../ducks/categories/actionCreators/deletCategory";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import { AreYouSure } from "../../../../components/AreYouSure";
-import { IColor } from "../../../../ducks/colors/contracts/state";
 
+import { itemCategoriesListPlusColor } from "../../../../ducks/categories/selector";
 const EditCategorySchema = Yup.object().shape({
     name: Yup.string().required("Обязательное поле"),
 });
 
-type FormEditCategoryProps = {
+interface IFormEditCategory {
     handleClose: () => void;
-    categoryList: {
-        _id: string;
-        name: string;
-        color: IColor;
-    }[];
-    selectedCategory: { _id: string; name: string; color: IColor };
-};
+    selectedCategory: itemCategoriesListPlusColor;
+    isEditing: boolean;
+    isDeleting: boolean;
+    colors: IColor[];
+}
 
-const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormEditCategoryProps) => {
-    const { colors, messageFail, messageSuccess, serviceIsEdited } = useSelector(
-        ({ colors, services }: IGlobalStore) => {
-            return {
-                colors: colors.colorsList,
-                messageFail: services.servicesMessageError,
-                messageSuccess: services.servicesMessageSuccess,
-                serviceIsEdited: services.serviceIsEdited,
-            };
-        },
-    );
+const FormEditCategory: React.FC<IFormEditCategory> = ({
+    handleClose,
+    selectedCategory,
+    isEditing,
+    isDeleting,
+    colors,
+}: IFormEditCategory) => {
     const initialValues = {
         name: selectedCategory.name,
     };
     const dispatch = useDispatch();
 
-    const [selectedColor, setSelectedColor] = useState(selectedCategory.color._id);
+    const [selectedColor, setSelectedColor] = useState(selectedCategory.color);
     const [open, setOpen] = useState(false);
 
-    useEffect(() => {
-        messageFail && cogoToast.error(<div className="message">{messageFail}</div>);
-    }, [messageFail]);
-
-    useEffect(() => {
-        messageSuccess && cogoToast.success(<div className="message">{messageSuccess}</div>);
-    }, [messageSuccess]);
-
-    interface EditCategory {
+    interface IHandlerEditCategory {
         name: string;
     }
-    const handlerEditCategory = (values: EditCategory) => {
+    const handlerEditCategory = (values: IHandlerEditCategory) => {
         const data = {
             _id: selectedCategory._id,
             name: values.name,
-            colorId: selectedColor,
+            colorId: selectedColor._id,
         };
         dispatch(runEditCategory(data, handleClose));
     };
 
     const handlerDelet = () => {
-        dispatch(rundDeletCategory(selectedCategory._id, handleClose));
+        dispatch(runDeletCategory(selectedCategory._id, handleClose));
     };
     return (
         <>
@@ -91,7 +73,7 @@ const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormE
                     <Form className="form">
                         <div className="form__title-btn-delet">
                             <h2 className="form__title">Редактировать</h2>
-                            <Button disabled={serviceIsEdited} onClick={() => setOpen(true)}>
+                            <Button disabled={isEditing || isDeleting} onClick={() => setOpen(true)}>
                                 <DeleteSweepIcon />
                             </Button>
                         </div>
@@ -111,6 +93,7 @@ const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormE
                                         error={errors.name ? true : false}
                                         autoComplete="false"
                                         className="form__item"
+                                        disabled={isDeleting || isEditing}
                                     />
                                 </div>
                             </div>
@@ -123,25 +106,23 @@ const FormEditCategory = ({ handleClose, selectedCategory, categoryList }: FormE
                             <div
                                 className="select-color__selected select-color__selected-margin-right "
                                 style={{
-                                    backgroundColor: selectedColor
-                                        ? colors.find((c) => c._id.toString() === selectedColor)?.hex
-                                        : "#4791db",
+                                    backgroundColor: selectedColor.hex,
                                 }}
                             ></div>
                             <div className="select-color__button">
                                 <SelectColor
                                     setSelectedColor={setSelectedColor}
                                     colors={colors}
-                                    disabled={serviceIsEdited}
+                                    disabled={isEditing || isDeleting}
                                     title={"Цвет категории"}
                                 />
                             </div>
                         </div>
                         <DialogActions>
-                            <Button color="primary" type="submit" disabled={!isValid || serviceIsEdited}>
+                            <Button color="primary" type="submit" disabled={!isValid || isEditing || isDeleting}>
                                 Сохранить
                             </Button>
-                            <Button onClick={handleClose} color="primary" disabled={serviceIsEdited}>
+                            <Button onClick={handleClose} color="primary" disabled={isEditing || isDeleting}>
                                 Отмена
                             </Button>
                         </DialogActions>

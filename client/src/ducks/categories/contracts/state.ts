@@ -1,4 +1,7 @@
 export interface IstateCategories {
+    readonly categoryIsAdding: boolean;
+    readonly categoryIsEditing: boolean;
+    readonly categoryIsDeleting: boolean;
     readonly categoryesIsFetching: boolean;
     readonly categoryesList: ICategory[];
     readonly categoryesMessageError: string;

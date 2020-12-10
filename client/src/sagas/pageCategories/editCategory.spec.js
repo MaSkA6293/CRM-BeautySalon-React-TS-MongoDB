@@ -6,7 +6,7 @@ import {
     clearEditCategorySuccess,
     editCategoryFail,
     clearEditCategoryError,
-} from "./editCategory";
+} from "../../ducks/categories/sagas/editCategory";
 import {
     EDIT_CATEGORY,
     EDIT_CATEGORY_REQUEST,

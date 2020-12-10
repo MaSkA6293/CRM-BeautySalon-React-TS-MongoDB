@@ -34,13 +34,13 @@ const AddClientSchema = Yup.object().shape({
 
 interface IFormicAddClient {
     handlerAddClient: (values: IClientValues) => void;
-    clientIsAdded: boolean;
+    clientIsAdding: boolean;
     closeModal: () => void;
 }
 
 const FormicAddClient: React.FC<IFormicAddClient> = ({
     handlerAddClient,
-    clientIsAdded,
+    clientIsAdding,
     closeModal,
 }: IFormicAddClient): React.ReactElement => {
     return (
@@ -125,12 +125,12 @@ const FormicAddClient: React.FC<IFormicAddClient> = ({
                             <Button
                                 color="primary"
                                 type="submit"
-                                disabled={!isValid || !dirty || clientIsAdded}
+                                disabled={!isValid || !dirty || clientIsAdding}
                                 className={"form__submit"}
                             >
-                                {clientIsAdded ? "Добавление..." : "Добавить"}
+                                {clientIsAdding ? "Добавление..." : "Добавить"}
                             </Button>
-                            <Button onClick={closeModal} color="primary" disabled={clientIsAdded}>
+                            <Button onClick={closeModal} color="primary" disabled={clientIsAdding}>
                                 Отмена
                             </Button>
                         </DialogActions>
