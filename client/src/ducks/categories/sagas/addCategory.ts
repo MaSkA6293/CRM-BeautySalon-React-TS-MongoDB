@@ -4,12 +4,13 @@ import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { clearMessageCategories } from "../actionCreators";
 import { addCategoryRequest, addCategorySuccess, addCategoryError } from "../actionCreators/addCategory";
 import { IAddCategory } from "../contracts/types";
+import { SagaIterator } from "@redux-saga/core";
 
-export function* addCategorySaga() {
+export function* addCategorySaga(): SagaIterator {
     yield takeLatest(CategoriesActionsType.ADD_CATEGORY, addCategory);
 }
 
-export function* addCategory(action: IAddCategory) {
+export function* addCategory(action: IAddCategory): SagaIterator {
     try {
         yield put(addCategoryRequest());
         const response = yield call(httpRequest, "api/services/categories", "POST", action.payload.data);

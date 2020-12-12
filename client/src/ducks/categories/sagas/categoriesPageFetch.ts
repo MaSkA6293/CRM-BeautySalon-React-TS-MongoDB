@@ -5,12 +5,13 @@ import { fetchCategoriesRequest, fetchCategoriesError } from "../actionCreators/
 import { clearMessageCategories } from "../actionCreators";
 import { fetchCategoriesSuccess } from "../actionCreators/fetchCategories";
 import { fetchColorsSuccess } from "../../colors/actionCreators/fetchColors";
+import { SagaIterator } from "@redux-saga/core";
 
-export function* fetchCategoriesPageSaga(): Generator<any, any, any> {
+export function* fetchCategoriesPageSaga(): SagaIterator {
     yield takeLatest(CategoriesActionsType.FETCH_CATEGORIES_PAGE, fetchCategoriesPage);
 }
 
-export function* fetchCategoriesPage(): Generator<any, any, any> {
+export function* fetchCategoriesPage(): SagaIterator {
     try {
         yield put(fetchCategoriesRequest());
         const [categories, colors] = yield all([

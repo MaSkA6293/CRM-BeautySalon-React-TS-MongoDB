@@ -4,12 +4,13 @@ import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { clearMessageCategories } from "../actionCreators";
 import { deletCategoryRequest, deletCategorySuccess, deletCategoryError } from "../actionCreators/deletCategory";
 import { IRunDeletCategory } from "../contracts/types";
+import { SagaIterator } from "@redux-saga/core";
 
-export function* deletCategorySaga() {
+export function* deletCategorySaga(): SagaIterator {
     yield takeLatest(CategoriesActionsType.DELET_CATEGORY, deletCategory);
 }
 
-export function* deletCategory(action: IRunDeletCategory) {
+export function* deletCategory(action: IRunDeletCategory): SagaIterator {
     try {
         yield put(deletCategoryRequest());
         const response = yield call(httpRequest, "api/services/categories", "DELETE", { _id: action.payload._id });

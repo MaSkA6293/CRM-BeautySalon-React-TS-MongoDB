@@ -3,17 +3,14 @@ import { httpRequest } from "../../../utils/network";
 import { signUpRequest, signUpSuccess, signUpFail } from "../actionCreators/signUp";
 import { userClearMessage } from "../actionCreators";
 import { UserActionsType } from "../contracts/actionTypes";
+import { SagaIterator } from "@redux-saga/core";
+import { ISignUp } from "../contracts/types";
 
-export function* signUpSaga() {
+export function* signUpSaga(): SagaIterator {
     yield takeLatest(UserActionsType.USER_SIGNUP, signUp);
 }
 
-interface ISignUp {
-    type: UserActionsType.USER_SIGNUP;
-    payload: { data: { email: string; password: string; confirmPassword: string } };
-}
-
-export function* signUp(action: ISignUp) {
+export function* signUp(action: ISignUp): SagaIterator {
     try {
         yield put(signUpRequest());
         const responst = yield call(httpRequest, "api/auth/signUp", "POST", action.payload);

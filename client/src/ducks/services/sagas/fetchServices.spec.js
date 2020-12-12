@@ -1,47 +1,31 @@
-import {
-    fetchServicePageData,
-    servicPageRequest,
-    colorsRequestSuccess,
-    servicesAndCategoriesSuccess,
-    requestError,
-    clearErrorRequest,
-} from "./fetchServices";
-import { call, put, all, delay } from "redux-saga/effects";
+import { call, put, delay } from "redux-saga/effects";
 import { httpRequest } from "../../../utils/network";
-import {
-    COLORS_REQUEST_SUCCESS,
-    GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
-    GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
-    SERVICE_PAGE_REQUEST,
-    CLEAR_ERROR_REQUEST_FAIL,
-} from "../../../constants";
+import { ServicesActionsType } from "../contracts/actionTypes";
+import { runFetchServices } from "../actionCreators/fetchServices";
+import { fetchServices } from "./fetchServices";
+import { fetchServicesRequest, fetchServicesSuccess, fetchServicesError } from "../actionCreators/fetchServices";
 
-describe("FetchClients Saga", () => {
-    const saga = fetchServicePageData();
+import { clearMessageServices } from "../actionCreators";
+
+describe("fetchServices Saga", () => {
+    const action = runFetchServices();
+    const saga = fetchServices(action);
     let output = null;
-    it("should call colors,services,categories parallel", (done) => {
+    it("should put fetchServicesRequest", () => {
         output = saga.next().value;
-        let expected = all([
-            call(httpRequest, "api/services/categories", "GET"),
-            call(httpRequest, "api/color", "GET"),
-            call(httpRequest, "api/services", "GET"),
-        ]);
+        let expected = put(fetchServicesRequest());
+        expect(output).toEqual(expected);
+    });
+    it("should call  api/services, GET", (done) => {
+        output = saga.next().value;
+        let expected = call(httpRequest, "api/services", "GET");
         done();
         expect(output).toEqual(expected);
     });
-    it("should put colors request success", () => {
-        const colors = { data: [] };
-        const categories = { data: [] };
+    it("should put fetchServicesSuccess", () => {
         const services = { data: [] };
-        output = saga.next([colors, categories, services]).value;
-        let expected = put(colorsRequestSuccess(colors));
-        expect(output).toEqual(expected);
-    });
-    it("should put services and categories request success", () => {
-        const categories = { data: [] };
-        const services = { data: [] };
-        output = saga.next().value;
-        let expected = put(servicesAndCategoriesSuccess(services, categories));
+        output = saga.next(services).value;
+        let expected = put(fetchServicesSuccess(services));
         expect(output).toEqual(expected);
     });
     it("should return done=true", () => {
@@ -51,13 +35,17 @@ describe("FetchClients Saga", () => {
     });
 });
 
-describe("tests Error FetchClients saga", () => {
-    const sagaError = fetchServicePageData();
+describe("tests Error fetchServices saga", () => {
+    const action = runFetchServices();
+    const sagaError = fetchServices(action);
     let output = null;
-    it("should break", () => {
-        sagaError.next().value;
-        output = sagaError.throw().value;
-        let expected = put(requestError());
+    it("test error", () => {
+        const error = {
+            response: { data: { message: "error" } },
+        };
+        sagaError.next();
+        output = sagaError.throw(error).value;
+        let expected = put(fetchServicesError(error));
         expect(output).toEqual(expected);
     });
     it("should delay(4000)", () => {
@@ -65,49 +53,40 @@ describe("tests Error FetchClients saga", () => {
         let expected = delay(4000);
         expect(output).toEqual(expected);
     });
-    it("should put clear error after delay", () => {
+    it("should put clearMessageServices", () => {
         output = sagaError.next().value;
-        let expected = put(clearErrorRequest());
+        let expected = put(clearMessageServices());
         expect(output).toEqual(expected);
     });
 });
 
 describe("tests action fetchServicePageData", () => {
-    it("test servicPageRequest", () => {
-        const output = servicPageRequest();
-        const expected = { type: SERVICE_PAGE_REQUEST };
+    it("test fetchServicesRequest", () => {
+        const output = fetchServicesRequest();
+        const expected = { type: ServicesActionsType.FETCH_SERVICES_REQUEST };
         expect(output).toEqual(expected);
     });
-    it("test colorsRequestSuccess", () => {
-        const colors = { data: [] };
-        const output = colorsRequestSuccess(colors);
-        const expected = {
-            type: COLORS_REQUEST_SUCCESS,
-            payload: colors.data,
-        };
-        expect(output).toEqual(expected);
-    });
-    it("test servicesAndCategoriesSuccess", () => {
-        const categories = { data: [] };
+    it("test fetchServicesSuccess", () => {
         const services = { data: [] };
-        const output = servicesAndCategoriesSuccess(services, categories);
+        const output = fetchServicesSuccess(services);
         const expected = {
-            type: GET_SERVICES_AND_CATEGORIES_REQUEST_SUCCESS,
-            payload: { services: services.data, categories: categories.data },
+            type: ServicesActionsType.FETCH_SERVICES_SUCCESS,
+            payload: services.data,
         };
         expect(output).toEqual(expected);
     });
-    it("test requestError", () => {
-        const output = requestError();
-        const expected = {
-            type: GET_SERVICES_AND_CATEGORIES_REQUEST_ERROR,
-            payload: { message: "Ошибка получения данных с сервера" },
+
+    it("fetchServicesError", () => {
+        const error = { response: { data: { message: "some error" } } };
+        const actions = fetchServicesError(error);
+        const expectActions = {
+            type: ServicesActionsType.FETCH_SERVICES_ERROR,
+            payload: {
+                message: error.response.data.message
+                    ? error.response.data.message
+                    : "Что-то пошло не так, попробуйте снова",
+            },
         };
-        expect(output).toEqual(expected);
-    });
-    it("test clearErrorRequest", () => {
-        const output = clearErrorRequest();
-        const expected = { type: CLEAR_ERROR_REQUEST_FAIL };
-        expect(output).toEqual(expected);
+        expect(actions).toEqual(expectActions);
     });
 });
