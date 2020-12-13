@@ -8,7 +8,7 @@ import {
     CLEAR_MESSAGE_SERVIC_EDIT_FAIL,
 } from "../../constants";
 import { httpRequest } from "../../utils/network";
-import { IService } from "../../pages/Services/types";
+import { IService } from "../../pages/ServicesPage/types";
 
 export function* editService(action: {
     payload: {

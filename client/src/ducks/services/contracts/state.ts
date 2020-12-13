@@ -12,14 +12,11 @@ export interface IstateService {
     readonly servicesGetIsFail: boolean;
     readonly servicesGetError: string;
 
-    readonly serviceIsAdded: boolean;
-    readonly serviceAdded: boolean;
+    readonly serviceIsAdding: boolean;
 
-    readonly serviceIsEdited: boolean;
-    readonly serviceEdited: boolean;
+    readonly serviceIsEditing: boolean;
 
-    readonly serviceIsDeleted: boolean;
-    readonly serviceDeleted: boolean;
+    readonly serviceIsDeleting: boolean;
 }
 
 export interface IService {

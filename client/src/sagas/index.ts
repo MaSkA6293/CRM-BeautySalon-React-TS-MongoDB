@@ -1,27 +1,4 @@
 import { all } from "redux-saga/effects";
-// import {
-//   CLIENTS_REQUEST,
-//   SERVICE_PAGE_REQUEST,
-//   EDIT_SERVIC,
-//   CATEGORY_PAGE_REQUEST,
-//   DELET_SERVICE,
-//   ADD_SERVIC,
-//   ADD_CATEGORY,
-//   DELET_CATEGORY,
-//   EDIT_CATEGORY,
-//   ADD_CLIENT,
-// } from "../constants";
-// import { UserActionsType } from "../ducks/user/contracts/actionTypes"
-// import { fetchClients } from "./pageClients/fetchClients";
-// import { fetchServicePageData } from "./pageServices/fetchServicePageData";
-// import { editService } from "./pageServices/editService";
-// import { fetchCategoryPageData } from "./pageCategories/fetchCategoryPageData";
-// import { deletServic } from "./pageServices/deletService";
-// import { addService } from "./pageServices/addService";
-// import { addCategory } from "./pageCategories/addCategory";
-// import { deletCategory } from "./pageCategories/deletCategory";
-// import { editCategory } from "./pageCategories/editCategory";
-// import { signUp } from "../ducks/user/sagas/signUp";
 
 import { signInSaga } from "../ducks/user/sagas/signIn";
 import { signUpSaga } from "../ducks/user/sagas/signUp";
@@ -36,9 +13,10 @@ import { fetchServicesPageSaga } from "../ducks/services/sagas/servicesPageFetch
 import { fetchCategoriesPageSaga } from "../ducks/categories/sagas/categoriesPageFetch";
 import { addCategorySaga } from "../ducks/categories/sagas/addCategory";
 import { editCategorySaga } from "../ducks/categories/sagas/editCategory";
-
 import { deletCategorySaga } from "../ducks/categories/sagas/deletCategory";
-
+import { addNewServiceSaga } from "../ducks/services/sagas/addNewService";
+import { editServiceSaga } from "../ducks/services/sagas/editService";
+import { deletServiceSaga } from "../ducks/services/sagas/deletService";
 export default function* rootSaga() {
     yield all([
         signInSaga(),
@@ -55,5 +33,8 @@ export default function* rootSaga() {
         addCategorySaga(),
         editCategorySaga(),
         deletCategorySaga(),
+        addNewServiceSaga(),
+        editServiceSaga(),
+        deletServiceSaga(),
     ]);
 }

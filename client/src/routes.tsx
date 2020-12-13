@@ -6,9 +6,9 @@ import { AuthPage } from "./pages/AuthPage";
 
 const Home = lazy(() => import("./pages/HomePage"));
 const Clients = lazy(() => import("./pages/Clients"));
-const Services = lazy(() => import("./pages/Services"));
+const Services = lazy(() => import("./pages/ServicesPage"));
 
-export const useRoutes = (isAuthenticated: boolean) => {
+export const useRoutes = (isAuthenticated: boolean): React.ReactElement => {
     if (isAuthenticated) {
         return (
             <Switch>

@@ -8,7 +8,7 @@ import {
     ADD_SERVIC_FAIL,
     CLEAR_MESSAGE_SERVIC_ADD_FAIL,
 } from "../../constants";
-import { IService } from "../../pages/Services/types";
+import { IService } from "../../pages/ServicesPage/types";
 
 export function* addService(action: {
     payload: {
