@@ -7,10 +7,10 @@ import { SagaIterator } from "@redux-saga/core";
 import { IRunEditService } from "../contracts/types";
 
 export function* editServiceSaga(): SagaIterator {
-    yield takeLatest(ServicesActionsType.EDIT_SERVICE, addService);
+    yield takeLatest(ServicesActionsType.EDIT_SERVICE, editService);
 }
 
-export function* addService(action: IRunEditService): SagaIterator {
+export function* editService(action: IRunEditService): SagaIterator {
     try {
         yield put(editServiceRequest());
         const response = yield call(httpRequest, "api/services", "PUT", action.payload.data);
