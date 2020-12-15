@@ -15,6 +15,8 @@ import ModalAddService from "../ModalAddNewService";
 import { ICategory } from "../../../../types";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { IColor } from "../../../../../../ducks/colors/contracts/state";
+import { Tooltip } from "@material-ui/core";
+
 const useStyles = makeStyles({
     root: {
         color: "#fff",
@@ -48,9 +50,11 @@ const ServicesHeader = ({ categoryList, setFilter, filter, colors, isAdding }: I
     return (
         <Header>
             <div className="services-header">
-                <Button color="secondary" onClick={history.goBack}>
-                    <ArrowBackIcon style={{ color: "white" }} />
-                </Button>
+                <Tooltip title="Назад">
+                    <Button color="secondary" onClick={history.goBack}>
+                        <ArrowBackIcon style={{ color: "white" }} />
+                    </Button>
+                </Tooltip>
                 <div className="services-header__filter">
                     <Select
                         labelId="demo-simple-select-label"
@@ -73,9 +77,11 @@ const ServicesHeader = ({ categoryList, setFilter, filter, colors, isAdding }: I
                 </div>
                 <AddNewService setIsOpen={setIsOpenAddService} />
                 <div className="services-header__category" onClick={() => handlerGoCategiry()}>
-                    <Button>
-                        <SettingsIcon style={{ color: "white" }} />
-                    </Button>
+                    <Tooltip title="Категории">
+                        <Button>
+                            <SettingsIcon style={{ color: "white" }} />
+                        </Button>
+                    </Tooltip>
                 </div>
             </div>
             <ModalAddService

@@ -6,6 +6,8 @@ import Header from "../../../../components/Header";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Button from "@material-ui/core/Button";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Tooltip from "@material-ui/core/Tooltip";
+
 interface ClientHeaderProps {
     setAddIsOpen: (value: boolean) => void;
 }
@@ -15,13 +17,17 @@ export const ClientsHeader: React.FC<ClientHeaderProps> = ({ setAddIsOpen }: Cli
     return (
         <Header>
             <div className="clients-header">
-                <Button color="secondary" onClick={history.goBack}>
-                    <ArrowBackIcon style={{ color: "white" }} />
-                </Button>
+                <Tooltip title="Назад">
+                    <Button color="secondary" onClick={history.goBack}>
+                        <ArrowBackIcon style={{ color: "white" }} />
+                    </Button>
+                </Tooltip>
                 <span className="clients-header__title">Клиенты</span>
-                <Button color="secondary" onClick={() => setAddIsOpen(true)}>
-                    <PersonAddIcon style={{ color: "white" }} />
-                </Button>
+                <Tooltip title="Добавить клиента">
+                    <Button color="secondary" onClick={() => setAddIsOpen(true)}>
+                        <PersonAddIcon style={{ color: "white" }} />
+                    </Button>
+                </Tooltip>
             </div>
         </Header>
     );
