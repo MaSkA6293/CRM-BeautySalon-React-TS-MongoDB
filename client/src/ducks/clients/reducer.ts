@@ -19,7 +19,7 @@ const initialState: IstateClients = {
     clientMessageSuccess: "",
     clientMessageError: "",
 };
-const stateClients = (state: IstateClients = initialState, action: ClientsAction) => {
+const stateClients = (state: IstateClients = initialState, action: ClientsAction): IstateClients => {
     switch (action.type) {
         case ClientsActionsType.ADD_CLIENT_REQUEST:
             return { ...state, clientIsAdding: true, clientAdded: false };

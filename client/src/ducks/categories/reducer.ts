@@ -11,7 +11,7 @@ export const initialState: IstateCategories = {
     categoryesMessageSuccess: "",
 };
 
-const stateCategories = (state: IstateCategories = initialState, action: CategoriesAction) => {
+const stateCategories = (state: IstateCategories = initialState, action: CategoriesAction): IstateCategories => {
     switch (action.type) {
         case CategoriesActionsType.FETCH_CATEGORIES_REQUEST:
             return { ...state, categoryesIsFetching: true };

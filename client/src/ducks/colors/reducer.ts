@@ -7,7 +7,7 @@ const initialState: IstateColors = {
     colorsList: [],
 };
 
-const stateColors = (state: IstateColors = initialState, action: ColorsAction) => {
+const stateColors = (state: IstateColors = initialState, action: ColorsAction): IstateColors => {
     switch (action.type) {
         case ColorsActionsType.FETCH_COLORS_REQUEST:
             return {

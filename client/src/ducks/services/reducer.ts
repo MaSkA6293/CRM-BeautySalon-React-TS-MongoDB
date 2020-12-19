@@ -21,9 +21,7 @@ export const initialState: IstateService = {
 
     serviceIsDeleting: false,
 };
-type stateServicesProps = Readonly<typeof initialState>;
-
-const stateServices = (state: IstateService = initialState, action: ServicesAction): stateServicesProps => {
+const stateServices = (state: IstateService = initialState, action: ServicesAction): IstateService => {
     switch (action.type) {
         case ServicesActionsType.FETCH_SERVICES_REQUEST:
             return { ...state, servicesIsFetching: true };

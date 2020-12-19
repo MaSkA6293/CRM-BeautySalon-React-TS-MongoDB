@@ -8,10 +8,9 @@ export const initialState: IstateUser = {
     userIsLogining: false,
     userData: undefined,
     statusUser: UserStatus.NOT_READY,
-    userCreateSuccess: false,
 };
 
-export const UserReducer = (state: IstateUser = initialState, action: UserActions) => {
+export const UserReducer = (state: IstateUser = initialState, action: UserActions): IstateUser => {
     switch (action.type) {
         case UserActionsType.SIGNUP_REQUEST:
             return {
@@ -53,7 +52,7 @@ export const UserReducer = (state: IstateUser = initialState, action: UserAction
             return {
                 ...state,
                 userIsLogining: false,
-                userLoginingError: action.payload.message,
+                userMessageError: action.payload.message,
             };
 
         case UserActionsType.SIGN_OUT:
