@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`all tests AuthPage AuthPage component should render AuthPage signIn:true 1`] = `
+<div
+  class="contaner"
+>
+  <div
+    class="auth"
+  >
+    <h1
+      class="auth__title"
+    >
+      Авторизация
+    </h1>
+    <form
+      action="#"
+      class="auth__form form"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root form__item MuiFormControl-fullWidth"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+          data-shrink="false"
+        >
+          Email
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="false"
+            class="MuiInputBase-input MuiInput-input"
+            name="email"
+            type="email"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        class="MuiFormHelperText-root"
+        id="component-error-text"
+      />
+      <div
+        class="MuiFormControl-root MuiTextField-root form__item MuiFormControl-fullWidth"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+          data-shrink="false"
+        >
+          Пароль
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="false"
+            class="MuiInputBase-input MuiInput-input"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        class="MuiFormHelperText-root"
+        id="component-error-text"
+      />
+      <div
+        class="form__submit"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Войти
+          </span>
+        </button>
+      </div>
+      <div
+        class="form__submit"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-fullWidth"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Назад
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`all tests AuthPage AuthPage component should render AuthPage signUp:true 1`] = `
+<div
+  class="contaner"
+>
+  <div
+    class="auth"
+  >
+    <h1
+      class="auth__title"
+    >
+      Авторизация
+    </h1>
+    <form
+      action="#"
+      class="auth__form form"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root form__item MuiFormControl-fullWidth"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+          data-shrink="false"
+        >
+          Email
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="false"
+            class="MuiInputBase-input MuiInput-input"
+            name="email"
+            type="email"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        class="MuiFormHelperText-root"
+        id="component-error-text"
+      />
+      <div
+        class="MuiFormControl-root MuiTextField-root form__item MuiFormControl-fullWidth"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+          data-shrink="false"
+        >
+          Пароль
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="false"
+            class="MuiInputBase-input MuiInput-input"
+            name="password"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        class="MuiFormHelperText-root"
+        id="component-error-text"
+      />
+      <div
+        class="MuiFormControl-root MuiTextField-root form__item MuiFormControl-fullWidth"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated"
+          data-shrink="false"
+        >
+          Подтвердить пароль
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="false"
+            class="MuiInputBase-input MuiInput-input"
+            name="confirmPassword"
+            type="password"
+            value=""
+          />
+        </div>
+      </div>
+      <p
+        class="MuiFormHelperText-root"
+        id="component-error-text"
+      />
+      <div
+        class="form__submit"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained form__signUp MuiButton-containedPrimary MuiButton-fullWidth"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Регистрация
+          </span>
+        </button>
+      </div>
+      <div
+        class="form__submit"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-fullWidth"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Назад
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`all tests AuthPage AuthPage component should render AuthPage variant:true 1`] = `
+<div
+  class="contaner"
+>
+  <div
+    class="auth"
+  >
+    <h1
+      class="auth__title"
+    >
+      Авторизация
+    </h1>
+    <div
+      class="auth__variant"
+    >
+      <div
+        class="auth__signIn"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Войти
+          </span>
+        </button>
+      </div>
+      <div
+        class="auth__signUp"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Регистрация
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

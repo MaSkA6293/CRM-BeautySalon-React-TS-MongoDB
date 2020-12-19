@@ -1,7 +1,17 @@
 import React from "react";
 import HomePage from "./index";
+import { Provider } from "react-redux";
+import store from "../../store";
 
-const setUp = (props) => shallow(<HomePage {...props} />);
+import { BrowserRouter as Router } from "react-router-dom";
+const setUp = (props) =>
+    render(
+        <Provider store={store}>
+            <Router>
+                <HomePage {...props} />
+            </Router>
+        </Provider>,
+    );
 
 describe("all tests HomePage", () => {
     let component;
