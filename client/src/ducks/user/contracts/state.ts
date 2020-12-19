@@ -5,7 +5,6 @@ export interface IstateUser {
     userIsLogining: boolean;
     userData: undefined | User;
     statusUser: UserStatus;
-    userCreateSuccess: boolean;
 }
 export interface User {
     id: string;

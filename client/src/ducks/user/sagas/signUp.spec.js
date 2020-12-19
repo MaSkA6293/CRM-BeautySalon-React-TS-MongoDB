@@ -7,7 +7,7 @@ import { call, delay, put } from "redux-saga/effects";
 import { httpRequest } from "../../../utils/network";
 
 describe("test saga signUp", () => {
-    const action = runSignUp({ email: "", password: "" });
+    const action = runSignUp({ email: "", password: "" }, () => undefined);
     const saga = signUp(action);
     let output = null;
     it("should put signUpRequest", () => {
@@ -18,7 +18,7 @@ describe("test saga signUp", () => {
     it("should call api/auth/signUp method POST", (done) => {
         output = saga.next().value;
         done();
-        let expected = call(httpRequest, "api/auth/signUp", "POST", action.payload);
+        let expected = call(httpRequest, "api/auth/signUp", "POST", action.payload.data);
         expect(output).toEqual(expected);
     });
     it("test should put signUpSuccess", () => {
@@ -35,6 +35,11 @@ describe("test saga signUp", () => {
     it("should put userClearMessage ", () => {
         output = saga.next().value;
         let expected = put(userClearMessage());
+        expect(output).toEqual(expected);
+    });
+    it("should call cb", () => {
+        output = saga.next().value;
+        let expected = call(action.payload.cb);
         expect(output).toEqual(expected);
     });
     it("should end", () => {
@@ -78,10 +83,11 @@ describe("test signUp Error", () => {
 describe("test signUp actions", () => {
     it("runSignUp", () => {
         const data = { email: "", password: "" };
-        const actions = runSignUp(data);
+        const cb = () => undefined;
+        const actions = runSignUp(data, cb);
         const expectActions = {
             type: UserActionsType.USER_SIGNUP,
-            payload: data,
+            payload: { data, cb },
         };
         expect(actions).toEqual(expectActions);
     });

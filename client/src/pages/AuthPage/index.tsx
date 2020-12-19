@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./styles.scss";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
@@ -13,7 +13,6 @@ import {
     selectuserIsLogining,
     selectuserMessageSuccess,
     selectuseruserMessageError,
-    selectuserCreateSuccess,
 } from "../../ducks/user/selector";
 interface AuthPageProps {
     signIn?: boolean;
@@ -26,23 +25,15 @@ export const AuthPage: React.FC<AuthPageProps> = ({ signIn, signUp, variant }: A
     const userIsLogining = useSelector(selectuserIsLogining);
     const messageSuccess = useSelector(selectuserMessageSuccess);
     const messageError = useSelector(selectuseruserMessageError);
-    const userCreateSuccess = useSelector(selectuserCreateSuccess);
     const dispatch = useDispatch();
 
-    const signUpHandler = (values: { email: string; password: string; confirmPassword: string }) => {
-        dispatch(runSignUp(values));
+    const signUpHandler = (values: { email: string; password: string; confirmPassword: string }, cb: () => void) => {
+        dispatch(runSignUp(values, cb));
     };
     const signInHandler = (values: { email: string; password: string }) => {
         dispatch(runSignIn(values));
     };
     const history = useHistory();
-    useEffect(() => {
-        if (userCreateSuccess) {
-            setTimeout(() => {
-                history.push("/signIn");
-            }, 4000);
-        }
-    }, [userCreateSuccess, history]);
 
     return (
         <>
@@ -86,5 +77,3 @@ export const AuthPage: React.FC<AuthPageProps> = ({ signIn, signUp, variant }: A
         </>
     );
 };
-
-export default AuthPage;

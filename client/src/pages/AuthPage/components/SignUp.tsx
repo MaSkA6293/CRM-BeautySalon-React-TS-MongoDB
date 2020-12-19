@@ -14,7 +14,7 @@ const AddClientSchema = Yup.object().shape({
 });
 type AuthFormProps = {
     userIsLoading: boolean;
-    signUp: (data: initialValues) => void;
+    signUp: (data: initialValues, cb: () => void) => void;
 };
 interface initialValues {
     email: string;
@@ -29,15 +29,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ userIsLoading, signUp }: AuthFormPr
         confirmPassword: "",
     };
 
-    const handleSubmit = (data: initialValues) => {
-        signUp(data);
+    const handleSubmit = (data: initialValues, cb: () => void) => {
+        signUp(data, cb);
     };
     const history = useHistory();
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={AddClientSchema}
-            onSubmit={(values: initialValues) => handleSubmit(values)}
+            onSubmit={(values: initialValues) => handleSubmit(values, () => history.push("./signIn"))}
         >
             {({ errors }) => (
                 <Form className="auth__form form">

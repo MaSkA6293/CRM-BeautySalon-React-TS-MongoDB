@@ -13,10 +13,11 @@ export function* signUpSaga(): SagaIterator {
 export function* signUp(action: ISignUp): SagaIterator {
     try {
         yield put(signUpRequest());
-        const responst = yield call(httpRequest, "api/auth/signUp", "POST", action.payload);
+        const responst = yield call(httpRequest, "api/auth/signUp", "POST", action.payload.data);
         yield put(signUpSuccess(responst.data.message));
         yield delay(3000);
         yield put(userClearMessage());
+        yield call(action.payload.cb);
     } catch (e) {
         yield put(signUpFail(e));
         yield delay(2000);

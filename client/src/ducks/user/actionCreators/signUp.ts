@@ -1,9 +1,9 @@
 import { UserActionsType } from "../contracts/actionTypes";
 
-export const runSignUp = (data: { email: string; password: string; confirmPassword: string }) => {
+export const runSignUp = (data: { email: string; password: string; confirmPassword: string }, cb: () => void) => {
     return {
         type: UserActionsType.USER_SIGNUP,
-        payload: data,
+        payload: { data, cb },
     };
 };
 export const signUpRequest = () => {
