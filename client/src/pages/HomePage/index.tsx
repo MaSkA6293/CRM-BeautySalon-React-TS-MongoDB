@@ -22,6 +22,11 @@ const Home: React.FC = (): React.ReactElement => {
                         <NavItem icon={faList} title={"Услуги"} addClass={["home__nav-item"]} />
                     </ListItem>
                 </Link>
+                <Link to="/calendar">
+                    <ListItem button>
+                        <NavItem icon={faList} title={"Календарь"} addClass={["home__nav-item"]} />
+                    </ListItem>
+                </Link>
             </div>
         </div>
     );

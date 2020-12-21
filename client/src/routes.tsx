@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Test from "./components/Test";
 
 import { AuthPage } from "./pages/AuthPage";
+import MCalendar from "./pages/CalendarPage";
 
 const Home = lazy(() => import("./pages/HomePage"));
 const Clients = lazy(() => import("./pages/Clients"));
@@ -20,6 +21,9 @@ export const useRoutes = (isAuthenticated: boolean): React.ReactElement => {
                 </Route>
                 <Route path="/clients">
                     <Clients />
+                </Route>
+                <Route path="/calendar">
+                    <MCalendar />
                 </Route>
 
                 <Redirect to="/" />
