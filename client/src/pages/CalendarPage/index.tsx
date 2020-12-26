@@ -11,9 +11,10 @@ import ModalAddEvent from "./components/ModalAddEvent";
 import { selectEventsList } from "../../ducks/calendar/selector";
 import { myNewEvent, myEvent } from "../../ducks/calendar/contracts/types";
 import { selectColorsList } from "../../ducks/colors/selector";
-
+import { selectEventIsAdding, selectEventsIsFetching } from "../../ducks/calendar/selector";
 import { runCalendarPageFetch } from "../../ducks/calendar/actionCreators/fetchCalendarPage";
 import { CalendarHeader } from "./components/CalendarHeader";
+import Spiner from "../../components/Spiner";
 moment.locale("ru");
 moment.updateLocale("ru", {
     workingWeekdays: [1, 2, 3, 4, 5],
@@ -37,7 +38,8 @@ export default function MCalendar(): React.ReactElement {
 
     const events = useSelector(selectEventsList);
     const colors = useSelector(selectColorsList);
-
+    const eventsIsFetching = useSelector(selectEventsIsFetching);
+    const isAdding = useSelector(selectEventIsAdding);
     const [editIsOpen, setEditIsOpen] = useState<boolean>(false);
     const [addIsOpen, setAddIsOpen] = useState<boolean>(false);
     const [addingElement, setAddingElement] = useState<myNewEvent | undefined>(undefined);
@@ -91,39 +93,44 @@ export default function MCalendar(): React.ReactElement {
         <div className="clients">
             <CalendarHeader />
 
-            <Calendar
-                onSelectSlot={newEvent}
-                localizer={localizer}
-                events={events}
-                messages={{
-                    month: "Месяц",
-                    day: "День",
-                    week: "Неделя",
-                    today: "Сегодня",
-                    previous: "Назад",
-                    next: "Вперёд",
-                }}
-                eventPropGetter={eventStyleGetter}
-                views={["month", "week", "day"]}
-                startAccessor="start"
-                endAccessor="end"
-                style={{ height: 500 }}
-                step={15}
-                defaultView="day"
-                min={new Date(2020, 0, 1, 7, 0)}
-                max={new Date(2020, 0, 1, 20, 0)}
-                components={{
-                    dateCellWrapper: ColoredDateCellWrapper,
-                    eventWrapper: eventWrapper,
-                }}
-                selectable
-            />
+            {eventsIsFetching ? (
+                <Spiner />
+            ) : (
+                <Calendar
+                    onSelectSlot={newEvent}
+                    localizer={localizer}
+                    events={events}
+                    messages={{
+                        month: "Месяц",
+                        day: "День",
+                        week: "Неделя",
+                        today: "Сегодня",
+                        previous: "Назад",
+                        next: "Вперёд",
+                    }}
+                    eventPropGetter={eventStyleGetter}
+                    views={["month", "week", "day"]}
+                    startAccessor="start"
+                    endAccessor="end"
+                    style={{ height: 500 }}
+                    step={15}
+                    defaultView="day"
+                    min={new Date(2020, 0, 1, 7, 0)}
+                    max={new Date(2020, 0, 1, 20, 0)}
+                    components={{
+                        dateCellWrapper: ColoredDateCellWrapper,
+                        eventWrapper: eventWrapper,
+                    }}
+                    selectable
+                />
+            )}
             {addIsOpen ? (
                 <ModalAddEvent
                     modalIsOpen={addIsOpen}
                     closeModal={() => setAddIsOpen(false)}
                     addingElement={addingElement}
                     colors={colors}
+                    isAdding={isAdding}
                 />
             ) : (
                 ""

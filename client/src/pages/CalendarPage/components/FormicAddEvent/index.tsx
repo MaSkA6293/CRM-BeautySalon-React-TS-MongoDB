@@ -14,14 +14,11 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { useDispatch } from "react-redux";
 import { IColor } from "../../../../ducks/colors/contracts/state";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
-import { IEventAdd } from "../../../../ducks/calendar/contracts/types";
 import SelectColor from "../../../../components/SelectColor";
 import { myNewEvent } from "../../../../ducks/calendar/contracts/types";
-
+import { runAddNewEvent } from "../../../../ducks/calendar/actionCreators/addNewEvent";
 import { validationEventSchema } from "../../../../ducks/calendar/validations/event";
-
 export interface IFormicAddEvent {
-    addNewEvent: (data: IEventAdd) => void;
     newEvent: myNewEvent | undefined;
     closeModal: () => void;
     colors: IColor[];
@@ -33,13 +30,13 @@ type initialValues = {
     end: string;
 };
 const FormicAddEvent: React.FC<IFormicAddEvent> = ({
-    addNewEvent,
     newEvent,
     closeModal,
     colors,
     isAdding,
 }: IFormicAddEvent): React.ReactElement => {
     const [selectedColor, setSelectedColor] = useState<IColor>(colors[0]);
+
     const initialValues: initialValues = {
         title: "",
         start: newEvent?.start ? newEvent.start : "00:00",
@@ -49,16 +46,18 @@ const FormicAddEvent: React.FC<IFormicAddEvent> = ({
 
     const handlerSubmit = (values: initialValues) => {
         dispatch(
-            addNewEvent({
-                ...newEvent,
-                title: values.title,
-                start: values.start,
-                end: values.end,
-                allDay: checked,
-                color: selectedColor.hex,
-            }),
+            runAddNewEvent(
+                {
+                    ...newEvent,
+                    title: values.title,
+                    start: values.start,
+                    end: values.end,
+                    allDay: checked,
+                    color: selectedColor.hex,
+                },
+                closeModal,
+            ),
         );
-        closeModal();
     };
     const [checked, setChecked] = useState<boolean>(false);
     const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {

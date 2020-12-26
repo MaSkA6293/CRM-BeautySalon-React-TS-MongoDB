@@ -12,3 +12,5 @@ export const selectEventsList = (state: IGlobalStore): ISelectEventListToRender[
             end: moment(el.end, "HH:mm").toDate(),
         };
     });
+export const selectEventIsAdding = (state: IGlobalStore): boolean => selectCalendarState(state).eventIsAdding;
+export const selectEventsIsFetching = (state: IGlobalStore): boolean => selectCalendarState(state).eventsIsFetching;

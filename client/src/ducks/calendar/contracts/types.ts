@@ -1,4 +1,5 @@
 import { CalendarActionsType } from "./actionTypes";
+import { IEvent } from "../contracts/state";
 export interface IEventToRender {
     _id: string;
     title: string;
@@ -38,4 +39,22 @@ export type IEventAdd = {
 
 export interface IRunCalendarPageFetch {
     type: typeof CalendarActionsType.FETCH_CALENDAR_PAGE;
+}
+
+export interface IFetchEventsSuccess {
+    type: CalendarActionsType.FETCH_EVENTS_SUCCESS;
+    payload: IEvent[];
+}
+export interface IFetchEventErrorProps {
+    response: { data: { message: string } };
+}
+export interface IFetchEventError {
+    type: CalendarActionsType.FETCH_EVENTS_ERROR;
+    payload: {
+        message: string;
+    };
+}
+
+export interface IFetchEventsRequest {
+    type: typeof CalendarActionsType.FETCH_EVENTS_REQUEST;
 }
