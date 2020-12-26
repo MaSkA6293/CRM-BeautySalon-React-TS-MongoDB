@@ -60,12 +60,23 @@
         flex-direction: column;
         width: 100%;
         padding-left: 10px;
+        
       }
+   
+      
+    }
+  }
+  .fieldCheckbox{
+    padding-left: 0px;
+    &__checkBox{
+      padding-left:13px ;
+      padding-right: 13px;
     }
   }
   .field__body-size-select {
     min-width: 185px;
   }
+ 
   .select-color {
     display: flex;
     align-items: center;
@@ -75,9 +86,6 @@
       height: 30px;
       border-radius: 50%;
       background-color: red;
-    }
-    &__selected-margin-right {
-      margin-right: 10px;
     }
     &__button {
       display: flex;
