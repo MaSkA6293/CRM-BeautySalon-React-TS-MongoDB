@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+
 import { TextField } from "@material-ui/core";
 import DialogActions from "@material-ui/core/DialogActions";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
-
+import TextFieldsIcon from "@material-ui/icons/TextFields";
 import { AreYouSure } from "../../../../components/AreYouSure";
 
+import { useDispatch } from "react-redux";
 import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
-import PersonIcon from "@material-ui/icons/Person";
 import moment from "moment-business-days";
-
-const EditEventSchema = Yup.object().shape({
-    title: Yup.string().min(4, "Минимум 4 символа").required("Обязательное поле"),
-});
+import { validationEventSchema } from "../../../../ducks/calendar/validations/event";
 
 interface IFormicEditEvent {
     editEvent: (values: any) => void;
@@ -37,8 +34,8 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
 }: IFormicEditEvent): React.ReactElement => {
     const initialValues: any = {
         title: currentEvent.title,
-        start: moment(currentEvent.start).format("HH:MM"),
-        end: moment(currentEvent.end).format("HH:MM"),
+        start: moment(currentEvent.start).format("HH:mm"),
+        end: moment(currentEvent.end).format("HH:mm"),
     };
     const [open, setOpen] = useState(false);
 
@@ -46,9 +43,12 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
         console.log("submit", currentEvent);
         //  deletEvent(currentEvent._id);
     };
+    const dispatch = useDispatch();
     const handlerSubmit = (values: any) => {
-        console.log("submit", values);
-        //  editEvent({ ...currentEvent, title: values.title, start: values.start, end: values.end });
+        // console.log("submit", values);
+
+        dispatch(editEvent({ ...currentEvent, title: values.title, start: values.start, end: values.end }));
+        closeModal();
     };
     return (
         <>
@@ -60,7 +60,7 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
             />
             <Formik
                 initialValues={initialValues}
-                validationSchema={EditEventSchema}
+                validationSchema={validationEventSchema}
                 onSubmit={(values: any) => handlerSubmit(values)}
             >
                 {({ dirty, isValid, errors }) => (
@@ -75,7 +75,7 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                             <div className="field__row">
                                 <div className="field__icon">
                                     {" "}
-                                    <PersonIcon />{" "}
+                                    <TextFieldsIcon />{" "}
                                 </div>
                                 <div className="field__body">
                                     <Field
