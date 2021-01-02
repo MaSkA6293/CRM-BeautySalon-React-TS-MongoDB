@@ -12,6 +12,7 @@ const clientRoutes = require("./routes/client.routes");
 const colorRoutes = require("./routes/color.routes");
 const serviceRoutes = require("./routes/service.routes");
 const serviceCategoryesRoutes = require("./routes/serviceCategory.routes");
+const eventsRoutes = require("./routes/eventsRoutes.routes");
 
 const app = express();
 
@@ -65,6 +66,7 @@ app.use("/api/client", clientRoutes);
 app.use("/api/color", colorRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/services/categories", serviceCategoryesRoutes);
+app.use("/api/calendar/events", eventsRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "build")));
