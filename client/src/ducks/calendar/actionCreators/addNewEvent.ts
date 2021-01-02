@@ -48,15 +48,25 @@ interface IAddEventError {
         message: string;
     };
 }
+type IErrors = {
+    msg: string;
+};
 interface IAddEventErrorProps {
-    response: { data: { message: string } };
+    response: { data: { message: string; errors: IErrors[] } };
 }
 
 export const addEventError = (e: IAddEventErrorProps): IAddEventError => {
+    let message = "";
+    if (e.response.data.message) {
+        message = e.response.data.message;
+    }
+    if (e.response.data.errors) {
+        message = e.response.data.errors.map((el) => `${el.msg}`).join(" ");
+    }
     return {
         type: CalendarActionsType.EVENT_ADD_ERROR,
         payload: {
-            message: e.response.data.message ? e.response.data.message : "Что-то пошло не так, попробуйте снова",
+            message,
         },
     };
 };

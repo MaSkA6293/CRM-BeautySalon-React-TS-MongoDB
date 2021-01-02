@@ -14,41 +14,65 @@ import DeleteSweepIcon from "@material-ui/icons/DeleteSweep";
 
 import moment from "moment-business-days";
 import { validationEventSchema } from "../../../../ducks/calendar/validations/event";
-
+import SelectColor from "../../../../components/SelectColor";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import { IColor } from "../../../../ducks/colors/contracts/state";
+import { IEvent } from "../../../../ducks/calendar/contracts/state";
+import { runEditEvent } from "../../../../ducks/calendar/actionCreators/editEvent";
+import { runDeletEvent } from "../../../../ducks/calendar/actionCreators/deletEvent";
 interface IFormicEditEvent {
-    editEvent: (values: any) => void;
-    deletEvent: (id: number) => void;
-    currentEvent: any;
-    eventIsDeleting: boolean;
-    eventIsEditing: boolean;
+    currentEvent: IEvent;
+    isDeleting: boolean;
+    isEditing: boolean;
     closeModal: () => void;
+    colors: IColor[];
 }
 
 const FormicEditEvent: React.FC<IFormicEditEvent> = ({
-    editEvent,
-    deletEvent,
     currentEvent,
-    eventIsDeleting,
-    eventIsEditing,
+    isDeleting,
+    isEditing,
     closeModal,
+    colors,
 }: IFormicEditEvent): React.ReactElement => {
-    const initialValues: any = {
+    type initialValuesProps = {
+        title: string;
+        start: string;
+        end: string;
+    };
+    const initialValues: initialValuesProps = {
         title: currentEvent.title,
         start: moment(currentEvent.start).format("HH:mm"),
         end: moment(currentEvent.end).format("HH:mm"),
     };
     const [open, setOpen] = useState(false);
+    const [checked, setChecked] = useState<boolean>(currentEvent === undefined ? false : currentEvent.allDay);
+    const [selectedColor, setSelectedColor] = useState(colors.find((el) => el.hex === currentEvent.color));
 
+    const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+    };
     const handlerDelet = () => {
-        console.log("submit", currentEvent);
-        //  deletEvent(currentEvent._id);
+        dispatch(runDeletEvent(currentEvent._id, closeModal));
     };
     const dispatch = useDispatch();
-    const handlerSubmit = (values: any) => {
-        // console.log("submit", values);
-
-        dispatch(editEvent({ ...currentEvent, title: values.title, start: values.start, end: values.end }));
-        closeModal();
+    const handlerSubmit = (values: initialValuesProps) => {
+        dispatch(
+            runEditEvent(
+                {
+                    ...currentEvent,
+                    title: values.title,
+                    start: values.start,
+                    end: values.end,
+                    color: selectedColor?.hex === undefined ? "red" : selectedColor?.hex,
+                    allDay: checked,
+                },
+                closeModal,
+            ),
+        );
     };
     return (
         <>
@@ -61,7 +85,7 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationEventSchema}
-                onSubmit={(values: any) => handlerSubmit(values)}
+                onSubmit={(values: initialValuesProps) => handlerSubmit(values)}
             >
                 {({ dirty, isValid, errors }) => (
                     <Form className="form">
@@ -87,6 +111,7 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                                         error={errors.title ? true : false}
                                         autoComplete="false"
                                         className="form__item"
+                                        disabled={isDeleting || isEditing || dirty}
                                     />
                                 </div>
                             </div>
@@ -107,10 +132,10 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                                             type="time"
                                             name="start"
                                             fullWidth
-                                            error={errors.time ? true : false}
+                                            error={errors.start ? true : false}
                                             autoComplete="false"
                                             className="form__item"
-                                            //  disabled={isAdding}
+                                            disabled={isDeleting || isEditing}
                                         />
                                     </div>
                                 </div>
@@ -128,13 +153,50 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                                             type="time"
                                             name="end"
                                             fullWidth
-                                            error={errors.time ? true : false}
+                                            error={errors.end ? true : false}
                                             autoComplete="false"
                                             className="form__item"
-                                            //  disabled={isAdding}
+                                            disabled={isDeleting || isEditing}
                                         />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="form__field field field-margin-bottom ">
+                                <div className="field__row">
+                                    <div className="field__body fieldCheckbox">
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                    name="checkedI"
+                                                    style={{ color: "green" }}
+                                                    className={"fieldCheckbox__checkBox"}
+                                                    checked={checked}
+                                                    onChange={handleChangeCheckBox}
+                                                    disabled={isEditing || isDeleting}
+                                                />
+                                            }
+                                            label="Весь день"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form__select-color select-color">
+                            <div
+                                className="select-color__selected select-color__selected-margin-right "
+                                style={{
+                                    backgroundColor: selectedColor?.hex,
+                                }}
+                            ></div>
+                            <div className="select-color__button">
+                                <SelectColor
+                                    setSelectedColor={setSelectedColor}
+                                    colors={colors}
+                                    disabled={isEditing || isDeleting}
+                                    title={"Цвет события"}
+                                />
                             </div>
                         </div>
                         <DialogActions>
@@ -142,16 +204,16 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                                 color="primary"
                                 type="submit"
                                 name="edit"
-                                disabled={!isValid || eventIsDeleting || eventIsEditing}
+                                disabled={!isValid || isDeleting || isEditing}
                             >
-                                {eventIsEditing ? "Сохренение..." : "Сохранить"}
+                                {isEditing ? "Сохренение..." : "Сохранить"}
                             </Button>
                             <Button
                                 onClick={closeModal}
                                 color="primary"
                                 name="delet"
                                 type="button"
-                                disabled={!isValid || eventIsDeleting || eventIsEditing}
+                                disabled={!isValid || isDeleting || isEditing}
                             >
                                 Отмена
                             </Button>

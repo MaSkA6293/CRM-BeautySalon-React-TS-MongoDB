@@ -14,12 +14,7 @@ export type myNewEvent = {
     start: string;
     end: string;
 };
-export type myEvent = {
-    title: string;
-    allDay: boolean;
-    start: Date;
-    end: Date;
-};
+
 export type ISelectEventListToRender = {
     _id: string;
     title: string;

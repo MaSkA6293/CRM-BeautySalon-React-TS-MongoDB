@@ -19,6 +19,8 @@ import { editServiceSaga } from "../ducks/services/sagas/editService";
 import { deletServiceSaga } from "../ducks/services/sagas/deletService";
 import { fetchCalendarPageSaga } from "../ducks/calendar/sagas/calendarPageFetch";
 import { addNewEventSaga } from "../ducks/calendar/sagas/addNewEvent";
+import { deletEventSaga } from "../ducks/calendar/sagas/deletEvent";
+import { editEventSaga } from "../ducks/calendar/sagas/editEvent";
 export default function* rootSaga() {
     yield all([
         signInSaga(),
@@ -40,5 +42,7 @@ export default function* rootSaga() {
         deletServiceSaga(),
         fetchCalendarPageSaga(),
         addNewEventSaga(),
+        deletEventSaga(),
+        editEventSaga(),
     ]);
 }

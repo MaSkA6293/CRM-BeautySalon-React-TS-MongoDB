@@ -3,32 +3,34 @@ import Spiner from "../../../../components/Spiner";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import FormicEditEvent from "../FormicEditEvent";
-import { editEvent } from "../../../../ducks/calendar/actionCreators/editEvent";
-type myEvent = {
-    title: string;
-    allDay: boolean;
-    start: Date;
-    end: Date;
-};
+import { IEvent } from "../../../../ducks/calendar/contracts/state";
+import { IColor } from "../../../../ducks/colors/contracts/state";
 interface IModalEditEvent {
     modalIsOpen: boolean;
     closeModal: () => void;
-    editingElement: myEvent | undefined;
+    editingElement: IEvent;
+    isDeleting: boolean;
+    isEditing: boolean;
+    colors: IColor[];
 }
 
-const ModalEditEvent = ({ modalIsOpen, closeModal, editingElement }: IModalEditEvent): React.ReactElement => {
-    const isEditing = false;
-    const isDeleting = false;
+const ModalEditEvent = ({
+    modalIsOpen,
+    closeModal,
+    editingElement,
+    isDeleting,
+    isEditing,
+    colors,
+}: IModalEditEvent): React.ReactElement => {
     return (
         <Dialog open={modalIsOpen} onClose={closeModal} maxWidth="sm" fullWidth={true} className="dialog">
             <DialogContent>
                 <FormicEditEvent
-                    editEvent={editEvent}
-                    deletEvent={() => undefined}
                     closeModal={closeModal}
                     currentEvent={editingElement}
-                    eventIsEditing={false}
-                    eventIsDeleting={false}
+                    isEditing={isEditing}
+                    isDeleting={isDeleting}
+                    colors={colors}
                 />
                 {isEditing || isDeleting ? <Spiner /> : ""}
             </DialogContent>

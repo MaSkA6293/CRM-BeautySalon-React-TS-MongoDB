@@ -4,17 +4,28 @@ export enum CalendarActionsType {
     CALENDAR_REQUEST = "calendar/CALENDAR_REQUEST",
     CALENDAR_REQUEST_SUCCESS = "calendar/CALENDAR_REQUEST_SUCCESS",
     CALENDAR_REQUEST_ERROR = "calendar/CALENDAR_REQUEST_ERROR",
+
     EDIT_EVENT = "EDIT_EVENT",
-    ADD_NEW_EVENT = "ADD_NEW_EVENT",
+    EDIT_EVENT_REQUEST = "EDIT_EVENT_REQUEST",
+    EDIT_EVENT_SUCCESS = "EDIT_EVENT_SUCCESS",
+    EDIT_EVENT_ERROR = "EDIT_EVENT_ERROR",
+
     FETCH_CALENDAR_PAGE = "FETCH_CALENDAR_PAGE",
 
     FETCH_EVENTS_REQUEST = "FETCH_EVENTS_REQUEST",
     FETCH_EVENTS_SUCCESS = "FETCH_EVENTS_SUCCESS",
     FETCH_EVENTS_ERROR = "FETCH_EVENTS_ERROR",
 
+    ADD_NEW_EVENT = "ADD_NEW_EVENT",
     ADD_EVENT_REQUEST = "ADD_EVENT_REQUEST",
     ADD_EVENT_SUCCESS = "ADD_EVENT_SUCCESS",
     EVENT_ADD_ERROR = "EVENT_ADD_ERROR",
+
+    DELET_EVENT = "DELET_EVENT",
+    DELET_EVENT_REQUEST = "DELET_EVENT_REQUEST",
+    DELET_EVENT_SUCCESS = "DELET_EVENT_SUCCESS",
+    DELET_EVENT_ERROR = "DELET_EVENT_ERROR",
+
     CLEAR_MESSAGE_CALENDAR = "CLEAR_MESSAGE_CALENDAR",
 }
 // all
@@ -47,7 +58,7 @@ export interface IAddEventRequest {
 
 export interface IAddEventSuccess {
     type: typeof CalendarActionsType.ADD_EVENT_SUCCESS;
-    payload: { data: IEvent; message: string };
+    payload: { event: IEvent; message: string };
 }
 export interface IAddEventError {
     type: CalendarActionsType.EVENT_ADD_ERROR;
@@ -72,6 +83,35 @@ export interface IFetchCategoriesError {
     };
 }
 
+// delet event
+export interface IDeletEventRequest {
+    type: typeof CalendarActionsType.DELET_EVENT_REQUEST;
+}
+export interface IDeletEventSuccess {
+    type: typeof CalendarActionsType.DELET_EVENT_SUCCESS;
+    payload: { _id: string; message: string };
+}
+export interface IDeletEventError {
+    type: CalendarActionsType.DELET_EVENT_ERROR;
+    payload: {
+        message: string;
+    };
+}
+
+//edit
+
+interface IEditEventRequest {
+    type: typeof CalendarActionsType.EDIT_EVENT_REQUEST;
+}
+interface IEditEventSuccess {
+    type: typeof CalendarActionsType.EDIT_EVENT_SUCCESS;
+    payload: { data: IEvent; message: string };
+}
+interface IEditEventError {
+    type: typeof CalendarActionsType.EDIT_EVENT_ERROR;
+    payload: { message: string };
+}
+
 export type CalendarsAction =
     | IRequestCalendarAction
     | IRequestCalendarSuccess
@@ -83,4 +123,10 @@ export type CalendarsAction =
     | IClearMessageCalendar
     | IFetchCategoriesRequest
     | IFetchCategoriesSuccess
-    | IFetchCategoriesError;
+    | IFetchCategoriesError
+    | IDeletEventRequest
+    | IDeletEventSuccess
+    | IDeletEventError
+    | IEditEventRequest
+    | IEditEventSuccess
+    | IEditEventError;

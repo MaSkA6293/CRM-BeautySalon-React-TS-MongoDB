@@ -6,39 +6,31 @@ const initialState: IstateCalendar = {
     calendarMessageSuccess: "",
     calendarMessageError: "",
     eventsIsFetching: false,
-    eventsList: [
-        {
-            _id: "1",
-            title: "first event",
-            allDay: false,
-            day: "2020 12 26",
-            start: "09:30:26",
-            end: "12:30:26",
-            color: "#e2b6b6",
-        },
-        {
-            _id: "2",
-            title: "second event",
-            allDay: false,
-            day: "2020 12 26",
-            start: "14:30",
-            end: "16:30",
-            color: "blue",
-        },
-    ],
+    eventIsDeleting: false,
+    eventIsEditing: false,
+    eventsList: [],
 };
 const stateCalendar = (state: IstateCalendar = initialState, action: CalendarsAction): IstateCalendar => {
     switch (action.type) {
-        case CalendarActionsType.EDIT_EVENT:
+        case CalendarActionsType.EDIT_EVENT_REQUEST:
             return {
                 ...state,
-                eventsList: state.eventsList.map((el) => {
-                    if (el._id === action.payload._id) {
-                        return action.payload;
-                    } else {
-                        return el;
-                    }
-                }),
+                eventIsEditing: true,
+            };
+        case CalendarActionsType.EDIT_EVENT_SUCCESS:
+            return {
+                ...state,
+                eventIsEditing: false,
+                eventsList: state.eventsList.map((event) =>
+                    event._id === action.payload.data._id ? action.payload.data : event,
+                ),
+                calendarMessageSuccess: action.payload.message,
+            };
+        case CalendarActionsType.EDIT_EVENT_ERROR:
+            return {
+                ...state,
+                eventIsEditing: false,
+                calendarMessageError: action.payload.message,
             };
 
         case CalendarActionsType.FETCH_EVENTS_REQUEST:
@@ -54,13 +46,32 @@ const stateCalendar = (state: IstateCalendar = initialState, action: CalendarsAc
         case CalendarActionsType.ADD_EVENT_SUCCESS:
             return {
                 ...state,
-                eventsList: [...state.eventsList, action.payload.data],
+                eventsList: [...state.eventsList, action.payload.event],
                 eventIsAdding: false,
                 calendarMessageSuccess: action.payload.message,
             };
 
         case CalendarActionsType.EVENT_ADD_ERROR:
             return { ...state, eventIsAdding: false, calendarMessageError: action.payload.message };
+
+        case CalendarActionsType.DELET_EVENT_REQUEST:
+            return {
+                ...state,
+                eventIsDeleting: true,
+            };
+        case CalendarActionsType.DELET_EVENT_SUCCESS:
+            return {
+                ...state,
+                eventsList: state.eventsList.filter((item) => item._id !== action.payload._id),
+                eventIsDeleting: false,
+                calendarMessageSuccess: action.payload.message,
+            };
+        case CalendarActionsType.DELET_EVENT_ERROR:
+            return {
+                ...state,
+                eventIsDeleting: false,
+                calendarMessageError: action.payload.message,
+            };
 
         case CalendarActionsType.CLEAR_MESSAGE_CALENDAR:
             return { ...state, calendarMessageError: "", calendarMessageSuccess: "" };

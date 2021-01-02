@@ -4,6 +4,8 @@ export interface IstateCalendar {
     readonly calendarMessageSuccess: string;
     readonly calendarMessageError: string;
     readonly eventsIsFetching: boolean;
+    readonly eventIsDeleting: boolean;
+    readonly eventIsEditing: boolean;
 }
 
 export interface IEvent {

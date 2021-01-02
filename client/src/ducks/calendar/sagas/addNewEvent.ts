@@ -21,7 +21,7 @@ interface IAddEventProps {
 export function* addEvent(action: IAddEventProps): SagaIterator {
     try {
         yield put(addEventRequest());
-        const response = yield call(httpRequest, "api/calendar", "POST", action.payload.event);
+        const response = yield call(httpRequest, "api/calendar/events", "POST", action.payload.event);
         yield put(addEventSuccess(response.data));
         yield call(action.payload.callback);
         yield delay(3000);
