@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import FormicEditEvent from "../FormicEditEvent";
 import { IEvent } from "../../../../ducks/calendar/contracts/state";
 import { IColor } from "../../../../ducks/colors/contracts/state";
+import { IClient } from "../../../../ducks/clients/contracts/state";
 interface IModalEditEvent {
     modalIsOpen: boolean;
     closeModal: () => void;
@@ -12,6 +13,7 @@ interface IModalEditEvent {
     isDeleting: boolean;
     isEditing: boolean;
     colors: IColor[];
+    clients: IClient[];
 }
 
 const ModalEditEvent = ({
@@ -21,6 +23,7 @@ const ModalEditEvent = ({
     isDeleting,
     isEditing,
     colors,
+    clients,
 }: IModalEditEvent): React.ReactElement => {
     return (
         <Dialog open={modalIsOpen} onClose={closeModal} maxWidth="sm" fullWidth={true} className="dialog">
@@ -31,6 +34,7 @@ const ModalEditEvent = ({
                     isEditing={isEditing}
                     isDeleting={isDeleting}
                     colors={colors}
+                    clients={clients}
                 />
                 {isEditing || isDeleting ? <Spiner /> : ""}
             </DialogContent>

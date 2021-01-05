@@ -18,7 +18,7 @@ export interface IstateClients {
 }
 
 export interface IClient {
-    _id: number;
+    _id: string;
     name: string;
     surname: string;
     phone: string;

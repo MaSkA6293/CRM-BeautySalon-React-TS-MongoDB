@@ -59,7 +59,7 @@ interface IDeletClientActionRequest {
 }
 interface IDeletClientActionSuccess {
     type: typeof ClientsActionsType.DELET_CLIENT_SUCCESS;
-    payload: { _id: number; message: string };
+    payload: { _id: string; message: string };
 }
 interface IDeletClientActionFail {
     type: typeof ClientsActionsType.CLIENT_DELET_FAIL;

@@ -23,6 +23,7 @@ export type ISelectEventListToRender = {
     start: Date;
     end: Date;
     color: string;
+    clientName: string;
 };
 export type IEventAdd = {
     title: string;
@@ -30,6 +31,7 @@ export type IEventAdd = {
     end: string;
     allDay: boolean;
     color: string;
+    clientId: string;
 };
 
 export interface IRunCalendarPageFetch {

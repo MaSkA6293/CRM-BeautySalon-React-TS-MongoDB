@@ -1,0 +1,15 @@
+.event{
+    display: flex;
+    flex-direction: column;
+    &__clientName{
+        display: flex;
+        font-size: 1em;
+    }
+    &__title{
+        display: flex;
+        font-size: 1em;
+    }
+}
+.rbc-event-label {
+    display: none;
+  }

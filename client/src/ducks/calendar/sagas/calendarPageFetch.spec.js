@@ -4,6 +4,7 @@ import { runCalendarPageFetch } from "../actionCreators/fetchCalendarPage";
 import { fetchEventsRequest, fetchEventsSuccess, fetchEventsError } from "../actionCreators/fetchEvents";
 
 import { fetchColorsSuccess } from "../../colors/actionCreators/fetchColors";
+import { clientsRequestSuccess } from "../../clients/actionCreators/fetchClients";
 import { fetchCalendarPage } from "./calendarPageFetch";
 import { call, delay, put, all } from "redux-saga/effects";
 import { httpRequest } from "../../../utils/network";
@@ -17,16 +18,21 @@ describe("test saga fetchCalendarPage", () => {
         let expected = put(fetchEventsRequest());
         expect(output).toEqual(expected);
     });
-    it("should call events,colors parallel", (done) => {
+    it("should call events,colors,clients parallel", (done) => {
         output = saga.next().value;
-        let expected = all([call(httpRequest, "api/calendar/events", "GET"), call(httpRequest, "api/color", "GET")]);
+        let expected = all([
+            call(httpRequest, "api/calendar/events", "GET"),
+            call(httpRequest, "api/color", "GET"),
+            call(httpRequest, "api/client", "GET"),
+        ]);
         done();
         expect(output).toEqual(expected);
     });
     it("should put fetchEventsSuccess", () => {
         const events = { data: [] };
         const colors = { data: [] };
-        output = saga.next([events, colors]).value;
+        const clients = { data: [] };
+        output = saga.next([events, colors, clients]).value;
         let expected = put(fetchEventsSuccess(events));
         expect(output).toEqual(expected);
     });
@@ -34,6 +40,12 @@ describe("test saga fetchCalendarPage", () => {
         const colors = { data: [] };
         output = saga.next().value;
         let expected = put(fetchColorsSuccess(colors));
+        expect(output).toEqual(expected);
+    });
+    it("should put clientsRequestSuccess", () => {
+        const clients = { data: [] };
+        output = saga.next().value;
+        let expected = put(clientsRequestSuccess(clients));
         expect(output).toEqual(expected);
     });
 

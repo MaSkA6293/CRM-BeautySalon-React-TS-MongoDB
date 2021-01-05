@@ -13,34 +13,46 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { useDispatch } from "react-redux";
 import { IColor } from "../../../../ducks/colors/contracts/state";
+import { IClient } from "../../../../ducks/clients/contracts/state";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import SelectColor from "../../../../components/SelectColor";
 import { myNewEvent } from "../../../../ducks/calendar/contracts/types";
 import { runAddNewEvent } from "../../../../ducks/calendar/actionCreators/addNewEvent";
 import { validationEventSchema } from "../../../../ducks/calendar/validations/event";
+import PersonIcon from "@material-ui/icons/Person";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import ListItemText from "@material-ui/core/ListItemText";
 export interface IFormicAddEvent {
     newEvent: myNewEvent | undefined;
     closeModal: () => void;
     colors: IColor[];
     isAdding: boolean;
+    clients: IClient[];
 }
 type initialValues = {
     title: string;
     start: string;
     end: string;
+    client: string;
 };
 const FormicAddEvent: React.FC<IFormicAddEvent> = ({
     newEvent,
     closeModal,
     colors,
     isAdding,
+    clients,
 }: IFormicAddEvent): React.ReactElement => {
     const [selectedColor, setSelectedColor] = useState<IColor>(colors[0]);
-
+    const [clientId, setClientId] = useState<string>("");
     const initialValues: initialValues = {
         title: "",
         start: newEvent?.start ? newEvent.start : "00:00",
         end: newEvent?.end ? newEvent.end : "00:00",
+        client: clientId,
     };
     const dispatch = useDispatch();
 
@@ -54,6 +66,7 @@ const FormicAddEvent: React.FC<IFormicAddEvent> = ({
                     end: values.end,
                     allDay: checked,
                     color: selectedColor.hex,
+                    clientId: clientId,
                 },
                 closeModal,
             ),
@@ -62,6 +75,10 @@ const FormicAddEvent: React.FC<IFormicAddEvent> = ({
     const [checked, setChecked] = useState<boolean>(false);
     const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
+    };
+
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setClientId(event.target.value as string);
     };
     return (
         <Formik
@@ -97,7 +114,41 @@ const FormicAddEvent: React.FC<IFormicAddEvent> = ({
                         <div className="field__error">
                             <FormHelperText id="component-error-text">{errors.title}</FormHelperText>
                         </div>
-
+                        <div className="form__field field field-margin-bottom ">
+                            <div className="field__row">
+                                <div className="field__icon">
+                                    {" "}
+                                    <PersonIcon />{" "}
+                                </div>
+                                <div className="field__body">
+                                    <FormControl>
+                                        <InputLabel id="demo-mutiple-checkbox-label">Клиент</InputLabel>
+                                        <Select
+                                            disabled={isAdding}
+                                            labelId="demo-mutiple-checkbox-label"
+                                            id="demo-mutiple-checkbox"
+                                            value={clientId}
+                                            onChange={handleChange}
+                                            input={<Input />}
+                                            name="client"
+                                        >
+                                            {clients.map((item, index) => (
+                                                <MenuItem
+                                                    key={index}
+                                                    value={item._id}
+                                                    style={{ backgroundColor: "white" }}
+                                                >
+                                                    <ListItemText primary={item.name} />
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field__error">
+                            <FormHelperText id="component-error-text">{errors.client}</FormHelperText>
+                        </div>
                         <div className="form__field field field-margin-bottom ">
                             <div className="field__row">
                                 <div className="field__icon">
@@ -169,6 +220,7 @@ const FormicAddEvent: React.FC<IFormicAddEvent> = ({
                             </div>
                         </div>
                     </div>
+
                     <div className="form__select-color select-color">
                         <div
                             className="select-color__selected select-color__selected-margin-right "

@@ -34,7 +34,7 @@ const EditClientSchema = Yup.object().shape({
 
 interface IFormicEditClient {
     editClient: (values: IClient) => void;
-    deletClient: (id: number) => void;
+    deletClient: (id: string) => void;
     currentClient: IClient;
     clientIsDeleting: boolean;
     clientIsEditing: boolean;

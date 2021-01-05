@@ -12,6 +12,7 @@ export const validationEventSchema = Yup.object().shape({
             return isSameOrBefore(value, end);
         }),
     end: Yup.string(),
+    client: Yup.string(),
 });
 
 const isSameOrBefore = (startTime: any, endTime: any) => {

@@ -3,11 +3,11 @@ import { ClientsActionsType } from "../contracts/actionTypes";
 interface IRunDeletClient {
     type: ClientsActionsType.DELET_CLIENT;
     payload: {
-        _id: number;
+        _id: string;
         callback: () => void;
     };
 }
-export const runDeletClient = (_id: number, callback: () => void): IRunDeletClient => {
+export const runDeletClient = (_id: string, callback: () => void): IRunDeletClient => {
     return {
         type: ClientsActionsType.DELET_CLIENT,
         payload: {

@@ -19,7 +19,7 @@ import {
 } from "../../ducks/clients/selector";
 
 const initialSelectedClient = {
-    _id: 0,
+    _id: "0",
     name: "",
     surname: "",
     phone: "",
@@ -41,7 +41,7 @@ const Clients: React.FC = (): React.ReactElement => {
     const clientIsDeleting = useSelector(selectClientIsDeleting);
     const clientIsEditing = useSelector(selectClientIsEditing);
     const clientIsAdding = useSelector(selectClientIsAdding);
-    const handlerEditClient = (_id: number) => {
+    const handlerEditClient = (_id: string) => {
         const currentEdit = clients.find((client: IClient) => client._id === _id);
         if (currentEdit) {
             setSelectedClient(currentEdit);
@@ -51,7 +51,7 @@ const Clients: React.FC = (): React.ReactElement => {
     const editClient = (data: IClient, callback: () => void) => {
         return dispatch(runEditClient(data, callback));
     };
-    const deletClient = (_id: number, callback: () => void) => {
+    const deletClient = (_id: string, callback: () => void) => {
         return dispatch(runDeletClient(_id, callback));
     };
     return (

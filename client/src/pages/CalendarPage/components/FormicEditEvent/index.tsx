@@ -23,12 +23,23 @@ import { IColor } from "../../../../ducks/colors/contracts/state";
 import { IEvent } from "../../../../ducks/calendar/contracts/state";
 import { runEditEvent } from "../../../../ducks/calendar/actionCreators/editEvent";
 import { runDeletEvent } from "../../../../ducks/calendar/actionCreators/deletEvent";
+
+import { IClient } from "../../../../ducks/clients/contracts/state";
+import PersonIcon from "@material-ui/icons/Person";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import ListItemText from "@material-ui/core/ListItemText";
+
 interface IFormicEditEvent {
     currentEvent: IEvent;
     isDeleting: boolean;
     isEditing: boolean;
     closeModal: () => void;
     colors: IColor[];
+    clients: IClient[];
 }
 
 const FormicEditEvent: React.FC<IFormicEditEvent> = ({
@@ -37,21 +48,20 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
     isEditing,
     closeModal,
     colors,
+    clients,
 }: IFormicEditEvent): React.ReactElement => {
     type initialValuesProps = {
         title: string;
         start: string;
         end: string;
-    };
-    const initialValues: initialValuesProps = {
-        title: currentEvent.title,
-        start: moment(currentEvent.start).format("HH:mm"),
-        end: moment(currentEvent.end).format("HH:mm"),
+        client: string;
     };
     const [open, setOpen] = useState(false);
     const [checked, setChecked] = useState<boolean>(currentEvent === undefined ? false : currentEvent.allDay);
     const [selectedColor, setSelectedColor] = useState(colors.find((el) => el.hex === currentEvent.color));
-
+    const [clientId, setClientId] = useState<string>(
+        currentEvent.clientId === "new" || undefined ? "" : currentEvent.clientId,
+    );
     const handleChangeCheckBox = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
     };
@@ -59,6 +69,12 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
         dispatch(runDeletEvent(currentEvent._id, closeModal));
     };
     const dispatch = useDispatch();
+    const initialValues: initialValuesProps = {
+        title: currentEvent.title,
+        start: moment(currentEvent.start).format("HH:mm"),
+        end: moment(currentEvent.end).format("HH:mm"),
+        client: clientId,
+    };
     const handlerSubmit = (values: initialValuesProps) => {
         dispatch(
             runEditEvent(
@@ -69,11 +85,16 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                     end: values.end,
                     color: selectedColor?.hex === undefined ? "red" : selectedColor?.hex,
                     allDay: checked,
+                    clientId: clientId,
                 },
                 closeModal,
             ),
         );
     };
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setClientId(event.target.value as string);
+    };
+
     return (
         <>
             <AreYouSure
@@ -117,6 +138,42 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                             </div>
                             <div className="field__error">
                                 <FormHelperText id="component-error-text">{errors.title}</FormHelperText>
+                            </div>
+
+                            <div className="form__field field field-margin-bottom ">
+                                <div className="field__row">
+                                    <div className="field__icon">
+                                        {" "}
+                                        <PersonIcon />{" "}
+                                    </div>
+                                    <div className="field__body">
+                                        <FormControl>
+                                            <InputLabel id="demo-mutiple-checkbox-label">Клиент</InputLabel>
+                                            <Select
+                                                disabled={isEditing}
+                                                labelId="demo-mutiple-checkbox-label"
+                                                id="demo-mutiple-checkbox"
+                                                value={clientId}
+                                                onChange={handleChange}
+                                                input={<Input />}
+                                                name="client"
+                                            >
+                                                {clients.map((item, index) => (
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={item._id}
+                                                        style={{ backgroundColor: "white" }}
+                                                    >
+                                                        <ListItemText primary={item.name} />
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="field__error">
+                                <FormHelperText id="component-error-text">{errors.client}</FormHelperText>
                             </div>
 
                             <div className="form__field field field-margin-bottom ">

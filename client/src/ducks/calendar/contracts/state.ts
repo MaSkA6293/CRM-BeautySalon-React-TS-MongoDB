@@ -16,4 +16,5 @@ export interface IEvent {
     end: string;
     allDay: boolean;
     color: string;
+    clientId: string;
 }

@@ -11,14 +11,14 @@ import ListItem from "@material-ui/core/ListItem";
 
 interface IClientsList {
     clients: IClient[];
-    edit: (id: number) => void;
+    edit: (id: string) => void;
 }
 
 export const ClientsList: React.FC<IClientsList> = ({ clients, edit }: IClientsList): React.ReactElement => {
     const options = [
         {
             label: "Редактировать клиента",
-            function: (id: number, cb: () => void) => {
+            function: (id: string, cb: () => void) => {
                 cb();
                 edit(id);
             },

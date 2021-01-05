@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import moment from "moment-business-days";
 import "moment/locale/ru";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-
+import "./styles.scss";
 import ModalEditEvent from "./components/ModalEditEvent";
 import ModalAddEvent from "./components/ModalAddEvent";
 import { selectEventsList } from "../../ducks/calendar/selector";
@@ -20,6 +20,7 @@ import {
     selectEventIsDeleting,
     selectEventIsEditing,
 } from "../../ducks/calendar/selector";
+import { selectClientsList } from "../../ducks/clients/selector";
 import Message from "../../components/Message";
 import { runCalendarPageFetch } from "../../ducks/calendar/actionCreators/fetchCalendarPage";
 import { CalendarHeader } from "./components/CalendarHeader";
@@ -27,15 +28,6 @@ import Spiner from "../../components/Spiner";
 moment.locale("ru");
 moment.updateLocale("ru", {
     workingWeekdays: [1, 2, 3, 4, 5],
-    // workinghours: {
-    //     0: null,
-    //     1: ["09:30:00", "17:00:00"],
-    //     2: ["09:30:00", "17:00:00"],
-    //     3: ["09:30:00", "13:00:00"],
-    //     4: ["09:30:00", "12:00:00", "13:00:00", "17:00:00"],
-    //     5: ["09:30:00", "17:00:00"],
-    //     6: null,
-    // },
 });
 const localizer = momentLocalizer(moment);
 
@@ -47,6 +39,7 @@ const defaultEvent = {
     end: "00:00",
     allDay: false,
     color: "red",
+    clientId: "",
 };
 
 export default function MCalendar(): React.ReactElement {
@@ -63,6 +56,7 @@ export default function MCalendar(): React.ReactElement {
     const messageError = useSelector(selectCalendarMessageError);
     const isDeleting = useSelector(selectEventIsDeleting);
     const isEditing = useSelector(selectEventIsEditing);
+    const clients = useSelector(selectClientsList);
     const [editIsOpen, setEditIsOpen] = useState<boolean>(false);
     const [addIsOpen, setAddIsOpen] = useState<boolean>(false);
     const [addingElement, setAddingElement] = useState<myNewEvent | undefined>(undefined);
@@ -112,6 +106,21 @@ export default function MCalendar(): React.ReactElement {
         };
     }
 
+    const EventComponent = (event: any) => {
+        return (
+            <div className="event">
+                <div className="event__title">
+                    {" "}
+                    <h4>{event.event.title}</h4>
+                </div>
+                <div className="event__clientName">
+                    <span>Клиент:</span>
+                    <h4>{event.event.clientName}</h4>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <>
             {messageSuccess && <Message isOpen status={"success"} message={messageSuccess} />}{" "}
@@ -146,6 +155,7 @@ export default function MCalendar(): React.ReactElement {
                         components={{
                             dateCellWrapper: ColoredDateCellWrapper,
                             eventWrapper: eventWrapper,
+                            event: EventComponent,
                         }}
                         selectable
                     />
@@ -157,6 +167,7 @@ export default function MCalendar(): React.ReactElement {
                         addingElement={addingElement}
                         colors={colors}
                         isAdding={isAdding}
+                        clients={clients}
                     />
                 ) : (
                     ""
@@ -169,6 +180,7 @@ export default function MCalendar(): React.ReactElement {
                         isDeleting={isDeleting}
                         isEditing={isEditing}
                         colors={colors}
+                        clients={clients}
                     />
                 ) : (
                     ""

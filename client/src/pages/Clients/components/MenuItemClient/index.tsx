@@ -7,11 +7,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 type itemMenu = {
     label: string;
-    function: (id: number, cb: () => void) => void;
+    function: (id: string, cb: () => void) => void;
 };
 interface IMenu {
     options: itemMenu[];
-    id: number;
+    id: string;
 }
 
 export const MenuItemClient: React.FC<IMenu> = ({ options, id }: IMenu): React.ReactElement => {
