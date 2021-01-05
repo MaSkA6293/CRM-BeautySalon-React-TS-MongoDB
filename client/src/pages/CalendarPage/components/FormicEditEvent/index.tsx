@@ -111,7 +111,7 @@ const FormicEditEvent: React.FC<IFormicEditEvent> = ({
                                         error={errors.title ? true : false}
                                         autoComplete="false"
                                         className="form__item"
-                                        disabled={isDeleting || isEditing || dirty}
+                                        disabled={isDeleting || isEditing}
                                     />
                                 </div>
                             </div>
