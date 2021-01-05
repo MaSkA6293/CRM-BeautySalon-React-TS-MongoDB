@@ -10,7 +10,7 @@ interface IFormAddClient {
     modalIsOpen: boolean;
     closeModal: () => void;
     currentClient: IClient;
-    deletClient: (_id: number, callback: () => void) => void;
+    deletClient: (_id: string, callback: () => void) => void;
     editClient: (data: IClient, callback: () => void) => void;
     clientIsDeleting: boolean;
     clientIsEditing: boolean;
@@ -28,7 +28,7 @@ export const FormEditClient: React.FC<IFormAddClient> = ({
     const handlerEditClient = (values: IClient) => {
         editClient(values, closeModal);
     };
-    const handlerDeletClient = (_id: number) => {
+    const handlerDeletClient = (_id: string) => {
         deletClient(_id, closeModal);
     };
 
