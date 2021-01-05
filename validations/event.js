@@ -21,6 +21,7 @@ const eventValidation = [
     .isLength({ min: 5, max: 5 })
     .withMessage("Не корректная дата окончания события"),
   check("color").isString().notEmpty().withMessage("Поле цвет обязательное"),
+  check("clientId").isString().withMessage("Значение должно быть строкой"),
 ];
 
 module.exports = eventValidation;
