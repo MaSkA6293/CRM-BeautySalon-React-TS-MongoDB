@@ -9,6 +9,7 @@ const EventShema = new Schema({
   end: String,
   allDay: Boolean,
   color: String,
+  clientId: String,
   userId: {
     required: true,
     ref: "User",

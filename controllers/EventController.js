@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const { ERROR_MESSAGE_STATUS_500 } = require("../constants");
 const EventModel = require("../models/Event");
+const ClientModel = require("../models/Client");
 const checkId = require("../validations/checkObjectId");
 
 module.exports.allEvents = async (req, res) => {
@@ -20,6 +21,11 @@ module.exports.add = async (req, res) => {
         errors: errors.array(),
       });
     }
+    let id = "";
+    if (await checkId(req.body.clientId)) {
+      const checkClient = await ClientModel.find({ _id: req.body.clientId });
+      id = checkClient !== undefined ? req.body.clientId : "new";
+    } else id = "new";
     const event = EventModel({
       title: req.body.title,
       day: req.body.day,
@@ -27,6 +33,7 @@ module.exports.add = async (req, res) => {
       end: req.body.end,
       allDay: req.body.allDay,
       color: req.body.color,
+      clientId: id,
       userId: req.user._id,
     });
     const result = await event.save();
